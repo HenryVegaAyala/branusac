@@ -8,6 +8,8 @@ return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Branusac - Imprenta',
     'language' => 'es',
+    'sourceLanguage'=>'en',
+    'charset'=>'utf-8',
 //    'theme' => 'hebo',
     // preloading 'log' component
     'preload' => array('bootstrap', 'log'),

@@ -339,3 +339,31 @@ Stack trace:
 REQUEST_URI=/branusac/site/register.php
 HTTP_REFERER=http://localhost/branusac/site/login.php
 ---
+2016/08/03 06:58:05 [error] [php] include(requiered.php): failed to open stream: No such file or directory (C:\wamp\www\branusac\framework\YiiBase.php:432)
+Stack trace:
+#0 unknown(0): spl_autoload_call()
+#1 C:\wamp\www\branusac\framework\YiiBase.php(303): class_exists()
+#2 C:\wamp\www\branusac\framework\validators\CValidator.php(174): import()
+#3 C:\wamp\www\branusac\framework\base\CModel.php(287): createValidator()
+#4 C:\wamp\www\branusac\framework\base\CModel.php(260): Usuario->createValidators()
+#5 C:\wamp\www\branusac\framework\base\CModel.php(304): Usuario->getValidators()
+#6 C:\wamp\www\branusac\framework\web\helpers\CHtml.php(1514): Usuario->isAttributeRequired()
+#7 C:\wamp\www\branusac\framework\web\widgets\CActiveForm.php(600): activeLabelEx()
+#8 C:\wamp\www\branusac\protected\views\site\register.php(40): CActiveForm->labelEx()
+#9 C:\wamp\www\branusac\framework\web\CBaseController.php(126): require()
+#10 C:\wamp\www\branusac\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#11 C:\wamp\www\branusac\framework\web\CController.php(869): SiteController->renderFile()
+#12 C:\wamp\www\branusac\framework\web\CController.php(782): SiteController->renderPartial()
+#13 C:\wamp\www\branusac\protected\controllers\SiteController.php(58): SiteController->render()
+#14 C:\wamp\www\branusac\framework\web\actions\CInlineAction.php(49): SiteController->ActionRegister()
+#15 C:\wamp\www\branusac\framework\web\CController.php(308): CInlineAction->runWithParams()
+#16 C:\wamp\www\branusac\framework\web\CController.php(286): SiteController->runAction()
+#17 C:\wamp\www\branusac\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#18 C:\wamp\www\branusac\framework\web\CWebApplication.php(282): SiteController->run()
+#19 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#20 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#21 C:\wamp\www\branusac\index.php(13): CWebApplication->run()
+REQUEST_URI=/branusac/site/register.php
+in C:\wamp\www\branusac\protected\views\site\register.php (40)
+in C:\wamp\www\branusac\protected\controllers\SiteController.php (58)
+in C:\wamp\www\branusac\index.php (13)
