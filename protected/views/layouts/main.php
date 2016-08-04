@@ -32,8 +32,10 @@
                         'class' => 'booster.widgets.TbMenu',
                         'type' => 'navbar',
                         'items' => array(
-                            array('label' => 'Inicio', 'url' => array('/site/index')),
 
+                            array('label' => 'Inicio', 'url' => array('/site/index'), 'visible' => Yii::app()->user->isGuest),
+
+                            /*
                             array(
                                 'label' => 'Usuario',
                                 'items' => array(
@@ -41,44 +43,44 @@
                                     array('label' => 'Cambiar Contraseña', 'url' => array('/site/change')),
                                 ), 'visible' => Yii::app()->user->isGuest
                             ),
+                            */
                             array(
                                 'label' => 'Presupuestos',
                                 'items' => array(
                                     array('label' => 'Crear Nuevo Presupuesto', 'url' => array('/presupuesto/create')),
                                     array('label' => 'Lista de Presupuestos', 'url' => array('/presupuesto/index')),
                                     '---',
-                                    array('label' => 'Generar Impresión', 'url' => array('/reportePresupuesto/index')),
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),
-                            array(
-                                'label' => 'Facturas',
-                                'items' => array(
-                                    array('label' => 'Crear Nueva Factura', 'url' => array('/factura/create')),
-                                    array('label' => 'Lista de Facturas', 'url' => array('/factura/index')),
-                                    '---',
-                                    array('label' => 'Generar Impresión', 'url' => array('/site/index')),
-                                ), 'visible' => !Yii::app()->user->isGuest
-                            ),
+
                             array(
                                 'label' => 'Guías',
                                 'items' => array(
-                                    array('label' => 'Crear Guias', 'url' => array('/guia/create')),
-                                    array('label' => 'Buscar Guias', 'url' => array('/guia/index')),
+                                    array('label' => 'Lista de Guias', 'url' => array('/guia/create')),
                                     '---',
-                                    '---',
-                                    array('label' => 'admin-index', 'url' => array('/guia/admin')),
-                                    array('label' => 'admin-index', 'url' => array('/tempProducto/admin')),
-                                    '---',
-                                    array('label' => 'Reportes', 'url' => array('/site/index')),
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),
-//                            array('label' => 'Productos', 'url' => array('/stock/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Clientes', 'url' => array('/cliente/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Transportistas', 'url' => array('/transportista/index'), 'visible' => !Yii::app()->user->isGuest),
-//                            array('label' => 'Registrarse', 'url' => array('/site/register'), 'visible' => Yii::app()->user->isGuest),
-//                            array('label' => 'Cambiar Contraseña', 'url' => array('/site/change'), 'visible' => !Yii::app()->user->isGuest),
+
+                            array(
+                                'label' => 'Facturas',
+                                'items' => array(
+                                    array('label' => 'Lista de Facturas', 'url' => array('/factura/index')),
+                                    '---',
+                                ), 'visible' => !Yii::app()->user->isGuest
+                            ),
+
+                            array(
+                                'label' => 'Registros',
+                                'items' => array(
+                                    array('label' => 'Clientes', 'url' => array('/cliente/index')),
+                                    array('label' => 'Transportistas', 'url' => array('/transportista/index')),
+                                    '---',
+                                ), 'visible' => !Yii::app()->user->isGuest
+                            ),
+
                             array('label' => 'Iniciar Sesión', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                             array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => 'user', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+
                         ),
                     )
                 )

@@ -398,3 +398,48 @@ Stack trace:
 REQUEST_URI=/branusac/reportePresupuesto/index.php
 HTTP_REFERER=http://localhost/branusac/presupuesto/index.php
 ---
+2016/08/04 16:06:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "presupuesto/create"' in C:\wamp\www\branusac\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController('presupuesto/cre...')
+#1 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\wamp\www\branusac\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/branusac/presupuesto/create.php
+HTTP_REFERER=http://localhost/branusac/
+---
+2016/08/04 16:06:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "presupuesto/index"' in C:\wamp\www\branusac\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController('presupuesto/ind...')
+#1 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\wamp\www\branusac\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/branusac/presupuesto/index.php
+HTTP_REFERER=http://localhost/branusac/
+---
+2016/08/04 16:10:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "cliente/index"' in C:\wamp\www\branusac\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController('cliente/index')
+#1 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\wamp\www\branusac\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/branusac/cliente/index.php
+HTTP_REFERER=http://localhost/branusac/
+---
+2016/08/04 16:10:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "transportista/index"' in C:\wamp\www\branusac\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController('transportista/i...')
+#1 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\wamp\www\branusac\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/branusac/transportista/index.php
+HTTP_REFERER=http://localhost/branusac/
+---
+2016/08/04 23:43:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "cliente/index"' in C:\wamp\www\branusac\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController('cliente/index')
+#1 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\wamp\www\branusac\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/branusac/cliente/index.php
+HTTP_REFERER=http://localhost/branusac/
+---

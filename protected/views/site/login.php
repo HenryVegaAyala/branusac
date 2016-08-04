@@ -22,6 +22,8 @@
                                         src="<?php echo Yii:: app()->baseUrl . '/images/Logo-Branusac.png' ?>"></a>
                     </div>
 
+                    <br>
+
                     <div class="login-form">
 
                         <?php echo $form->textField($model, 'username', array('maxlength' => 10, 'class' => 'form-control', 'placeholder' => 'Usuario', 'required' => true)); ?>
