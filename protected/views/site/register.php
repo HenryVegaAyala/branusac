@@ -50,7 +50,7 @@ $this->breadcrumbs = array(
 
                     <div class="col-sm-6">
                         <?php echo $form->labelEx($model, 'PAS_USUA', array('class' => 'form-label')); ?>
-                        <?php echo $form->passwordField($model, 'PAS_USUA', array('class' => 'form-control', 'placeholder' => 'Ingresar Contrasena')); ?>
+                        <?php echo $form->passwordField($model, 'PAS_USUA', array('class' => 'form-control', 'placeholder' => 'Ingresar Contraseña')); ?>
                         <?php echo $form->error($model, 'PAS_USUA'); ?>
                     </div>
                 </div>

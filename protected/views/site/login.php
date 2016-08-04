@@ -41,7 +41,7 @@
 
 
                         <div class="login-links">
-                            <!--<a href="">¿Recupera tu cuenta? <strong>INGRESA AQU�?</strong</a>-->
+                            <!--<a href="">Â¿Recupera tu cuenta? <strong>INGRESA AQUÃ?</strong</a>-->
                         </div>
                     </div>
                 </div>

@@ -65,7 +65,7 @@ class Usuario extends CActiveRecord
             'NOM_USUA' => 'Nom Usua',
             'APE_USUA' => 'Ape Usua',
             'USE_USUA' => 'Usuario',
-            'PAS_USUA' => 'Contraseña',
+            'PAS_USUA' => 'ContraseÃ±a',
             'EMA_USUA' => 'Ema Usua',
             'EST_USUA' => 'Est Usua',
         );
