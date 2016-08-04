@@ -367,3 +367,34 @@ REQUEST_URI=/branusac/site/register.php
 in C:\wamp\www\branusac\protected\views\site\register.php (40)
 in C:\wamp\www\branusac\protected\controllers\SiteController.php (58)
 in C:\wamp\www\branusac\index.php (13)
+2016/08/04 06:14:00 [error] [php] Undefined variable: dataProvider (C:\wamp\www\branusac\protected\views\presupuesto\index.php:18)
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CController.php(869): PresupuestoController->renderFile()
+#1 C:\wamp\www\branusac\framework\web\CController.php(782): PresupuestoController->renderPartial()
+#2 C:\wamp\www\branusac\protected\controllers\PresupuestoController.php(120): PresupuestoController->render()
+#3 C:\wamp\www\branusac\framework\web\actions\CInlineAction.php(49): PresupuestoController->actionIndex()
+#4 C:\wamp\www\branusac\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\branusac\framework\web\filters\CFilterChain.php(133): PresupuestoController->runAction()
+#6 C:\wamp\www\branusac\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#7 C:\wamp\www\branusac\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#8 C:\wamp\www\branusac\framework\web\filters\CInlineFilter.php(58): PresupuestoController->filterAccessControl()
+#9 C:\wamp\www\branusac\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#10 C:\wamp\www\branusac\framework\web\CController.php(291): CFilterChain->run()
+#11 C:\wamp\www\branusac\framework\web\CController.php(265): PresupuestoController->runActionWithFilters()
+#12 C:\wamp\www\branusac\framework\web\CWebApplication.php(282): PresupuestoController->run()
+#13 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#14 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\wamp\www\branusac\index.php(13): CWebApplication->run()
+REQUEST_URI=/branusac/presupuesto/index.php
+in C:\wamp\www\branusac\protected\views\presupuesto\index.php (18)
+in C:\wamp\www\branusac\protected\controllers\PresupuestoController.php (120)
+in C:\wamp\www\branusac\index.php (13)
+2016/08/04 06:17:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "reportePresupuesto/index"' in C:\wamp\www\branusac\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\wamp\www\branusac\framework\web\CWebApplication.php(141): CWebApplication->runController('reportePresupue...')
+#1 C:\wamp\www\branusac\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\wamp\www\branusac\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/branusac/reportePresupuesto/index.php
+HTTP_REFERER=http://localhost/branusac/presupuesto/index.php
+---
