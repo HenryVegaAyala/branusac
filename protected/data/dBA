@@ -1,0 +1,291 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.6.17
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema branusac
+--
+
+CREATE DATABASE IF NOT EXISTS branusac;
+USE branusac;
+
+--
+-- Definition of table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+CREATE TABLE `cliente` (
+  `COD_CLIE` int(99) NOT NULL,
+  `NOMBRE` varchar(150) NOT NULL,
+  `APELLIDO` varchar(45) DEFAULT NULL,
+  `RUC` varchar(20) NOT NULL,
+  `DIRECCION` varchar(150) DEFAULT NULL,
+  `TELEFONO` varchar(60) DEFAULT NULL,
+  `FAX` varchar(60) DEFAULT NULL,
+  `CORREO_E` varchar(150) DEFAULT NULL,
+  `ESTADO` char(1) DEFAULT NULL,
+  PRIMARY KEY (`COD_CLIE`),
+  UNIQUE KEY `SYS_CT_1` (`NOMBRE`),
+  UNIQUE KEY `SYS_CT_2` (`RUC`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cliente`
+--
+
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+
+
+--
+-- Definition of table `detalle_guia`
+--
+
+DROP TABLE IF EXISTS `detalle_guia`;
+CREATE TABLE `detalle_guia` (
+  `COD_GUIA_DET` int(99) NOT NULL,
+  `CODIGO_GUIA` int(99) NOT NULL,
+  `LINEA` int(11) NOT NULL,
+  `CANTIDAD` int(11) DEFAULT NULL,
+  `DESCRIPCION` varchar(100) DEFAULT NULL,
+  `TOTAL` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`COD_GUIA_DET`),
+  KEY `fk_t_guia_det_t_guia1_idx` (`CODIGO_GUIA`),
+  CONSTRAINT `fk_t_guia_det_t_guia1` FOREIGN KEY (`CODIGO_GUIA`) REFERENCES `guia` (`COD_GUIA`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detalle_guia`
+--
+
+/*!40000 ALTER TABLE `detalle_guia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalle_guia` ENABLE KEYS */;
+
+
+--
+-- Definition of table `detalle_presupuesto`
+--
+
+DROP TABLE IF EXISTS `detalle_presupuesto`;
+CREATE TABLE `detalle_presupuesto` (
+  `COD_PRESU` int(99) NOT NULL,
+  `COD_PRESU_DET` int(99) NOT NULL,
+  `COD_PRODUC` int(11) NOT NULL,
+  `LINEA` int(11) DEFAULT NULL,
+  `CANTIDAD` int(11) DEFAULT NULL,
+  `DESCRIPCION` varchar(250) DEFAULT NULL,
+  `TOTAL` decimal(9,2) DEFAULT NULL,
+  PRIMARY KEY (`COD_PRESU_DET`),
+  KEY `fk_t_presupuesto_det_Presupuesto1_idx` (`COD_PRESU`),
+  KEY `fk_detalle_presupuesto_t_stock1_idx` (`COD_PRODUC`),
+  CONSTRAINT `fk_t_presupuesto_det_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_detalle_presupuesto_t_stock1` FOREIGN KEY (`COD_PRODUC`) REFERENCES `producto` (`CODIGO`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detalle_presupuesto`
+--
+
+/*!40000 ALTER TABLE `detalle_presupuesto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalle_presupuesto` ENABLE KEYS */;
+
+
+--
+-- Definition of table `factura`
+--
+
+DROP TABLE IF EXISTS `factura`;
+CREATE TABLE `factura` (
+  `COD_FACT` int(99) NOT NULL,
+  `NUM_FACT` varchar(7) NOT NULL,
+  `MONEDA` char(1) NOT NULL,
+  `FECHA` date DEFAULT NULL,
+  `CLIENTE` varchar(150) NOT NULL,
+  `RUC` varchar(20) NOT NULL,
+  `OC` varchar(20) DEFAULT NULL,
+  `COND_PAGO` char(1) DEFAULT NULL,
+  `NRO_DIAS` int(11) DEFAULT NULL,
+  `COND_PERSONALIZADO` varchar(100) DEFAULT NULL,
+  `SUBTOTAL` decimal(10,2) DEFAULT NULL,
+  `IGV` decimal(10,2) DEFAULT NULL,
+  `TOTAL` decimal(10,2) DEFAULT NULL,
+  `FECHA_CANC` date DEFAULT NULL,
+  `ESTADO` char(1) DEFAULT NULL,
+  `COD_GUIA` int(99) NOT NULL,
+  `facturacol` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`COD_FACT`),
+  UNIQUE KEY `SYS_CT_12` (`NUM_FACT`),
+  KEY `fk_t_factura_Guia1_idx` (`COD_GUIA`),
+  CONSTRAINT `fk_t_factura_Guia1` FOREIGN KEY (`COD_GUIA`) REFERENCES `guia` (`COD_GUIA`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `factura`
+--
+
+/*!40000 ALTER TABLE `factura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `factura` ENABLE KEYS */;
+
+
+--
+-- Definition of table `guia`
+--
+
+DROP TABLE IF EXISTS `guia`;
+CREATE TABLE `guia` (
+  `COD_GUIA` int(99) NOT NULL,
+  `NUM_GUIA` varchar(3) DEFAULT NULL,
+  `COD_PRESU` int(99) NOT NULL,
+  `DOMICILIO` varchar(120) DEFAULT NULL,
+  `RUC` varchar(20) DEFAULT NULL,
+  `OC` varchar(20) DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `TRANS_CODIGO` int(99) NOT NULL,
+  PRIMARY KEY (`COD_GUIA`),
+  UNIQUE KEY `SYS_CT_38` (`NUM_GUIA`),
+  KEY `SYS_FK_40` (`TRANS_CODIGO`),
+  KEY `fk_t_guia_Presupuesto1_idx` (`COD_PRESU`),
+  CONSTRAINT `fk_t_guia_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `SYS_FK_40` FOREIGN KEY (`TRANS_CODIGO`) REFERENCES `transportista` (`COD_TRANSP`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `guia`
+--
+
+/*!40000 ALTER TABLE `guia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guia` ENABLE KEYS */;
+
+
+--
+-- Definition of table `presupuesto`
+--
+
+DROP TABLE IF EXISTS `presupuesto`;
+CREATE TABLE `presupuesto` (
+  `COD_PRESU` int(99) NOT NULL,
+  `NUM_PRESU` varchar(12) DEFAULT NULL,
+  `COD_CLIE` int(99) NOT NULL,
+  `MONEDA` char(1) NOT NULL DEFAULT 'S',
+  `FECHA` date NOT NULL,
+  `INICIO` date DEFAULT NULL,
+  `DIRECCION` varchar(250) DEFAULT NULL,
+  `VIGENCIA` date DEFAULT NULL,
+  `COND_PAGO` char(1) DEFAULT NULL,
+  `NRO_DIAS` int(11) DEFAULT NULL,
+  `COND_PERSONALIZADO` char(1) DEFAULT NULL,
+  `ESTADO` char(1) DEFAULT NULL,
+  PRIMARY KEY (`COD_PRESU`),
+  UNIQUE KEY `SYS_CT_13` (`NUM_PRESU`),
+  KEY `SYS_FK_21` (`COD_CLIE`),
+  CONSTRAINT `SYS_FK_21` FOREIGN KEY (`COD_CLIE`) REFERENCES `cliente` (`COD_CLIE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `presupuesto`
+--
+
+/*!40000 ALTER TABLE `presupuesto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
+
+
+--
+-- Definition of table `producto`
+--
+
+DROP TABLE IF EXISTS `producto`;
+CREATE TABLE `producto` (
+  `CODIGO` int(99) NOT NULL,
+  `DESCRIPCION` varchar(100) DEFAULT NULL,
+  `CANTIDAD` int(11) NOT NULL DEFAULT '0',
+  `PRECIO_U` decimal(9,2) NOT NULL,
+  PRIMARY KEY (`CODIGO`),
+  UNIQUE KEY `SYS_CT_14` (`DESCRIPCION`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `producto`
+--
+
+/*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `producto` ENABLE KEYS */;
+
+
+--
+-- Definition of table `transportista`
+--
+
+DROP TABLE IF EXISTS `transportista`;
+CREATE TABLE `transportista` (
+  `COD_TRANSP` int(99) NOT NULL,
+  `COD_VEHI` int(11) NOT NULL,
+  `NOMBRE` varchar(100) DEFAULT NULL,
+  `APELLIDO` varchar(45) DEFAULT NULL,
+  `DIRECCION` varchar(100) DEFAULT NULL,
+  `RUC` varchar(12) DEFAULT NULL,
+  `DNI` varchar(12) DEFAULT NULL,
+  `NRO_LICENCIA` varchar(12) DEFAULT NULL,
+  `TELEFONO` varchar(10) DEFAULT NULL,
+  `PLACA` varchar(45) DEFAULT NULL,
+  `MARCA` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`COD_TRANSP`),
+  UNIQUE KEY `SYS_CT_28` (`NOMBRE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transportista`
+--
+
+/*!40000 ALTER TABLE `transportista` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transportista` ENABLE KEYS */;
+
+
+--
+-- Definition of table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+CREATE TABLE `usuario` (
+  `COD_USUA` int(99) unsigned NOT NULL AUTO_INCREMENT,
+  `NOM_USUA` varchar(60) DEFAULT NULL,
+  `APE_USUA` varchar(60) DEFAULT NULL,
+  `USE_USUA` varchar(20) DEFAULT NULL,
+  `PAS_USUA` varchar(250) DEFAULT NULL,
+  `EMA_USUA` varchar(50) DEFAULT NULL,
+  `EST_USUA` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`COD_USUA`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuario`
+--
+
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` (`COD_USUA`,`NOM_USUA`,`APE_USUA`,`USE_USUA`,`PAS_USUA`,`EMA_USUA`,`EST_USUA`) VALUES 
+ (1,NULL,NULL,'admin','21232f297a57a5a743894a0e4a801fc3',NULL,NULL),
+ (2,NULL,NULL,'','d41d8cd98f00b204e9800998ecf8427e',NULL,NULL),
+ (3,NULL,NULL,'root','63a9f0ea7bb98050796b649e85481845',NULL,NULL);
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
