@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/protected/config/main.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/controllers/SiteController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/models/Presupuesto.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/models/Usuario.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/layouts/main.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/site/login.php" charset="UTF-8" />

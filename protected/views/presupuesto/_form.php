@@ -11,10 +11,6 @@
 
         <?php $form = $this->beginWidget('CActiveForm', array(
             'id' => 'presupuesto-form',
-            // Please note: When you enable ajax validation, make sure the corresponding
-            // controller action is handling ajax validation correctly.
-            // There is a call to performAjaxValidation() commented in generated controller code.
-            // See class documentation of CActiveForm for details on this.
             'enableAjaxValidation' => false,
         )); ?>
 
@@ -30,10 +26,11 @@
 
             <div class="fieldset">
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <?php echo $form->labelEx($model, 'COD_PRESU'); ?>
-                        <?php echo $form->textField($model, 'COD_PRESU', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'COD_PRESU'); ?>
+
+                    <div class="col-sm-3" style="display: none">
+                        <?php echo $form->labelEx($model, 'INICIO'); ?>
+                        <?php echo $form->textField($model, 'INICIO', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'INICIO'); ?>
                     </div>
 
                     <div class="col-sm-3">
@@ -48,44 +45,24 @@
                         <?php echo $form->error($model, 'COD_CLIE'); ?>
                     </div>
 
-                    <div class="col-sm-3">
-                        <?php echo $form->labelEx($model, 'MONEDA'); ?>
-                        <?php echo $form->textField($model, 'MONEDA', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'MONEDA'); ?>
+                    <div class="col-sm-6">
+                        <?php echo $form->labelEx($model, 'DIRECCION'); ?>
+                        <?php echo $form->textField($model, 'DIRECCION', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'DIRECCION'); ?>
                     </div>
+
                 </div>
             </div>
 
             <div class="fieldset">
                 <div class="form-group">
-                    <div class="col-sm-3">
-                        <?php echo $form->labelEx($model, 'FECHA'); ?>
-                        <?php echo $form->textField($model, 'FECHA', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'FECHA'); ?>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <?php echo $form->labelEx($model, 'INICIO'); ?>
-                        <?php echo $form->textField($model, 'INICIO', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'INICIO'); ?>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <?php echo $form->labelEx($model, 'DIRECCION'); ?>
-                        <?php echo $form->textField($model, 'DIRECCION', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'DIRECCION'); ?>
-                    </div>
 
                     <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'VIGENCIA'); ?>
                         <?php echo $form->textField($model, 'VIGENCIA', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'VIGENCIA'); ?>
                     </div>
-                </div>
-            </div>
 
-            <div class="fieldset">
-                <div class="form-group">
                     <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'COND_PAGO'); ?>
                         <?php echo $form->textField($model, 'COND_PAGO', array('class' => 'form-control')); ?>
@@ -99,21 +76,55 @@
                     </div>
 
                     <div class="col-sm-3">
+                        <?php echo $form->labelEx($model, 'FECHA'); ?>
+                        <?php echo $form->textField($model, 'FECHA', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'FECHA'); ?>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="fieldset">
+                <div class="form-group">
+
+                    <div class="col-sm-3">
+                        <?php echo $form->labelEx($model, 'MONEDA'); ?>
+                        <?php echo $form->textField($model, 'MONEDA', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'MONEDA'); ?>
+                    </div>
+
+                    <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'COND_PERSONALIZADO'); ?>
                         <?php echo $form->textField($model, 'COND_PERSONALIZADO', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'COND_PERSONALIZADO'); ?>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" style="display: none">
                         <?php echo $form->labelEx($model, 'ESTADO'); ?>
                         <?php echo $form->textField($model, 'ESTADO', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'ESTADO'); ?>
                     </div>
+
+                    <div class="col-sm-3" style="display: none">
+                        <?php echo $form->labelEx($model, 'COD_PRESU'); ?>
+                        <?php echo $form->textField($model, 'COD_PRESU', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'COD_PRESU'); ?>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <br>
+        <div class="container-fluid">
+            <div class="panel-footer" style="overflow:hidden;text-align:right;margin-top: 2%"></div>
+        </div>
+
+        <div class="container-fluid">
+            <?php
+            include __DIR__ . '/../Recurso/Grilla.php';
+            ?>
+        </div>
 
         <div class="panel-footer " style="overflow:hidden;text-align:right;">
             <div class="form-group">
@@ -126,6 +137,16 @@
                         'size' => 'md',
                         'icon' => 'fa fa-save fa-lg',
                         'buttonType' => 'submit',
+                    ));
+                    ?>
+                    <?php
+                    $this->widget(
+                        'ext.bootstrap.widgets.TbButton', array(
+                        'context' => 'default',
+                        'label' => 'Regresar',
+                        'size' => 'default',
+                        'buttonType' => 'link',
+                        'url' => array('index')
                     ));
                     ?>
 

@@ -40,7 +40,7 @@ class Presupuesto extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('COD_PRESU, COD_CLIE, FECHA', 'required'),
+            array('COD_CLIE, FECHA', 'required'),
             array('COD_PRESU, COD_CLIE, NRO_DIAS', 'numerical', 'integerOnly' => true),
             array('NUM_PRESU', 'length', 'max' => 12),
             array('MONEDA, COND_PAGO, COND_PERSONALIZADO, ESTADO', 'length', 'max' => 1),
@@ -72,17 +72,17 @@ class Presupuesto extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'COD_PRESU' => 'Cod Presu',
-            'NUM_PRESU' => 'Num Presu',
-            'COD_CLIE' => 'Cod Clie',
-            'MONEDA' => 'Moneda',
-            'FECHA' => 'Fecha',
+            'COD_PRESU' => 'Codigo de Preusupuesto',
+            'NUM_PRESU' => 'N° Preusupuesto',
+            'COD_CLIE' => 'Cliente',
+            'MONEDA' => 'Tipo Moneda',
+            'FECHA' => 'Fecha de Entrega',
             'INICIO' => 'Inicio',
-            'DIRECCION' => 'Direccion',
+            'DIRECCION' => 'Dirección',
             'VIGENCIA' => 'Vigencia',
-            'COND_PAGO' => 'Cond Pago',
-            'NRO_DIAS' => 'Nro Dias',
-            'COND_PERSONALIZADO' => 'Cond Personalizado',
+            'COND_PAGO' => 'Condición de pago',
+            'NRO_DIAS' => 'N° Dias',
+            'COND_PERSONALIZADO' => 'Perso.',
             'ESTADO' => 'Estado',
         );
     }
