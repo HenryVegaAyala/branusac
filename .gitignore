@@ -7,16 +7,13 @@ framework/cli/views/shell/module/messages/
 framework/cli/views/shell/module/models/
 framework/cli/views/shell/module/views/layouts/
 protected/commands/
-protected/controllers/PresupuestoController.php
 protected/messages/
 protected/migrations/
-protected/models/DetallePresupuesto.php
-protected/models/Presupuesto.php
 protected/tests/fixtures/
 protected/tests/report/
 protected/tests/unit/
-protected/views/presupuesto/
 themes/classic/views/layouts/
 themes/classic/views/site/
 themes/classic/views/system/
 /protected/runtime/session-1.1.17.db
+/protected/runtime/
