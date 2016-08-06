@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - branusac@localhost" uuid="b88950b8-936d-4f8c-bde9-09d9e591ba99">
+    <database-info product="MySQL" version="5.6.17" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="branusac"/>
+    <schema name="" catalog="test"/>
+    <table name="cliente" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_CLIE" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NOMBRE" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
+      <column name="APELLIDO" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="RUC" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="DIRECCION" sqlType="VARCHAR" precision="150" scale="0" nullable="true" jdbcType="12"/>
+      <column name="TELEFONO" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="FAX" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="CORREO_E" sqlType="VARCHAR" precision="150" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="DNI" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="COD_CLIE"/>
+      <exported-key name="SYS_FK_21" table="presupuesto" schema="" catalog="branusac" columns="COD_CLIE"/>
+      <index name="SYS_CT_1" unique="true" columns="NOMBRE"/>
+      <index name="SYS_CT_2" unique="true" columns="RUC"/>
+    </table>
+    <table name="detalle_guia" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_GUIA_DET" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CODIGO_GUIA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="LINEA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CANTIDAD" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="DESCRIPCION" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="TOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="COD_GUIA_DET"/>
+      <foreign-key name="fk_t_guia_det_t_guia1" columns="CODIGO_GUIA" ref-table="guia" ref-schema="" ref-catalog="branusac" ref-columns="COD_GUIA" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_t_guia_det_t_guia1_idx" unique="false" columns="CODIGO_GUIA"/>
+    </table>
+    <table name="detalle_presupuesto" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_PRESU_DET" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_PRODUC" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="LINEA" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="CANTIDAD" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="DESCRIPCION" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
+      <column name="TOTAL" sqlType="DECIMAL" precision="9" scale="2" nullable="true" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="COD_PRESU_DET"/>
+      <foreign-key name="fk_detalle_presupuesto_t_stock1" columns="COD_PRODUC" ref-table="producto" ref-schema="" ref-catalog="branusac" ref-columns="CODIGO" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_t_presupuesto_det_Presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_detalle_presupuesto_t_stock1_idx" unique="false" columns="COD_PRODUC"/>
+      <index name="fk_t_presupuesto_det_Presupuesto1_idx" unique="false" columns="COD_PRESU"/>
+    </table>
+    <table name="factura" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_FACT" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NUM_FACT" sqlType="VARCHAR" precision="7" scale="0" nullable="false" jdbcType="12"/>
+      <column name="MONEDA" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="FECHA" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="CLIENTE" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
+      <column name="RUC" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="OC" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="COND_PAGO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="NRO_DIAS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="COND_PERSONALIZADO" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="SUBTOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="IGV" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="TOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="FECHA_CANC" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="COD_GUIA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="facturacol" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="COD_FACT"/>
+      <foreign-key name="fk_t_factura_Guia1" columns="COD_GUIA" ref-table="guia" ref-schema="" ref-catalog="branusac" ref-columns="COD_GUIA" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="SYS_CT_12" unique="true" columns="NUM_FACT"/>
+      <index name="fk_t_factura_Guia1_idx" unique="false" columns="COD_GUIA"/>
+    </table>
+    <table name="guia" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_GUIA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NUM_GUIA" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="DOMICILIO" sqlType="VARCHAR" precision="120" scale="0" nullable="true" jdbcType="12"/>
+      <column name="RUC" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="OC" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="FECHA" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="TRANS_CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="COD_GUIA"/>
+      <foreign-key name="fk_t_guia_Presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="SYS_FK_40" columns="TRANS_CODIGO" ref-table="transportista" ref-schema="" ref-catalog="branusac" ref-columns="COD_TRANSP" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_t_guia_det_t_guia1" table="detalle_guia" schema="" catalog="branusac" columns="CODIGO_GUIA"/>
+      <exported-key name="fk_t_factura_Guia1" table="factura" schema="" catalog="branusac" columns="COD_GUIA"/>
+      <index name="SYS_CT_38" unique="true" columns="NUM_GUIA"/>
+      <index name="fk_t_guia_Presupuesto1_idx" unique="false" columns="COD_PRESU"/>
+      <index name="SYS_FK_40" unique="false" columns="TRANS_CODIGO"/>
+    </table>
+    <table name="presupuesto" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NUM_PRESU" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="COD_CLIE" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="MONEDA" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1" def="J1Mn"/>
+      <column name="FECHA" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="INICIO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="DIRECCION" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
+      <column name="VIGENCIA" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="COND_PAGO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="NRO_DIAS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="COND_PERSONALIZADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="COD_PRESU"/>
+      <foreign-key name="SYS_FK_21" columns="COD_CLIE" ref-table="cliente" ref-schema="" ref-catalog="branusac" ref-columns="COD_CLIE" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_t_presupuesto_det_Presupuesto1" table="detalle_presupuesto" schema="" catalog="branusac" columns="COD_PRESU"/>
+      <exported-key name="fk_t_guia_Presupuesto1" table="guia" schema="" catalog="branusac" columns="COD_PRESU"/>
+      <index name="SYS_CT_13" unique="true" columns="NUM_PRESU"/>
+      <index name="SYS_FK_21" unique="false" columns="COD_CLIE"/>
+    </table>
+    <table name="producto" schema="" catalog="branusac" type="TABLE">
+      <column name="CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="DESCRIPCION" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="CANTIDAD" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="PRECIO_U" sqlType="DECIMAL" precision="9" scale="2" nullable="false" jdbcType="3"/>
+      <primary-key name="PRIMARY" columns="CODIGO"/>
+      <exported-key name="fk_detalle_presupuesto_t_stock1" table="detalle_presupuesto" schema="" catalog="branusac" columns="COD_PRODUC"/>
+      <index name="SYS_CT_14" unique="true" columns="DESCRIPCION"/>
+    </table>
+    <table name="transportista" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_TRANSP" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_VEHI" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NOMBRE" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="APELLIDO" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="DIRECCION" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="RUC" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="DNI" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="NRO_LICENCIA" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="TELEFONO" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="PLACA" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="MARCA" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="COD_TRANSP"/>
+      <exported-key name="SYS_FK_40" table="guia" schema="" catalog="branusac" columns="TRANS_CODIGO"/>
+      <index name="SYS_CT_28" unique="true" columns="NOMBRE"/>
+    </table>
+    <table name="usuario" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_USUA" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="NOM_USUA" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="APE_USUA" sqlType="VARCHAR" precision="60" scale="0" nullable="true" jdbcType="12"/>
+      <column name="USE_USUA" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="PAS_USUA" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
+      <column name="EMA_USUA" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="EST_USUA" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="COD_USUA"/>
+    </table>
+  </data-source>
+</component>

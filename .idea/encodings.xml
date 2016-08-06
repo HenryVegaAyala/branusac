@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/protected/models/Cliente.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/models/Presupuesto.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/models/Usuario.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/views/cliente/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/layouts/main.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/site/login.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/site/register.php" charset="UTF-8" />

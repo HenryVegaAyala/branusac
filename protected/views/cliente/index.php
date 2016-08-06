@@ -2,14 +2,14 @@
 /* @var $this ClienteController */
 /* @var $model Cliente */
 
-$this->breadcrumbs=array(
-    'Clientes'=>array('index'),
-    'Manage',
+$this->breadcrumbs = array(
+    'Cliente' => array('index'),
+    'Lista',
 );
 
-$this->menu=array(
-    array('label'=>'List Cliente', 'url'=>array('index')),
-    array('label'=>'Create Cliente', 'url'=>array('create')),
+$this->menu = array(
+    array('label' => 'List Cliente', 'url' => array('index')),
+    array('label' => 'Create Cliente', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -26,38 +26,37 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Clientes</h1>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Lista de Clientes</h3>
+        </div>
 
-<p>
-    You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-    or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
+        <?php echo CHtml::link('Búsqueda Avanzada', '#', array('class' => 'search-button')); ?>
+        <div class="search-form" style="display:none">
+            <?php $this->renderPartial('_search', array(
+                'model' => $model,
+            )); ?>
+        </div>
+        <!-- search-form -->
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-    <?php $this->renderPartial('_search',array(
-        'model'=>$model,
-    )); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-    'id'=>'cliente-grid',
-    'dataProvider'=>$model->search(),
-    'filter'=>$model,
-    'columns'=>array(
-        'COD_CLIE',
-        'NOMBRE',
-        'APELLIDO',
-        'RUC',
-        'DIRECCION',
-        'TELEFONO',
-        /*
-        'FAX',
-        'CORREO_E',
-        'ESTADO',
-        */
-        array(
-            'class'=>'CButtonColumn',
-        ),
-    ),
-)); ?>
+        <div class="table-responsive">
+            <?php $this->widget('ext.bootstrap.widgets.TbGridView', array(
+                'id' => 'cliente-grid',
+                'type' => 'bordered condensed striped',
+                'dataProvider' => $model->search(),
+                'columns' => array(
+                    'NOMBRE',
+                    'DNI',
+                    'RUC',
+                    'TELEFONO',
+                    'CORREO_E',
+                    array(
+                        'header' => 'Opciones',
+                        'class' => 'ext.bootstrap.widgets.TbButtonColumn',
+                        'htmlOptions' => array('style' => 'width: 130px; text-align: center;'),
+                        'template' => '{view} / {update} / {delete} ',
+                    ),
+                ),
+            )); ?>
+        </div>

@@ -24,6 +24,7 @@
         <?php echo $form->errorSummary($model); ?>
 
         <div class="container-fluid">
+
             <div class="fieldset">
                 <div class="form-group">
 
@@ -33,65 +34,109 @@
                         <?php echo $form->error($model, 'COD_CLIE'); ?>
                     </div>
 
-                    <div class="row">
+                    <div class="col-sm-6">
                         <?php echo $form->labelEx($model, 'NOMBRE'); ?>
                         <?php echo $form->textField($model, 'NOMBRE', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'NOMBRE'); ?>
                     </div>
 
-                    <div class="row">
+                    <div class="col-sm-3" style="display: none">
                         <?php echo $form->labelEx($model, 'APELLIDO'); ?>
                         <?php echo $form->textField($model, 'APELLIDO', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'APELLIDO'); ?>
                     </div>
 
-                    <div class="row">
+                    <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'RUC'); ?>
                         <?php echo $form->textField($model, 'RUC', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'RUC'); ?>
                     </div>
 
-                    <div class="row">
-                        <?php echo $form->labelEx($model, 'DNI'); ?>
-                        <?php echo $form->textField($model, 'DNI', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'DNI'); ?>
-                    </div>
-
-                    <div class="row">
+                    <div class="col-sm-6">
                         <?php echo $form->labelEx($model, 'DIRECCION'); ?>
                         <?php echo $form->textField($model, 'DIRECCION', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'DIRECCION'); ?>
                     </div>
 
-                    <div class="row">
+                </div>
+            </div>
+
+            <div class="fieldset">
+                <div class="form-group">
+
+                    <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'TELEFONO'); ?>
                         <?php echo $form->textField($model, 'TELEFONO', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'TELEFONO'); ?>
                     </div>
 
-                    <div class="row">
+                    <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'FAX'); ?>
                         <?php echo $form->textField($model, 'FAX', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'FAX'); ?>
                     </div>
 
-                    <div class="row">
+                    <div class="col-sm-3">
                         <?php echo $form->labelEx($model, 'CORREO_E'); ?>
                         <?php echo $form->textField($model, 'CORREO_E', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'CORREO_E'); ?>
                     </div>
 
-                    <div class="row">
+                    <div class="col-sm-3">
+                        <?php echo $form->labelEx($model, 'DNI'); ?>
+                        <?php echo $form->textField($model, 'DNI', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'DNI'); ?>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="fieldset">
+                <div class="form-group">
+                    <div class="col-sm-3" style="display: none">
                         <?php echo $form->labelEx($model, 'ESTADO'); ?>
                         <?php echo $form->textField($model, 'ESTADO', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'ESTADO'); ?>
                     </div>
+                </div>
+            </div>
 
-                    <div class="row buttons">
-                        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-                    </div>
+        </div>
 
-                    <?php $this->endWidget(); ?>
+        <br>
+
+        <div class="panel-footer " style="overflow:hidden;text-align:right;">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <?php
+                    $this->widget(
+                        'ext.bootstrap.widgets.TbButton', array(
+                        'context' => 'success',
+                        'label' => 'Guardar',
+                        'size' => 'md',
+                        'icon' => 'fa fa-save fa-lg',
+                        'buttonType' => 'submit',
+                    ));
+                    ?>
+                    <?php
+                    $this->widget(
+                        'ext.bootstrap.widgets.TbButton', array(
+                        'context' => 'default',
+                        'label' => 'Regresar',
+                        'size' => 'default',
+                        'buttonType' => 'link',
+                        'icon' => 'fa fa-long-arrow-left fa-lg',
+                        'url' => array('index')
+                    ));
+                    ?>
 
                 </div>
-                <!-- form -->
+            </div>
+        </div>
+
+
+        <?php $this->endWidget(); ?>
+
+    </div>
+</div>
+<!-- form -->
