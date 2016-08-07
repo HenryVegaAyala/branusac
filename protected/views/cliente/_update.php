@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Registrar Nuevo Cliente</h3>
+            <h3 class="panel-title">Actualizar Datos del Cliente</h3>
         </div>
 
         <?php $form = $this->beginWidget('CActiveForm', array(
@@ -122,10 +122,10 @@
                     $this->widget(
                         'ext.bootstrap.widgets.TbButton', array(
                         'context' => 'default',
-                        'label' => 'Regresar',
+                        'label' => 'Cancelar',
                         'size' => 'default',
                         'buttonType' => 'link',
-                        'icon' => 'fa fa-long-arrow-left fa-lg',
+                        'icon' => 'fa fa-times fa-lg',
                         'url' => array('index')
                     ));
                     ?>

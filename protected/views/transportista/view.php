@@ -1,9 +1,9 @@
 <?php
-/* @var $this ClienteController */
-/* @var $model Cliente */
+/* @var $this TransportistaController */
+/* @var $model Transportista */
 
 $this->breadcrumbs = array(
-    'Datos del Cliente' => array('index'),
+    'Datos del Transportista' => array('index'),
 );
 ?>
 
@@ -20,16 +20,15 @@ $this->breadcrumbs = array(
             'type' => 'bordered condensed striped raw',
             'attributes' => array(
                 'NOMBRE',
-                'DNI',
-                'RUC',
                 'DIRECCION',
+                'RUC',
+                'DNI',
+                'NRO_LICENCIA',
                 'TELEFONO',
-                'FAX',
-                'CORREO_E',
+                'PLACA',
+                'MARCA',
             ),
         )); ?>
-
-
         <div class="panel-footer " style="overflow:hidden;text-align:right;">
             <div class="form-group">
                 <div class="col-sm-12">

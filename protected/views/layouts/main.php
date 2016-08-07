@@ -70,19 +70,10 @@
                             ),
 
                             array(
-                                'label' => 'Clientes',
+                                'label' => 'Registrar',
                                 'items' => array(
-                                    array('label' => 'Agregar Clientes', 'url' => array('/cliente/create')),
-                                    array('label' => 'Lista de Facturas', 'url' => array('/cliente/index')),
-                                    '---',
-                                ), 'visible' => !Yii::app()->user->isGuest
-                            ),
-
-                            array(
-                                'label' => 'Transportistas',
-                                'items' => array(
-                                    array('label' => 'Agregar Facturas', 'url' => array('/transportista/create')),
-                                    array('label' => 'Lista de Facturas', 'url' => array('/transportista/index')),
+                                    array('label' => 'Clientes', 'url' => array('/cliente/index')),
+                                    array('label' => 'Transportistas', 'url' => array('/transportista/index')),
                                     '---',
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),

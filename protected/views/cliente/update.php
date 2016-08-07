@@ -3,19 +3,9 @@
 /* @var $model Cliente */
 
 $this->breadcrumbs=array(
-	'Clientes'=>array('index'),
-	$model->COD_CLIE=>array('view','id'=>$model->COD_CLIE),
-	'Update',
-);
-
-$this->menu=array(
-	array('label'=>'List Cliente', 'url'=>array('index')),
-	array('label'=>'Create Cliente', 'url'=>array('create')),
-	array('label'=>'View Cliente', 'url'=>array('view', 'id'=>$model->COD_CLIE)),
-	array('label'=>'Manage Cliente', 'url'=>array('admin')),
+	'Cliente'=>array('index'),
+	'Actualización de datos',
 );
 ?>
 
-<h1>Update Cliente <?php echo $model->COD_CLIE; ?></h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_update', array('model'=>$model)); ?>

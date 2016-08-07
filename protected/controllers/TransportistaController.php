@@ -1,6 +1,6 @@
 <?php
 
-class ClienteController extends Controller
+class TransportistaController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -53,13 +53,13 @@ class ClienteController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Cliente;
+        $model = new Transportista;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Cliente'])) {
-            $model->attributes = $_POST['Cliente'];
+        if (isset($_POST['Transportista'])) {
+            $model->attributes = $_POST['Transportista'];
             if ($model->save())
                 $this->redirect(array('index'));
         }
@@ -81,8 +81,8 @@ class ClienteController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Cliente'])) {
-            $model->attributes = $_POST['Cliente'];
+        if (isset($_POST['Transportista'])) {
+            $model->attributes = $_POST['Transportista'];
             if ($model->save())
                 $this->redirect(array('index'));
         }
@@ -111,10 +111,10 @@ class ClienteController extends Controller
      */
     public function actionIndex()
     {
-        $model = new Cliente('search');
+        $model = new Transportista('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Cliente']))
-            $model->attributes = $_GET['Cliente'];
+        if (isset($_GET['Transportista']))
+            $model->attributes = $_GET['Transportista'];
 
         $this->render('index', array(
             'model' => $model,
@@ -126,10 +126,10 @@ class ClienteController extends Controller
      */
     public function actionAdmin()
     {
-        $model = new Cliente('search');
+        $model = new Transportista('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Cliente']))
-            $model->attributes = $_GET['Cliente'];
+        if (isset($_GET['Transportista']))
+            $model->attributes = $_GET['Transportista'];
 
         $this->render('admin', array(
             'model' => $model,
@@ -140,12 +140,12 @@ class ClienteController extends Controller
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
-     * @return Cliente the loaded model
+     * @return Transportista the loaded model
      * @throws CHttpException
      */
     public function loadModel($id)
     {
-        $model = Cliente::model()->findByPk($id);
+        $model = Transportista::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -153,11 +153,11 @@ class ClienteController extends Controller
 
     /**
      * Performs the AJAX validation.
-     * @param Cliente $model the model to be validated
+     * @param Transportista $model the model to be validated
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'cliente-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'transportista-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

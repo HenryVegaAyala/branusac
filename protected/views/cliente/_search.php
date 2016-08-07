@@ -6,60 +6,62 @@
 
 <div class="wide form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
-)); ?>
+    <?php $form = $this->beginWidget('CActiveForm', array(
+        'action' => Yii::app()->createUrl($this->route),
+        'method' => 'get',
+    )); ?>
 
-	<div class="row">
-		<?php echo $form->label($model,'COD_CLIE'); ?>
-		<?php echo $form->textField($model,'COD_CLIE'); ?>
-	</div>
+    <div class="fieldset">
 
-	<div class="row">
-		<?php echo $form->label($model,'NOMBRE'); ?>
-		<?php echo $form->textField($model,'NOMBRE',array('size'=>60,'maxlength'=>150)); ?>
-	</div>
+        <div class="container-fluid">
+            <div class="form-group">
+                <div class="col-sm-4 control-label">
+                    <?php echo $form->label($model, 'NOMBRE'); ?>
+                    <?php echo $form->textField($model, 'NOMBRE', array('class' => 'form-control')); ?>
+                </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'APELLIDO'); ?>
-		<?php echo $form->textField($model,'APELLIDO',array('size'=>45,'maxlength'=>45)); ?>
-	</div>
+                <div class="col-sm-4 control-label">
+                    <?php echo $form->label($model, 'DNI'); ?>
+                    <?php echo $form->textField($model, 'DNI', array('class' => 'form-control')); ?>
+                </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'RUC'); ?>
-		<?php echo $form->textField($model,'RUC',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
+                <div class="col-sm-4 control-label">
+                    <?php echo $form->label($model, 'RUC'); ?>
+                    <?php echo $form->textField($model, 'RUC', array('class' => 'form-control')); ?>
+                </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'DIRECCION'); ?>
-		<?php echo $form->textField($model,'DIRECCION',array('size'=>60,'maxlength'=>150)); ?>
-	</div>
+            </div>
+        </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'TELEFONO'); ?>
-		<?php echo $form->textField($model,'TELEFONO',array('size'=>60,'maxlength'=>60)); ?>
-	</div>
+        <br>
 
-	<div class="row">
-		<?php echo $form->label($model,'FAX'); ?>
-		<?php echo $form->textField($model,'FAX',array('size'=>60,'maxlength'=>60)); ?>
-	</div>
+        <div class="panel-footer " style="overflow:hidden;text-align:right;">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <?php
+                    $this->widget(
+                        'ext.bootstrap.widgets.TbButton', array(
+                        'context' => 'success',
+                        'label' => 'Buscar',
+                        'buttonType' => 'submit',
+                        'icon' => 'fa fa-search fa-lg',
+                    ));
+                    ?>
+                    <?php
+                    $this->widget(
+                        'ext.bootstrap.widgets.TbButton', array(
+                        'context' => 'default',
+                        'label' => 'Limpiar',
+                        'buttonType' => 'reset',
+                        'icon' => 'fa fa-eraser fa-lg',
+                    ));
+                    ?>
+                </div>
+            </div>
+        </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'CORREO_E'); ?>
-		<?php echo $form->textField($model,'CORREO_E',array('size'=>60,'maxlength'=>150)); ?>
-	</div>
+        <?php $this->endWidget(); ?>
 
-	<div class="row">
-		<?php echo $form->label($model,'ESTADO'); ?>
-		<?php echo $form->textField($model,'ESTADO',array('size'=>1,'maxlength'=>1)); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Search'); ?>
-	</div>
-
-<?php $this->endWidget(); ?>
-
-</div><!-- search-form -->
+    </div>
+</div>
+<!-- search-form -->

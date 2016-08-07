@@ -1,15 +1,10 @@
 <?php
-/* @var $this ClienteController */
-/* @var $model Cliente */
+/* @var $this TransportistaController */
+/* @var $model Transportista */
 
 $this->breadcrumbs = array(
-    'Cliente' => array('index'),
+    'Transportista' => array('index'),
     'Lista',
-);
-
-$this->menu = array(
-    array('label' => 'List Cliente', 'url' => array('index')),
-    array('label' => 'Create Cliente', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +13,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$('#cliente-grid').yiiGridView('update', {
+	$('#transportista-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -29,7 +24,7 @@ $('.search-form form').submit(function(){
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Lista de Clientes</h3>
+            <h3 class="panel-title">Lista de Transportistas</h3>
         </div>
 
         <div class="container-fluid" style="margin-top: 2%">
@@ -46,20 +41,16 @@ $('.search-form form').submit(function(){
 
         <div class="table-responsive">
             <?php $this->widget('ext.bootstrap.widgets.TbGridView', array(
-                'type' => 'bordered condensed striped',
                 'id' => 'cliente-grid',
+                'type' => 'bordered condensed striped',
                 'dataProvider' => $model->search(),
                 'columns' => array(
-                    array(
-                        'name' => 'NOMBRE',
-                        'header' => 'Nombre',
-                        'htmlOptions' => array('style' => 'width: 300px'),
-                        'value' => '$data->NOMBRE',
-                    ),
+                    'NOMBRE',
                     'DNI',
                     'RUC',
                     'TELEFONO',
-                    'CORREO_E',
+                    'MARCA',
+                    'DIRECCION',
                     array(
                         'header' => 'Opciones',
                         'class' => 'ext.bootstrap.widgets.TbButtonColumn',
@@ -82,7 +73,7 @@ $('.search-form form').submit(function(){
                         'size' => 'default',
                         'icon' => 'fa fa-plus fa-lg',
                         'buttonType' => 'link',
-                        'url' => array('/cliente/create')
+                        'url' => array('/Transportista/create')
                     ));
                     ?>
 
@@ -94,7 +85,7 @@ $('.search-form form').submit(function(){
                         'size' => 'default',
                         'icon' => 'refresh',
                         'buttonType' => 'link',
-                        'url' => array('/cliente/index')
+                        'url' => array('/Transportista/index')
                     ));
                     ?>
                 </div>
