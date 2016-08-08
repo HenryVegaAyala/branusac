@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - branusac@localhost" uuid="b88950b8-936d-4f8c-bde9-09d9e591ba99">
+  <data-source name="MySQL - branusac@localhost" uuid="dc1eff98-665f-4519-9b14-683217f000ed">
     <database-info product="MySQL" version="5.6.17" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="branusac"/>
-    <schema name="" catalog="test"/>
     <table name="cliente" schema="" catalog="branusac" type="TABLE">
       <column name="COD_CLIE" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="NOMBRE" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
@@ -44,8 +43,8 @@
       <column name="DESCRIPCION" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
       <column name="TOTAL" sqlType="DECIMAL" precision="9" scale="2" nullable="true" jdbcType="3"/>
       <primary-key name="PRIMARY" columns="COD_PRESU_DET"/>
-      <foreign-key name="fk_detalle_presupuesto_t_stock1" columns="COD_PRODUC" ref-table="producto" ref-schema="" ref-catalog="branusac" ref-columns="CODIGO" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="fk_t_presupuesto_det_Presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_detalle_presupuesto_t_stock1" columns="COD_PRODUC" ref-table="producto" ref-schema="" ref-catalog="branusac" ref-columns="CODIGO" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="fk_detalle_presupuesto_t_stock1_idx" unique="false" columns="COD_PRODUC"/>
       <index name="fk_t_presupuesto_det_Presupuesto1_idx" unique="false" columns="COD_PRESU"/>
     </table>
@@ -103,6 +102,9 @@
       <column name="NRO_DIAS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="COND_PERSONALIZADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
       <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="SUB_TOTAL" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
+      <column name="IGV" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
+      <column name="TOTAL" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
       <primary-key name="PRIMARY" columns="COD_PRESU"/>
       <foreign-key name="SYS_FK_21" columns="COD_CLIE" ref-table="cliente" ref-schema="" ref-catalog="branusac" ref-columns="COD_CLIE" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="fk_t_presupuesto_det_Presupuesto1" table="detalle_presupuesto" schema="" catalog="branusac" columns="COD_PRESU"/>

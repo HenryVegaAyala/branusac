@@ -126,6 +126,29 @@
             ?>
         </div>
 
+        <div class="container-fluid">
+            <table align="right">
+                <tbody>
+                <tr>
+                    <td class="col-sm-4">
+                        <?php echo $form->labelEx($model, 'TOTAL'); ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $form->textField($model, 'TOTAL', array(
+                           // 'value' => $model->Total(),
+                            'class' => 'form-control',
+                            'style' => 'background-color: transparent;',
+                            'readonly' => 'readonly'
+                        ))
+                        ?>
+                        <?php echo $form->error($model, 'TOTAL'); ?>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="panel-footer " style="overflow:hidden;text-align:right;">
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
