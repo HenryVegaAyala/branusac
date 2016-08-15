@@ -39,7 +39,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
         <th><input class='check_all' type='checkbox' onclick="select_all()"/></th>
         <th>#</th>
         <th>Descripción</th>
-        <th>Codigo</th>
         <th>Cantidad</th>
         <th>Precio</th>
         <th>Total</th>
@@ -125,16 +124,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
                                     <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="45" class="form-control" />\n\
                                 </td> \n\
                                 <td>\n\
-                                    <input type="text" id="COD_PROD_' + i + '" name="COD_PROD[]" size="10" class="form-control" readonly="true"/>\n\
-                                </td>\n\
-                                <td>\n\
-                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="10" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" readonly="true"/>\n\
+                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="10" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>   \n\
                                 <td>\n\
-                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="10" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" readonly="true"/>\n\
+                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="10" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="10" class="form-control" readonly="true"/>\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="10" class="form-control" />\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);
@@ -202,7 +198,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
                 console.log(names[1], names[2], names[3]);
                 cad = names[1];
                 if (cad !== '') {
-                    $('#COD_PROD_' + i).val(names[1]);
+                    $('#DES_LARG_' + i).val(names[1]);
                     $('#NRO_UNID_' + i).val(names[2]);
                     $('#VAL_PREC_' + i).val(names[3]);
 
@@ -210,7 +206,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
                     $('#VAL_PREC_' + i).prop('readonly', false);
                     $('#NRO_UNID_' + i).focus();
                 } else {
-                    $('#COD_PROD_' + i).prop('readonly', true);
+                    $('#DES_LARG_' + i).prop('readonly', true);
                     $('#NRO_UNID_' + i).prop('readonly', true);
                     $('#VAL_PREC_' + i).prop('readonly', true);
 

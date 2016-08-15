@@ -43,13 +43,13 @@ class Presupuesto extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('COD_PRESU, COD_CLIE, FECHA, SUB_TOTAL, IGV, TOTAL', 'required'),
+            //array('COD_PRESU, COD_CLIE, FECHA, SUB_TOTAL, IGV, TOTAL', 'required'),
             array('COD_PRESU, COD_CLIE, NRO_DIAS', 'numerical', 'integerOnly' => true),
             array('NUM_PRESU', 'length', 'max' => 12),
             array('MONEDA, COND_PAGO, COND_PERSONALIZADO, ESTADO', 'length', 'max' => 1),
             array('DIRECCION', 'length', 'max' => 250),
-            array('SUB_TOTAL, IGV, TOTAL', 'length', 'max' => 8),
-            array('INICIO, VIGENCIA', 'safe'),
+            array('SUB_TOTAL, IGV, TOTAL', 'length', 'max' => 10),
+            //array('INICIO, VIGENCIA', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('COD_PRESU, NUM_PRESU, COD_CLIE, MONEDA, FECHA, INICIO, DIRECCION, VIGENCIA, COND_PAGO, NRO_DIAS, COND_PERSONALIZADO, ESTADO, SUB_TOTAL, IGV, TOTAL', 'safe', 'on' => 'search'),
@@ -144,53 +144,19 @@ class Presupuesto extends CActiveRecord
         return parent::model($className);
     }
 
-    public function SubTotal()
+    public function Total()
     {
 
         $max = Yii::app()->db->createCommand()
-            ->select('round (SUM(VAL_MONT_UNID),2) as SUBTOTAL')
-            ->from('FAC_DETAL_ORDEN_COMPR')
+            ->select('round (SUM(TOTAL),2) as TOTAL')
+            ->from('detalle_presupuesto')
             ->where("COD_CLIE = '" . $this->COD_CLIE . "'
-                      and COD_TIEN = '" . $this->COD_TIEN . "'
-                      and COD_ORDE = '" . $this->COD_ORDE . "';")
+                      and COD_PRESU = '" . $this->COD_PRESU . "';")
             ->queryScalar();
 
         $id = ($max + 0);
 
         return $id;
     }
-
-    public function Igv()
-    {
-
-        $max = Yii::app()->db->createCommand()
-            ->select('round (SUM(VAL_MONT_IGV),2) as IGV')
-            ->from('FAC_DETAL_ORDEN_COMPR')
-            ->where("COD_CLIE = '" . $this->COD_CLIE . "'
-                      and COD_TIEN = '" . $this->COD_TIEN . "'
-                      and COD_ORDE = '" . $this->COD_ORDE . "';")
-            ->queryScalar();
-
-        $id = ($max);
-
-        return $max;
-    }
-
-    public function Total()
-    {
-
-        $max = Yii::app()->db->createCommand()
-            ->select('round (SUM(VAL_TOTAL),2) as TOTAL')
-            ->from('FAC_DETAL_ORDEN_COMPR')
-            ->where("COD_CLIE = '" . $this->COD_CLIE . "'
-                      and COD_TIEN = '" . $this->COD_TIEN . "'
-                      and COD_ORDE = '" . $this->COD_ORDE . "';")
-            ->queryScalar();
-
-        $id = ($max);
-
-        return $max;
-    }
-
 
 }

@@ -106,7 +106,7 @@
                         <?php echo $form->error($model, 'ESTADO'); ?>
                     </div>
 
-                    <div class="col-sm-3" style="display: none">
+                    <div class="col-sm-3" >
                         <?php echo $form->labelEx($model, 'COD_PRESU'); ?>
                         <?php echo $form->textField($model, 'COD_PRESU', array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'COD_PRESU'); ?>
@@ -136,7 +136,7 @@
                     <td>
                         <?php
                         echo $form->textField($model, 'TOTAL', array(
-                           // 'value' => $model->Total(),
+                            'value' => $model->Total(),
                             'class' => 'form-control',
                             'style' => 'background-color: transparent;',
                             'readonly' => 'readonly'

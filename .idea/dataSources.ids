@@ -7,6 +7,16 @@
     </database-info>
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="branusac"/>
+    <table name="bas_param" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_PARA" sqlType="VARCHAR" precision="2" scale="0" nullable="false" jdbcType="12"/>
+      <column name="VAL_PARA" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="DES_PARA" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="USU_DIGI" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="FEC_DIGI" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="USU_MODI" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="FEC_MODI" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="COD_PARA"/>
+    </table>
     <table name="cliente" schema="" catalog="branusac" type="TABLE">
       <column name="COD_CLIE" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="NOMBRE" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
@@ -42,9 +52,10 @@
       <column name="CANTIDAD" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="DESCRIPCION" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
       <column name="TOTAL" sqlType="DECIMAL" precision="9" scale="2" nullable="true" jdbcType="3"/>
-      <primary-key name="PRIMARY" columns="COD_PRESU_DET"/>
-      <foreign-key name="fk_t_presupuesto_det_Presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
+      <column name="COD_CLIE" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="PRECIO" sqlType="DECIMAL" precision="10" scale="2" nullable="false" jdbcType="3"/>
       <foreign-key name="fk_detalle_presupuesto_t_stock1" columns="COD_PRODUC" ref-table="producto" ref-schema="" ref-catalog="branusac" ref-columns="CODIGO" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_t_presupuesto_det_Presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="fk_detalle_presupuesto_t_stock1_idx" unique="false" columns="COD_PRODUC"/>
       <index name="fk_t_presupuesto_det_Presupuesto1_idx" unique="false" columns="COD_PRESU"/>
     </table>
@@ -102,9 +113,9 @@
       <column name="NRO_DIAS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="COND_PERSONALIZADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
       <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
-      <column name="SUB_TOTAL" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
-      <column name="IGV" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
-      <column name="TOTAL" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
+      <column name="SUB_TOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="false" jdbcType="3"/>
+      <column name="IGV" sqlType="DECIMAL" precision="10" scale="2" nullable="false" jdbcType="3"/>
+      <column name="TOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="false" jdbcType="3"/>
       <primary-key name="PRIMARY" columns="COD_PRESU"/>
       <foreign-key name="SYS_FK_21" columns="COD_CLIE" ref-table="cliente" ref-schema="" ref-catalog="branusac" ref-columns="COD_CLIE" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="fk_t_presupuesto_det_Presupuesto1" table="detalle_presupuesto" schema="" catalog="branusac" columns="COD_PRESU"/>
@@ -147,5 +158,16 @@
       <column name="EST_USUA" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="COD_USUA"/>
     </table>
+    <procedure name="CREAR_DETAL_PRESU" schema="" catalog="branusac" type="1">
+      <prototype>
+        <parameter name="fila" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="x_cod_presu" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+        <parameter name="x_cod_presu_det" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="3"/>
+        <parameter name="x_cod_clien" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+        <parameter name="x_NRO_UNID" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="5"/>
+        <parameter name="x_DES_LARG" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12" type="1" index="6"/>
+        <parameter name="x_VAL_PREC" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3" type="1" index="7"/>
+      </prototype>
+    </procedure>
   </data-source>
 </component>
