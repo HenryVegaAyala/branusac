@@ -16,9 +16,10 @@
  * @property integer $NRO_DIAS
  * @property string $COND_PERSONALIZADO
  * @property string $ESTADO
- * @property string $SUB_TOTAL
- * @property string $IGV
- * @property string $TOTAL
+ * @property string $TOT_MONT_ORDE
+ * @property string $TOT_MONT_IGV
+ * @property string $TOT_FACT
+ * @property string $COMENTARIO
  *
  * The followings are the available model relations:
  * @property DetallePresupuesto[] $detallePresupuestos
@@ -43,16 +44,16 @@ class Presupuesto extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            //array('COD_PRESU, COD_CLIE, FECHA, SUB_TOTAL, IGV, TOTAL', 'required'),
             array('COD_PRESU, COD_CLIE, NRO_DIAS', 'numerical', 'integerOnly' => true),
             array('NUM_PRESU', 'length', 'max' => 12),
             array('MONEDA, COND_PAGO, COND_PERSONALIZADO, ESTADO', 'length', 'max' => 1),
             array('DIRECCION', 'length', 'max' => 250),
-            array('SUB_TOTAL, IGV, TOTAL', 'length', 'max' => 10),
-            //array('INICIO, VIGENCIA', 'safe'),
+            array('TOT_MONT_ORDE, TOT_MONT_IGV, TOT_FACT', 'length', 'max' => 10),
+            array('COMENTARIO', 'length', 'max' => 350),
+            array('INICIO, VIGENCIA,FECHA', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('COD_PRESU, NUM_PRESU, COD_CLIE, MONEDA, FECHA, INICIO, DIRECCION, VIGENCIA, COND_PAGO, NRO_DIAS, COND_PERSONALIZADO, ESTADO, SUB_TOTAL, IGV, TOTAL', 'safe', 'on' => 'search'),
+            array('COD_PRESU, NUM_PRESU, COD_CLIE, MONEDA, FECHA, INICIO, DIRECCION, VIGENCIA, COND_PAGO, NRO_DIAS, COND_PERSONALIZADO, ESTADO, TOT_MONT_ORDE, TOT_MONT_IGV, TOT_FACT, COMENTARIO', 'safe', 'on' => 'search'),
         );
     }
 
@@ -88,9 +89,10 @@ class Presupuesto extends CActiveRecord
             'NRO_DIAS' => 'N° Dias',
             'COND_PERSONALIZADO' => 'Perso.',
             'ESTADO' => 'Estado',
-            'SUB_TOTAL' => 'Sub Total',
-            'IGV' => 'I.G.V',
-            'TOTAL' => 'Total',
+            'TOT_MONT_ORDE' => 'Total',
+            'TOT_MONT_IGV' => 'I.G.V',
+            'TOT_FACT' => 'Total',
+            'COMENTARIO' => 'Comentario',
         );
     }
 
@@ -124,9 +126,10 @@ class Presupuesto extends CActiveRecord
         $criteria->compare('NRO_DIAS', $this->NRO_DIAS);
         $criteria->compare('COND_PERSONALIZADO', $this->COND_PERSONALIZADO, true);
         $criteria->compare('ESTADO', $this->ESTADO, true);
-        $criteria->compare('SUB_TOTAL', $this->SUB_TOTAL, true);
-        $criteria->compare('IGV', $this->IGV, true);
-        $criteria->compare('TOTAL', $this->TOTAL, true);
+        $criteria->compare('TOT_MONT_ORDE', $this->TOT_MONT_ORDE, true);
+        $criteria->compare('TOT_MONT_IGV', $this->TOT_MONT_IGV, true);
+        $criteria->compare('TOT_FACT', $this->TOT_FACT, true);
+        $criteria->compare('COMENTARIO', $this->COMENTARIO, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -144,19 +147,56 @@ class Presupuesto extends CActiveRecord
         return parent::model($className);
     }
 
-    public function Total()
+    public function ListaCliente()
     {
 
-        $max = Yii::app()->db->createCommand()
-            ->select('round (SUM(TOTAL),2) as TOTAL')
-            ->from('detalle_presupuesto')
-            ->where("COD_CLIE = '" . $this->COD_CLIE . "'
-                      and COD_PRESU = '" . $this->COD_PRESU . "';")
-            ->queryScalar();
+        $Cliente = Cliente::model()->findAll();
+        return CHtml::listData($Cliente, "COD_CLIE", "NOMBRE");
+    }
 
-        $id = ($max + 0);
+    public function ListaMoneda()
+    {
+        $model = array(
+            array('MONEDA' => '0', 'value' => 'PE – Nuevo Soles'),
+            array('MONEDA' => '1', 'value' => 'US – Dólares Americanos'),
+        );
+        return cHtml::listData($model, 'MONEDA', 'value');
+    }
+
+    public function ListaCondicion()
+    {
+        $model = array(
+            array('COND_PAGO' => '0', 'value' => 'ContraEntrega'),
+            array('COND_PAGO' => '1', 'value' => 'Contado'),
+            array('COND_PAGO' => '2', 'value' => '30 días'),
+            array('COND_PAGO' => '3', 'value' => '45 días'),
+            array('COND_PAGO' => '4', 'value' => '60 días'),
+            array('COND_PAGO' => '5', 'value' => 'Personalizado'),
+        );
+        return cHtml::listData($model, 'COND_PAGO', 'value');
+    }
+
+    public function AIPresu()
+    {
+
+        $max = Yii::app()->db->createCommand()->select('count(*)')->from('presupuesto')->queryScalar();
+
+        $id = ($max + 1);
 
         return $id;
+    }
+
+    public function NAIPresu()
+    {
+
+        $NunPresu = Yii::app()->db->createCommand()
+            ->select('VAL_ACTU')
+            ->from('imp_folio_presu')
+            ->queryScalar();
+
+        $Num = ($NunPresu + 1);
+
+        return $Num;
     }
 
 }

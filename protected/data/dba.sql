@@ -22,6 +22,32 @@ CREATE DATABASE IF NOT EXISTS branusac;
 USE branusac;
 
 --
+-- Definition of table `bas_param`
+--
+
+DROP TABLE IF EXISTS `bas_param`;
+CREATE TABLE `bas_param` (
+  `COD_PARA` varchar(2) NOT NULL,
+  `VAL_PARA` varchar(100) DEFAULT NULL,
+  `DES_PARA` varchar(100) DEFAULT NULL,
+  `USU_DIGI` varchar(20) DEFAULT NULL,
+  `FEC_DIGI` datetime DEFAULT NULL,
+  `USU_MODI` varchar(20) DEFAULT NULL,
+  `FEC_MODI` datetime DEFAULT NULL,
+  PRIMARY KEY (`COD_PARA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bas_param`
+--
+
+/*!40000 ALTER TABLE `bas_param` DISABLE KEYS */;
+INSERT INTO `bas_param` (`COD_PARA`,`VAL_PARA`,`DES_PARA`,`USU_DIGI`,`FEC_DIGI`,`USU_MODI`,`FEC_MODI`) VALUES 
+ ('01','18','IGV','ADMIN','2016-06-21 00:00:00',NULL,NULL);
+/*!40000 ALTER TABLE `bas_param` ENABLE KEYS */;
+
+
+--
 -- Definition of table `cliente`
 --
 
@@ -29,16 +55,14 @@ DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `COD_CLIE` int(99) NOT NULL,
   `NOMBRE` varchar(150) NOT NULL,
-  `APELLIDO` varchar(45) DEFAULT NULL,
-  `RUC` varchar(20) NOT NULL,
-  `DIRECCION` varchar(150) DEFAULT NULL,
+  `RUC` varchar(20) DEFAULT NULL,
+  `DNI` int(8) DEFAULT NULL,
+  `DIRECCION` varchar(250) DEFAULT NULL,
+  `TELEFONO2` int(10) DEFAULT NULL,
+  `CORREO_E` varchar(150) DEFAULT NULL,
   `TELEFONO` varchar(60) DEFAULT NULL,
   `FAX` varchar(60) DEFAULT NULL,
-  `CORREO_E` varchar(150) DEFAULT NULL,
-  `ESTADO` char(1) DEFAULT NULL,
-  PRIMARY KEY (`COD_CLIE`),
-  UNIQUE KEY `SYS_CT_1` (`NOMBRE`),
-  UNIQUE KEY `SYS_CT_2` (`RUC`)
+  PRIMARY KEY (`COD_CLIE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -46,6 +70,8 @@ CREATE TABLE `cliente` (
 --
 
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` (`COD_CLIE`,`NOMBRE`,`RUC`,`DNI`,`DIRECCION`,`TELEFONO2`,`CORREO_E`,`TELEFONO`,`FAX`) VALUES 
+ (1,'adidas chile ltda suc  del perú','20347100316',48429679,'av. santa cruz 970 - lima 18',955201758,'','2802886','');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 
 
@@ -87,11 +113,12 @@ CREATE TABLE `detalle_presupuesto` (
   `CANTIDAD` int(11) DEFAULT NULL,
   `DESCRIPCION` varchar(250) DEFAULT NULL,
   `TOTAL` decimal(9,2) DEFAULT NULL,
-  PRIMARY KEY (`COD_PRESU_DET`),
+  `COD_CLIE` int(11) NOT NULL,
+  `PRECIO` decimal(10,2) NOT NULL,
   KEY `fk_t_presupuesto_det_Presupuesto1_idx` (`COD_PRESU`),
   KEY `fk_detalle_presupuesto_t_stock1_idx` (`COD_PRODUC`),
-  CONSTRAINT `fk_t_presupuesto_det_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_detalle_presupuesto_t_stock1` FOREIGN KEY (`COD_PRODUC`) REFERENCES `producto` (`CODIGO`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_detalle_presupuesto_t_stock1` FOREIGN KEY (`COD_PRODUC`) REFERENCES `producto` (`CODIGO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_t_presupuesto_det_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -99,6 +126,11 @@ CREATE TABLE `detalle_presupuesto` (
 --
 
 /*!40000 ALTER TABLE `detalle_presupuesto` DISABLE KEYS */;
+INSERT INTO `detalle_presupuesto` (`COD_PRESU`,`COD_PRESU_DET`,`COD_PRODUC`,`LINEA`,`CANTIDAD`,`DESCRIPCION`,`TOTAL`,`COD_CLIE`,`PRECIO`) VALUES 
+ (1,1,1,NULL,1000,'papel folder 4a','0.92',1,'920.00'),
+ (2,2,1,NULL,34,'pan','43.00',1,'1462.00'),
+ (3,3,1,NULL,34,'papel','4.00',1,'136.00'),
+ (4,4,1,NULL,34,'pae','4.00',1,'136.00');
 /*!40000 ALTER TABLE `detalle_presupuesto` ENABLE KEYS */;
 
 
@@ -170,6 +202,65 @@ CREATE TABLE `guia` (
 
 
 --
+-- Definition of table `imp_folio_factu`
+--
+
+DROP TABLE IF EXISTS `imp_folio_factu`;
+CREATE TABLE `imp_folio_factu` (
+  `VAL_INI` int(99) NOT NULL,
+  `VAL_FIN` int(99) NOT NULL,
+  `VAL_ACTU` int(99) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `imp_folio_factu`
+--
+
+/*!40000 ALTER TABLE `imp_folio_factu` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imp_folio_factu` ENABLE KEYS */;
+
+
+--
+-- Definition of table `imp_folio_guia`
+--
+
+DROP TABLE IF EXISTS `imp_folio_guia`;
+CREATE TABLE `imp_folio_guia` (
+  `VAL_INI` int(99) NOT NULL,
+  `VAL_FIN` int(99) NOT NULL,
+  `VAL_ACTU` int(99) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `imp_folio_guia`
+--
+
+/*!40000 ALTER TABLE `imp_folio_guia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imp_folio_guia` ENABLE KEYS */;
+
+
+--
+-- Definition of table `imp_folio_presu`
+--
+
+DROP TABLE IF EXISTS `imp_folio_presu`;
+CREATE TABLE `imp_folio_presu` (
+  `VAL_INI` int(99) NOT NULL,
+  `VAL_FIN` int(99) NOT NULL,
+  `VAL_ACTU` int(99) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `imp_folio_presu`
+--
+
+/*!40000 ALTER TABLE `imp_folio_presu` DISABLE KEYS */;
+INSERT INTO `imp_folio_presu` (`VAL_INI`,`VAL_FIN`,`VAL_ACTU`) VALUES 
+ (1,9999999,8);
+/*!40000 ALTER TABLE `imp_folio_presu` ENABLE KEYS */;
+
+
+--
 -- Definition of table `presupuesto`
 --
 
@@ -178,7 +269,7 @@ CREATE TABLE `presupuesto` (
   `COD_PRESU` int(99) NOT NULL,
   `NUM_PRESU` varchar(12) DEFAULT NULL,
   `COD_CLIE` int(99) NOT NULL,
-  `MONEDA` char(1) NOT NULL DEFAULT 'S',
+  `MONEDA` char(1) NOT NULL DEFAULT '0',
   `FECHA` date NOT NULL,
   `INICIO` date DEFAULT NULL,
   `DIRECCION` varchar(250) DEFAULT NULL,
@@ -186,7 +277,11 @@ CREATE TABLE `presupuesto` (
   `COND_PAGO` char(1) DEFAULT NULL,
   `NRO_DIAS` int(11) DEFAULT NULL,
   `COND_PERSONALIZADO` char(1) DEFAULT NULL,
-  `ESTADO` char(1) DEFAULT NULL,
+  `ESTADO` char(1) DEFAULT '0',
+  `TOT_MONT_ORDE` decimal(10,2) NOT NULL,
+  `TOT_MONT_IGV` decimal(10,2) NOT NULL,
+  `TOT_FACT` decimal(10,2) NOT NULL,
+  `COMENTARIO` varchar(350) DEFAULT NULL,
   PRIMARY KEY (`COD_PRESU`),
   UNIQUE KEY `SYS_CT_13` (`NUM_PRESU`),
   KEY `SYS_FK_21` (`COD_CLIE`),
@@ -198,6 +293,11 @@ CREATE TABLE `presupuesto` (
 --
 
 /*!40000 ALTER TABLE `presupuesto` DISABLE KEYS */;
+INSERT INTO `presupuesto` (`COD_PRESU`,`NUM_PRESU`,`COD_CLIE`,`MONEDA`,`FECHA`,`INICIO`,`DIRECCION`,`VIGENCIA`,`COND_PAGO`,`NRO_DIAS`,`COND_PERSONALIZADO`,`ESTADO`,`TOT_MONT_ORDE`,`TOT_MONT_IGV`,`TOT_FACT`,`COMENTARIO`) VALUES 
+ (1,'05154',1,'0','2016-08-27','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',30,'','0','920.00','0.00','0.00',NULL),
+ (2,'6',1,'0','2016-08-28','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',30,'','0','1462.00','0.00','0.00',NULL),
+ (3,'7',1,'0','2016-08-01','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',30,'','0','136.00','0.00','0.00',NULL),
+ (4,'8',1,'0','2016-08-02','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',95,'','0','136.00','0.00','0.00',NULL);
 /*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
 
 
@@ -220,6 +320,8 @@ CREATE TABLE `producto` (
 --
 
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+INSERT INTO `producto` (`CODIGO`,`DESCRIPCION`,`CANTIDAD`,`PRECIO_U`) VALUES 
+ (1,'aa',12,'212.00');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 
 
@@ -249,6 +351,8 @@ CREATE TABLE `transportista` (
 --
 
 /*!40000 ALTER TABLE `transportista` DISABLE KEYS */;
+INSERT INTO `transportista` (`COD_TRANSP`,`COD_VEHI`,`NOMBRE`,`APELLIDO`,`DIRECCION`,`RUC`,`DNI`,`NRO_LICENCIA`,`TELEFONO`,`PLACA`,`MARCA`) VALUES 
+ (9,0,'Henry Pablo','Vega Ayala','Sector 8 mz m lote 13','10484296796','48429679','84228-668','955201758','XLS-956','Huinday');
 /*!40000 ALTER TABLE `transportista` ENABLE KEYS */;
 
 
@@ -279,6 +383,65 @@ INSERT INTO `usuario` (`COD_USUA`,`NOM_USUA`,`APE_USUA`,`USE_USUA`,`PAS_USUA`,`E
  (3,NULL,NULL,'root','63a9f0ea7bb98050796b649e85481845',NULL,NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
+
+--
+-- Definition of procedure `CREAR_DETAL_PRESU`
+--
+
+DROP PROCEDURE IF EXISTS `CREAR_DETAL_PRESU`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CREAR_DETAL_PRESU`(
+
+    IN fila            INT,
+    IN x_cod_presu     int(99),
+    IN x_cod_presu_det int(99),
+    IN x_cod_clien     int(99),
+    IN x_NRO_UNID      INT(11),
+    IN x_DES_LARG      VARCHAR(250),
+    IN x_VAL_PREC      DECIMAL(10, 2),
+    IN x_VAL_MONT_UNID DECIMAL(10, 2),
+    IN x_NUM_PRESU     INT(99)
+)
+BEGIN
+
+  IF fila = 0  THEN
+
+    delete from detalle_presupuesto where COD_PRESU = x_cod_presu and COD_CLIE= x_cod_clien;
+
+  END IF;
+
+  INSERT INTO  detalle_presupuesto (
+    COD_PRESU,
+    COD_PRESU_DET, 
+    COD_PRODUC,
+    CANTIDAD,
+    DESCRIPCION, 
+    TOTAL, 
+    COD_CLIE,
+    PRECIO
+  )
+
+  VALUES (
+    x_cod_presu,
+    x_cod_presu_det,
+    1,
+    x_NRO_UNID,
+    x_DES_LARG,
+    x_VAL_PREC,
+    x_cod_clien,
+    x_VAL_MONT_UNID  
+  );
+
+  UPDATE imp_folio_presu
+  SET VAL_ACTU = x_NUM_PRESU;
+  
+  END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
 
 
 

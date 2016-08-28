@@ -28,22 +28,10 @@
             <div class="fieldset">
                 <div class="form-group">
 
-                    <div class="col-sm-3" style="display: none">
-                        <?php echo $form->labelEx($model, 'COD_CLIE'); ?>
-                        <?php echo $form->textField($model, 'COD_CLIE', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'COD_CLIE'); ?>
-                    </div>
 
                     <div class="col-sm-6">
                         <?php echo $form->labelEx($model, 'NOMBRE'); ?>
                         <?php echo $form->textField($model, 'NOMBRE', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'NOMBRE'); ?>
-                    </div>
-
-                    <div class="col-sm-3" style="display: none">
-                        <?php echo $form->labelEx($model, 'APELLIDO'); ?>
-                        <?php echo $form->textField($model, 'APELLIDO', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'APELLIDO'); ?>
                     </div>
 
                     <div class="col-sm-3">
@@ -77,9 +65,9 @@
                     </div>
 
                     <div class="col-sm-3">
-                        <?php echo $form->labelEx($model, 'FAX'); ?>
-                        <?php echo $form->textField($model, 'FAX', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'FAX'); ?>
+                        <?php echo $form->labelEx($model, 'TELEFONO2'); ?>
+                        <?php echo $form->textField($model, 'TELEFONO2', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'TELEFONO2'); ?>
                     </div>
 
                     <div class="col-sm-6">
@@ -88,19 +76,13 @@
                         <?php echo $form->error($model, 'CORREO_E'); ?>
                     </div>
 
-                </div>
-            </div>
-
-            <div class="fieldset">
-                <div class="form-group">
-                    <div class="col-sm-3" style="display: none">
-                        <?php echo $form->labelEx($model, 'ESTADO'); ?>
-                        <?php echo $form->textField($model, 'ESTADO', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'ESTADO'); ?>
+                    <div class="col-sm-3">
+                        <?php echo $form->labelEx($model, 'FAX'); ?>
+                        <?php echo $form->textField($model, 'FAX', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'FAX'); ?>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <br>

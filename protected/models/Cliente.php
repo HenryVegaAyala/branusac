@@ -6,14 +6,13 @@
  * The followings are the available columns in table 'cliente':
  * @property integer $COD_CLIE
  * @property string $NOMBRE
- * @property string $APELLIDO
  * @property string $RUC
+ * @property integer $DNI
  * @property string $DIRECCION
+ * @property integer $TELEFONO2
+ * @property string $CORREO_E
  * @property string $TELEFONO
  * @property string $FAX
- * @property string $CORREO_E
- * @property string $ESTADO
- * @property integer $DNI
  *
  * The followings are the available model relations:
  * @property Presupuesto[] $presupuestos
@@ -36,16 +35,16 @@ class Cliente extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('COD_CLIE, NOMBRE, RUC, DNI', 'required'),
-            array('COD_CLIE, DNI', 'numerical', 'integerOnly' => true),
-            array('NOMBRE, DIRECCION, CORREO_E', 'length', 'max' => 150),
-            array('APELLIDO', 'length', 'max' => 45),
+            array('COD_CLIE, NOMBRE', 'required'),
+            array('RUC, DNI','unique'),
+            array('COD_CLIE, DNI, TELEFONO2', 'numerical', 'integerOnly' => true),
+            array('NOMBRE, CORREO_E', 'length', 'max' => 150),
             array('RUC', 'length', 'max' => 20),
+            array('DIRECCION', 'length', 'max' => 250),
             array('TELEFONO, FAX', 'length', 'max' => 60),
-            array('ESTADO', 'length', 'max' => 1),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('COD_CLIE, NOMBRE, APELLIDO, RUC, DIRECCION, TELEFONO, FAX, CORREO_E, ESTADO, DNI', 'safe', 'on' => 'search'),
+            array('COD_CLIE, NOMBRE, RUC, DNI, DIRECCION, TELEFONO2, CORREO_E, TELEFONO, FAX', 'safe', 'on' => 'search'),
         );
     }
 
@@ -67,16 +66,15 @@ class Cliente extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'COD_CLIE' => 'Codigó Cliente',
+            'COD_CLIE' => 'Codigo',
             'NOMBRE' => 'Nombre',
-            'APELLIDO' => 'Apellido',
             'RUC' => 'RUC',
-            'DIRECCION' => 'Dirección',
-            'TELEFONO' => 'Teléfono',
-            'FAX' => 'Fax',
-            'CORREO_E' => 'Correo',
-            'ESTADO' => 'Estado',
             'DNI' => 'DNI',
+            'DIRECCION' => 'Dirección',
+            'TELEFONO2' => 'N° Telefono 2',
+            'CORREO_E' => 'Correo',
+            'TELEFONO' => 'N° Telefono 1',
+            'FAX' => 'Fax',
         );
     }
 
@@ -100,14 +98,13 @@ class Cliente extends CActiveRecord
 
         $criteria->compare('COD_CLIE', $this->COD_CLIE);
         $criteria->compare('NOMBRE', $this->NOMBRE, true);
-        $criteria->compare('APELLIDO', $this->APELLIDO, true);
         $criteria->compare('RUC', $this->RUC, true);
+        $criteria->compare('DNI', $this->DNI);
         $criteria->compare('DIRECCION', $this->DIRECCION, true);
+        $criteria->compare('TELEFONO2', $this->TELEFONO2);
+        $criteria->compare('CORREO_E', $this->CORREO_E, true);
         $criteria->compare('TELEFONO', $this->TELEFONO, true);
         $criteria->compare('FAX', $this->FAX, true);
-        $criteria->compare('CORREO_E', $this->CORREO_E, true);
-        $criteria->compare('ESTADO', $this->ESTADO, true);
-        $criteria->compare('DNI', $this->DNI);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -123,5 +120,18 @@ class Cliente extends CActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function AICliente()
+    {
+
+        $max = Yii::app()->db->createCommand()
+            ->select('count(*)')
+            ->from('cliente')
+            ->queryScalar();
+
+        $id = ($max + 1);
+
+        return $id;
     }
 }

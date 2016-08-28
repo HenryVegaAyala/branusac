@@ -1,5 +1,6 @@
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl . '/css/new/jqueryui.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseurl . '/css/icon/css/font-awesome.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jquery1103.js');
 ?>
 
@@ -29,15 +30,21 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
 
 
 <html>
-
-<button type="button" id="agregarCampo" class='btn btn-success btn-sm addmore'>+ Agregar Productos</button>
-<button type="button" class='btn btn-danger btn-sm delete'>- Eliminar</button>
+<div style="margin-top: 2%"></div>
+<button type="button" id="agregarCampo" class='btn btn-success btn-sm addmore'><a class="fa fa-plus fa-lg"
+                                                                                  style="color: white;"></a> Agregar
+    Productos
+</button>
+<button type="button" class='btn btn-danger btn-sm delete'><a class="fa fa-close fa-lg" style="color: white;"></a>
+    Eliminar
+</button>
 <br><br>
+
 <table class="table table-bordered table-condensed table-responsive table-striped table-hover table-wrapper"
        id="tableP">
     <tr>
         <th><input class='check_all' type='checkbox' onclick="select_all()"/></th>
-        <th>#</th>
+        <th>N°</th>
         <th>Descripción</th>
         <th>Cantidad</th>
         <th>Precio</th>
@@ -80,9 +87,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
         montoIGV = parseFloat(parseFloat(sumaSubTotal, 2) * parseFloat(eval(0.18), 2), 2);
         total = parseFloat(sumaSubTotal, 2) + parseFloat(montoIGV, 2);
 
-        document.getElementById("FACORDENCOMPR_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);
-        document.getElementById("FACORDENCOMPR_TOT_MONT_IGV").value = redondear2decimales(montoIGV);
-        document.getElementById("FACORDENCOMPR_TOT_FACT").value = redondear2decimales(total);
+        document.getElementById("Presupuesto_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);
+        document.getElementById("Presupuesto_TOT_MONT_IGV").value = redondear2decimales(montoIGV);
+        document.getElementById("Presupuesto_TOT_FACT").value = redondear2decimales(total);
     }
 
 
@@ -121,16 +128,16 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
         var data = "<tr><td><input type='checkbox' class='case'/></td><td><span id='snum" + i + "'>" + count + "</span></td>";
         data += '\n\\n\
                                 <td>\n\
-                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="45" class="form-control" />\n\
+                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control" style="text-transform:uppercase"/>\n\
                                 </td> \n\
                                 <td>\n\
-                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="10" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
+                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>   \n\
                                 <td>\n\
-                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="10" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
+                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="10" class="form-control" />\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" />\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);

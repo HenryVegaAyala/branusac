@@ -46,20 +46,72 @@ $('.search-form form').submit(function(){
                 'id' => 'presupuesto-grid',
                 'dataProvider' => $model->search(),
                 'columns' => array(
-                    'COD_PRESU',
-                    'NUM_PRESU',
-                    'COD_CLIE',
-                    'MONEDA',
-                    'FECHA',
-                    'INICIO',
-                    /*
-                    'DIRECCION',
-                    'VIGENCIA',
+                    array(
+                        'id' => 'COD_PRESU',
+                        'class' => 'CCheckBoxColumn',
+                        'selectableRows' => '50',
+                    ),
+                    array(
+                        'name' => 'NUM_PRESU',
+                        'header' => 'N° de Presupuesto',
+                        'value' => '$data->NUM_PRESU'
+                    ),
+                    array(
+                        'name' => 'COD_CLIE',
+                        'header' => 'Cliente',
+                        'value' => '$data->cODCLIE->NOMBRE'
+                    ),
+                    array(
+                        'name' => 'MONEDA',
+                        'header' => 'Moneda',
+                        'value' => function($data) {
+
+                            $variable = $data->__GET('MONEDA');
+                            switch ($variable) {
+                                case 0:
+                                    echo 'Nuevo Soles';
+                                    break;
+                                case 1:
+                                    echo 'Dólares Americanos';
+                                    break;
+                            }
+                        },
+                    ),
+
+                    array(
+                        'name' => 'FECHA',
+                        'header' => 'Fecha',
+                        'value' => 'Yii::app()->dateFormatter->format("dd/MM/y",strtotime($data->FECHA))'
+                    ),
+                    array(
+                        'name' => 'VIGENCIA',
+                        'header' => 'Vigencia',
+                        'value' => 'Yii::app()->dateFormatter->format("dd/MM/y",strtotime($data->VIGENCIA))'
+                    ),
                     'COND_PAGO',
-                    'NRO_DIAS',
-                    'COND_PERSONALIZADO',
-                    'ESTADO',
-                    */
+                    array(
+                        'name' => 'ESTADO',
+                        'header' => 'Estado',
+                        'value' => function($data) {
+
+                            $variable = $data->__GET('ESTADO');
+                            switch ($variable) {
+                                case 1:
+                                    echo 'En Proceso';
+                                    break;
+                                case 2:
+                                    echo 'Despacho/Atendido';
+                                    break;
+                                case 9:
+                                    echo 'Anulado';
+                                    break;
+                                case 0:
+                                    echo 'Creado';
+                                    break;
+                            }
+                        },
+                    ),
+
                     array(
                         'header' => 'Opciones',
                         'class' => 'ext.bootstrap.widgets.TbButtonColumn',
@@ -82,7 +134,7 @@ $('.search-form form').submit(function(){
                         'size' => 'default',
                         'icon' => 'fa fa-plus fa-lg',
                         'buttonType' => 'link',
-                        'url' => array('/cliente/create')
+                        'url' => array('/Presupuesto/create')
                     ));
                     ?>
 
@@ -94,7 +146,7 @@ $('.search-form form').submit(function(){
                         'size' => 'default',
                         'icon' => 'refresh',
                         'buttonType' => 'link',
-                        'url' => array('/cliente/index')
+                        'url' => array('/Presupuesto/index')
                     ));
                     ?>
                 </div>

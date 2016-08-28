@@ -24,6 +24,7 @@ $this->breadcrumbs = array(
                 'RUC',
                 'DIRECCION',
                 'TELEFONO',
+                'TELEFONO2',
                 'FAX',
                 'CORREO_E',
             ),

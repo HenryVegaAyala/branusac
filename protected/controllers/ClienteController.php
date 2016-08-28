@@ -60,6 +60,9 @@ class ClienteController extends Controller
 
         if (isset($_POST['Cliente'])) {
             $model->attributes = $_POST['Cliente'];
+
+            $model->COD_CLIE = $model->AICliente();
+
             if ($model->save())
                 $this->redirect(array('index'));
         }
@@ -117,21 +120,6 @@ class ClienteController extends Controller
             $model->attributes = $_GET['Cliente'];
 
         $this->render('index', array(
-            'model' => $model,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model = new Cliente('search');
-        $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Cliente']))
-            $model->attributes = $_GET['Cliente'];
-
-        $this->render('admin', array(
             'model' => $model,
         ));
     }

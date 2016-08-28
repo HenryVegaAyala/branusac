@@ -12,5 +12,7 @@ img {
     height: auto;
 }
 
-
+input{
+    text-transform: uppercase;
+}
 

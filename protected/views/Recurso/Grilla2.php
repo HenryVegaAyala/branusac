@@ -42,70 +42,67 @@ Yii::app()->session['USU'] = $usuario;
 
 <html>
 
-    <button type="button" id="agregarCampo" class='btn btn-success btn-sm addmore'>+ Agregar Campos de Productos</button>
-    <button type="button" class='btn btn-danger btn-sm delete'>- Eliminar</button>
-    <br><br>
-    <table class="table table-bordered table-condensed table-responsive table-striped table-hover table-wrapper" id="tableP">
-        <tr>
-            <th><input class='check_all' type='checkbox' onclick="select_all()"/></th>
-            <th>#</th>
-            <th>Descripción</th>
-            <th>Codigo</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Total</th>
-        </tr>
-        <?php
-        $connection = Yii::app()->db;
-        //filtar por oc, cliente y tienda
+<button type="button" id="agregarCampo" class='btn btn-success btn-sm addmore'>+ Agregar Campos de Productos</button>
+<button type="button" class='btn btn-danger btn-sm delete'>- Eliminar</button>
+<br><br>
+<table class="table table-bordered table-condensed table-responsive table-striped table-hover table-wrapper"
+       id="tableP">
+    <tr>
+        <th><input class='check_all' type='checkbox' onclick="select_all()"/></th>
+        <th>#</th>
+        <th>Descripción</th>
+        <th>Codigo</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Total</th>
+    </tr>
+    <?php
+    $connection = Yii::app()->db;
+    //filtar por oc, cliente y tienda
 
 
-        
-        $sqlStatement = "SELECT X.DES_LARG,F.COD_PROD,F.NRO_UNID,VAL_PREC,VAL_MONT_UNID 
+    $sqlStatement = "SELECT X.DES_LARG,F.COD_PROD,F.NRO_UNID,VAL_PREC,VAL_MONT_UNID 
             FROM 
            FAC_DETAL_ORDEN_COMPR F, MAE_PRODU X WHERE X.COD_PROD=F.COD_PROD 
            and F.COD_ORDE = '" . $model->COD_ORDE . "' 
-           and F.COD_CLIE =  '".$model->COD_CLIE."' 
-           and  F.COD_TIEN = '".$model->COD_TIEN."';";
-        
-        $command = $connection->createCommand($sqlStatement);
-        $reader = $command->query();
-        $count = 1;
-        foreach ($reader as $row){
-           
-            $descripcion=$row['DES_LARG'];
-            //$iddescripcion="DES_LARG_". $count .""; 
-            echo "<tr>
+           and F.COD_CLIE =  '" . $model->COD_CLIE . "' 
+           and  F.COD_TIEN = '" . $model->COD_TIEN . "';";
+
+    $command = $connection->createCommand($sqlStatement);
+    $reader = $command->query();
+    $count = 1;
+    foreach ($reader as $row) {
+
+        $descripcion = $row['DES_LARG'];
+        //$iddescripcion="DES_LARG_". $count ."";
+        echo "<tr>
             <td><input type='checkbox' class='case'/></td>
             <td><span id='snum'>$count</span></td>
-            <td><input type='text' value=' $descripcion ' id='DES_LARG_". $count ."' name='DES_LARG[]' size='45'  class='form-control'/></td>
-            <td><input type='text' value=" . $row['COD_PROD'] . " id='COD_PROD_". $count ."' name='COD_PROD[]' size='10' class='form-control' readonly='true'/></td>
-            <td><input type='text' value=" . $row['NRO_UNID'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_". $count ."' name='NRO_UNID[]' value='0' size='10' class='form-control' /></td>
-            <td><input type='text' value=" . $row['VAL_PREC'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' onkeypress='jsAgregar(event);' id='VAL_PREC_". $count ."' name='VAL_PREC[]' value='0' size='10' class='form-control'/> </td>
-            <td><input type='text' value=" . $row['VAL_MONT_UNID'] . " id='campo_VAL_MONT_UNID_". $count ."' name='VAL_MONT_UNID[]' size='10' class='form-control' readonly='true'/> </td>
+            <td><input type='text' value=' $descripcion ' id='DES_LARG_" . $count . "' name='DES_LARG[]' size='45'  class='form-control' style='text-transform:uppercase'/></td>
+            <td><input type='text' value=" . $row['COD_PROD'] . " id='COD_PROD_" . $count . "' name='COD_PROD[]' size='10' class='form-control' readonly='true'/></td>
+            <td><input type='text' value=" . $row['NRO_UNID'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' value='0' size='10' class='form-control' /></td>
+            <td><input type='text' value=" . $row['VAL_PREC'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' onkeypress='jsAgregar(event);' id='VAL_PREC_" . $count . "' name='VAL_PREC[]' value='0' size='10' class='form-control'/> </td>
+            <td><input type='text' value=" . $row['VAL_MONT_UNID'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control' readonly='true'/> </td>
         </tr>";
-           
+
 //            "crearFunciones( $count )";
-            $count++;
-        }
-        ?>
-    </table>
-    <br>
+        $count++;
+    }
+    ?>
+</table>
+<br>
 
 
 </html>
 
 
-
 <script>
 
-    function redondear2decimales(numero)
-    {
+    function redondear2decimales(numero) {
         var original = parseFloat(numero);
         var result = Math.round(original * 100) / 100;
         return result;
     }
-
 
 
     function jsCalcular(ele) {
@@ -135,14 +132,14 @@ Yii::app()->session['USU'] = $usuario;
     }
 
 
-    $(".delete").on('click', function() {
+    $(".delete").on('click', function () {
         $('.case:checkbox:checked').parents("tr").remove();
         $('.check_all').prop("checked", false);
         check();
         jsCalcular();
     });
     var i = $('#tableP tr').length;
-    $(".addmore").on('click', function() {
+    $(".addmore").on('click', function () {
 
         //debe validar que no se ingrese registros duplicados
         var x = document.getElementsByName("COD_PROD[]");
@@ -185,13 +182,13 @@ Yii::app()->session['USU'] = $usuario;
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);
-     
+
         crearFunciones(i);
-        $( '#DES_LARG_'+i ).focus();
+        $('#DES_LARG_' + i).focus();
         i++;
     });
     function select_all() {
-        $('input[class=case]:checkbox').each(function() {
+        $('input[class=case]:checkbox').each(function () {
             if ($('input[class=check_all]:checkbox:checked').length == 0) {
                 $(this).prop("checked", false);
             } else {
@@ -209,14 +206,14 @@ Yii::app()->session['USU'] = $usuario;
 //        });
     }
 
-function crearFunciones(i) {
+    function crearFunciones(i) {
         //  for(i=0; i< fila;i++){
         //alert('crearFunciones '+i);
-        psclient=document.getElementById('FACORDENCOMPR_COD_CLIE').value;
-        pstienda=document.getElementById('FACORDENCOMPR_COD_TIEN').value;
+        psclient = document.getElementById('FACORDENCOMPR_COD_CLIE').value;
+        pstienda = document.getElementById('FACORDENCOMPR_COD_TIEN').value;
         row = i;
         $('#DES_LARG_' + i).autocomplete({
-            source: function(request, response) {
+            source: function (request, response) {
                 $.ajax({
                     url: '/Alemana/fACORDENCOMPR/ajax.php',
                     dataType: "json",
@@ -224,11 +221,11 @@ function crearFunciones(i) {
                         nombre_producto: request.term,
                         type: 'produc_tiend',
                         clie: psclient,
-                        tienda:  pstienda,      
+                        tienda: pstienda,
                         row_num: i
                     },
-                    success: function(data) {
-                        response($.map(data, function(item) {
+                    success: function (data) {
+                        response($.map(data, function (item) {
                             //alert(item)
                             var code = item.split("|");
                             return {
@@ -242,35 +239,35 @@ function crearFunciones(i) {
             },
             autoFocus: true,
             minLength: 0,
-            select: function(event, ui) {
+            select: function (event, ui) {
                 var names = ui.item.data.split("|");
                 console.log(names[1], names[2], names[3]);
                 cad = names[1];
-                if( cad !== ''){
+                if (cad !== '') {
                     $('#COD_PROD_' + i).val(names[1]);
                     $('#NRO_UNID_' + i).val(names[2]);
                     $('#VAL_PREC_' + i).val(names[3]);
-                         
+
                     $('#NRO_UNID_' + i).prop('readonly', false);
                     $('#VAL_PREC_' + i).prop('readonly', false);
-                    $('#NRO_UNID_'+i ).focus();
-                }else{
+                    $('#NRO_UNID_' + i).focus();
+                } else {
                     $('#COD_PROD_' + i).prop('readonly', true);
                     $('#NRO_UNID_' + i).prop('readonly', true);
                     $('#VAL_PREC_' + i).prop('readonly', true);
-                    
+
                 }
             }
         });
     }
- 
-    $( document ).ready(function() {
-    	 
-    	   var arr_uni = document.getElementsByName("NRO_UNID[]");
-         //alert('hi '+ arr_uni.length);
-         for (var x = 1; x <= arr_uni.length; x++) {
-           crearFunciones(x) ;
-         }
-    	
+
+    $(document).ready(function () {
+
+        var arr_uni = document.getElementsByName("NRO_UNID[]");
+        //alert('hi '+ arr_uni.length);
+        for (var x = 1; x <= arr_uni.length; x++) {
+            crearFunciones(x);
+        }
+
     });
 </script>

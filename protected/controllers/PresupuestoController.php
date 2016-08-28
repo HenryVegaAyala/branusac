@@ -26,10 +26,19 @@ class PresupuestoController extends Controller
 
     public function actionAjax()
     {
+        $CodCliente = $_POST["Presupuesto"]["COD_CLIE"];
+
+        $connection = Yii::app()->db;
+        $sqlStatement = "SELECT  DIRECCION from cliente where '" . $CodCliente . "';";
+        $command = $connection->createCommand($sqlStatement);
+        $reader = $command->query();
+
+        foreach ($reader as $row) {
+            echo $row['DIRECCION'];
+        }
 
     }
-
-
+    
     public function actionCreate()
     {
         $model = new Presupuesto;
@@ -43,6 +52,12 @@ class PresupuestoController extends Controller
         if (isset($_POST['Presupuesto'])) {
 
             $model->attributes = $_POST['Presupuesto'];
+
+            $model->VIGENCIA = substr($model->VIGENCIA, 6, 4) . '/' . substr($model->VIGENCIA, 3, 2) . '/' . substr($model->VIGENCIA, 0, 2); //'2016-06-09' ;
+            $model->FECHA = substr($model->FECHA, 6, 4) . '/' . substr($model->FECHA, 3, 2) . '/' . substr($model->FECHA, 0, 2); //'2016-06-09' ;
+            $model->COD_PRESU = $model->AIPresu();
+            $model->NUM_PRESU = $model->NAIPresu();
+
 
             if (isset ($_POST['DES_LARG'])) {
 
@@ -62,7 +77,8 @@ class PresupuestoController extends Controller
                      '" . $UND[$i] . "',
                      '" . $DESCRI[$i] . "',
                      '" . $VALPRE[$i] . "',
-                     '" . $VALMOTUND[$i] . "'
+                     '" . $VALMOTUND[$i] . "',
+                     '" . $model->NUM_PRESU = $model->NAIPresu() . "'
                      )";
                             $command = Yii::app()->db->createCommand($sqlStatement);
                             $command->execute();
@@ -73,88 +89,88 @@ class PresupuestoController extends Controller
             }
 
         }
-            $this->render('create', array(
-                'model' => $model,
-            ));
+        $this->render('create', array(
+            'model' => $model,
+        ));
+    }
+
+
+    public
+    function actionUpdate($id)
+    {
+        $model = $this->loadModel($id);
+
+        if (isset($_POST['Presupuesto'])) {
+            $model->attributes = $_POST['Presupuesto'];
+            if ($model->save())
+                $this->redirect(array('view', 'id' => $model->COD_PRESU));
         }
 
-
-        public
-        function actionUpdate($id)
-        {
-            $model = $this->loadModel($id);
-
-            if (isset($_POST['Presupuesto'])) {
-                $model->attributes = $_POST['Presupuesto'];
-                if ($model->save())
-                    $this->redirect(array('view', 'id' => $model->COD_PRESU));
-            }
-
-            $this->render('update', array(
-                'model' => $model,
-            ));
-        }
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
 
 
-        public
-        function actionDelete($id)
-        {
-            $this->loadModel($id)->delete();
+    public
+    function actionDelete($id)
+    {
+        $this->loadModel($id)->delete();
 
-            if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        }
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
 
 
-        public
-        function actionIndex()
-        {
-            $model = new Presupuesto('search');
-            $model->unsetAttributes();  // clear any default values
-            if (isset($_GET['Presupuesto']))
-                $model->attributes = $_GET['Presupuesto'];
+    public
+    function actionIndex()
+    {
+        $model = new Presupuesto('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Presupuesto']))
+            $model->attributes = $_GET['Presupuesto'];
 
-            $this->render('index', array(
-                'model' => $model,
-            ));
-        }
+        $this->render('index', array(
+            'model' => $model,
+        ));
+    }
 
-        public
-        function actionAdmin()
-        {
-            $model = new Presupuesto('search');
-            $model->unsetAttributes();  // clear any default values
-            if (isset($_GET['Presupuesto']))
-                $model->attributes = $_GET['Presupuesto'];
+    public
+    function actionAdmin()
+    {
+        $model = new Presupuesto('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Presupuesto']))
+            $model->attributes = $_GET['Presupuesto'];
 
-            $this->render('admin', array(
-                'model' => $model,
-            ));
-        }
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
 
-        public
-        function actionView($id)
-        {
-            $this->render('view', array(
-                'model' => $this->loadModel($id),
-            ));
-        }
+    public
+    function actionView($id)
+    {
+        $this->render('view', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
 
-        public
-        function loadModel($id)
-        {
-            $model = Presupuesto::model()->findByPk($id);
-            if ($model === null)
-                throw new CHttpException(404, 'The requested page does not exist.');
-            return $model;
-        }
+    public
+    function loadModel($id)
+    {
+        $model = Presupuesto::model()->findByPk($id);
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
 
-        protected
-        function performAjaxValidation($model)
-        {
-            if (isset($_POST['ajax']) && $_POST['ajax'] === 'presupuesto-form') {
-                echo CActiveForm::validate($model);
-                Yii::app()->end();
-            }
+    protected
+    function performAjaxValidation($model)
+    {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'presupuesto-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
         }
     }
+}

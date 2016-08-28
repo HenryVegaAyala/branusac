@@ -56,9 +56,35 @@ $('.search-form form').submit(function(){
                         'htmlOptions' => array('style' => 'width: 300px'),
                         'value' => '$data->NOMBRE',
                     ),
-                    'DNI',
-                    'RUC',
-                    'TELEFONO',
+
+                    array(
+                        'name' => 'DNI',
+                        'header' => 'DNI',
+                        'htmlOptions' => array('style' => 'width: 110px'),
+                        'value' => '$data->DNI',
+                    ),
+
+                    array(
+                        'name' => 'RUC',
+                        'header' => 'RUC',
+                        'htmlOptions' => array('style' => 'width: 120px'),
+                        'value' => '$data->RUC',
+                    ),
+
+                    array(
+                        'name' => 'TELEFONO',
+                        'header' => '#. Teléfono 1',
+                        'htmlOptions' => array('style' => 'width: 120px'),
+                        'value' => '$data->TELEFONO',
+                    ),
+
+                    array(
+                        'name' => 'TELEFONO2',
+                        'header' => '#. Teléfono 2',
+                        'htmlOptions' => array('style' => 'width: 120px'),
+                        'value' => '$data->TELEFONO2',
+                    ),
+
                     'CORREO_E',
                     array(
                         'header' => 'Opciones',
