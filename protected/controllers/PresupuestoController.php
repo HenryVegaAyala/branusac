@@ -88,7 +88,6 @@ class PresupuestoController extends Controller
             $model->COD_PRESU = $model->AIPresu();
             $model->NUM_PRESU = $model->NAIPresu();
 
-
             if (isset ($_POST['DES_LARG'])) {
 
                 $DESCRI = $_POST['DES_LARG'];
@@ -107,8 +106,7 @@ class PresupuestoController extends Controller
                      '" . $UND[$i] . "',
                      '" . $DESCRI[$i] . "',
                      '" . $VALPRE[$i] . "',
-                     '" . $VALMOTUND[$i] . "',
-                     '" . $model->NUM_PRESU = $model->NAIPresu() . "'
+                     '" . $VALMOTUND[$i] . "'
                      )";
                             $command = Yii::app()->db->createCommand($sqlStatement);
                             $command->execute();
@@ -124,21 +122,22 @@ class PresupuestoController extends Controller
         ));
     }
 
-    public
-    function actionUpdate($id)
+    public function actionUpdate($id)
     {
 
-        $model = new Presupuesto;
+        $model = new DetallePresupuesto();
 
         $count = Yii::app()->db->createCommand()->select('count(*)')
-            ->from('presupuesto')
+            ->from('detalle_presupuesto')
+            ->where("COD_PRESU_DET = '" . $model->COD_PRESU_DET . "'")
             ->queryScalar();
 
-        $CODPREDET = ($count + 1);
+        $CODPREDET = ($count);
 
         $model = $this->loadModel($id);
 
         if (isset($_POST['Presupuesto'])) {
+
             $model->attributes = $_POST['Presupuesto'];
 
             $model->FECHA = substr($model->FECHA, 6, 4) . '/' . substr($model->FECHA, 3, 2) . '/' . substr($model->FECHA, 0, 2); //'2016-06-09' ;
@@ -150,20 +149,19 @@ class PresupuestoController extends Controller
                 $VALPRE = $_POST['VAL_PREC'];
                 $VALMOTUND = $_POST['VAL_MONT_UNID'];
 
-                if ($model->save()) {
+                if ($model->update()) {
                     for ($i = 0; $i < count($DESCRI); $i++) {
                         if ($DESCRI[$i] <> '') {
-                            $sqlStatement = "call CREAR_DETAL_PRESU(
-                     '" . $i . "',
-                     '" . $model->COD_PRESU . "',
-                     '" . $CODPREDET . "',
-                     '" . $model->COD_CLIE . "',
-                     '" . $UND[$i] . "',
-                     '" . $DESCRI[$i] . "',
-                     '" . $VALPRE[$i] . "',
-                     '" . $VALMOTUND[$i] . "',
-                     '" . $model->NUM_PRESU = $model->NAIPresu() . "'
-                     )";
+                            $sqlStatement = "call ACTUA_DETAL_PRESU(
+                    '" . $i . "',
+                    '" . $model->COD_PRESU . "',
+                    '" . $CODPREDET . "',
+                    '" . $model->COD_CLIE . "',
+                    '" . $UND[$i] . "',
+                    '" . $DESCRI[$i] . "',
+                    '" . $VALPRE[$i] . "',
+                    '" . $VALMOTUND[$i] . "'
+                )";
                             $command = Yii::app()->db->createCommand($sqlStatement);
                             $command->execute();
                         }

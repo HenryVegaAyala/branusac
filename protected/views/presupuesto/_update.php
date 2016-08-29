@@ -57,7 +57,7 @@
 
                     <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'NUM_PRESU'); ?>
-                        <?php echo $form->textField($model, 'NUM_PRESU', array('class' => 'form-control', 'value' => $model->NAIPresu(), 'disabled' => 'true')); ?>
+                        <?php echo $form->textField($model, 'NUM_PRESU', array('class' => 'form-control', 'value' => $model->NUM_PRESU, 'disabled' => 'true')); ?>
                         <?php echo $form->error($model, 'NUM_PRESU'); ?>
                     </div>
 

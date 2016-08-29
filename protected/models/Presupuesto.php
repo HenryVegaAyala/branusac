@@ -77,8 +77,8 @@ class Presupuesto extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'COD_PRESU' => 'Codigo de Preusupuesto',
-            'NUM_PRESU' => 'Número de Preusupuesto',
+            'COD_PRESU' => 'Codigo de Presupuesto',
+            'NUM_PRESU' => 'Número de Presupuesto',
             'COD_CLIE' => 'Cliente',
             'MONEDA' => 'Tipo Moneda',
             'FECHA' => 'Fecha de Entrega',

@@ -61,18 +61,23 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
     $count = 1;
     foreach ($reader as $row) {
 
-        $descripcion = $row['DESCRIPCION'];
-        //$iddescripcion="DES_LARG_". $count ."";
         echo "<tr>
             <td><input type='checkbox' class='case'/></td>
             <td><span id='snum'>$count</span></td>
-            <td><input type='text' value=' $descripcion ' id='DES_LARG_" . $count . "' name='DES_LARG[]' size='45'  class='form-control' style='text-transform:uppercase'/></td>
-            <td><input type='text' value=" . $row['CANTIDAD'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' value='0' size='10' class='form-control' /></td>
-            <td><input type='text' value=" . $row['PRECIO'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' onkeypress='jsAgregar(event);' id='VAL_PREC_" . $count . "' name='VAL_PREC[]' value='0' size='10' class='form-control'/> </td>
-            <td><input type='text' value=" . $row['TOTAL'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control' readonly='true'/> </td>
+            <td>
+                <input type='text' value=" . $row['DESCRIPCION'] . " id='DES_LARG_" . $count . "' name='DES_LARG[]' size='45'  class='form-control' style='text-transform:uppercase'/>
+            </td>
+            <td>
+                <input type='text' value=" . $row['CANTIDAD'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' size='10' class='form-control' />
+            </td>
+            <td>
+                <input type='text' value=" . $row['PRECIO'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);'  id='VAL_PREC_" . $count . "' name='VAL_PREC[]' size='10' class='form-control' />
+            </td>
+            <td>
+                <input type='text' value=" . $row['TOTAL'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control' onkeypress='jsAgregar(event);' value='0'/>
+            </td>
         </tr>";
 
-//            "crearFunciones( $count )";
         $count++;
     }
     ?>
@@ -129,7 +134,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
 
         //debe validar que no se ingrese registros duplicados
         var x = document.getElementsByName("COD_PROD[]");
-        var z = document.getElementsByName("DES_LARG[]");
         primeraFila = 0;
         ultimaFila = x.length - 1;
         //i=x.length+1;
@@ -156,13 +160,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
                                     <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control" style="text-transform:uppercase"/>\n\
                                 </td> \n\
                                 <td>\n\
-                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
+                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);"   />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
+                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);"   />\n\
                                 </td>   \n\
                                 <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" />\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" onkeypress="jsAgregar(event);" />\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);
@@ -193,56 +197,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
     function crearFunciones(i) {
         //  for(i=0; i< fila;i++){
         //alert('crearFunciones '+i);
-        psclient = document.getElementById('FACORDENCOMPR_COD_CLIE').value;
-        pstienda = document.getElementById('FACORDENCOMPR_COD_TIEN').value;
         row = i;
-        $('#DES_LARG_' + i).autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '/Alemana/fACORDENCOMPR/ajax.php',
-                    dataType: "json",
-                    data: {
-                        nombre_producto: request.term,
-                        type: 'produc_tiend',
-                        clie: psclient,
-                        tienda: pstienda,
-                        row_num: i
-                    },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            //alert(item)
-                            var code = item.split("|");
-                            return {
-                                label: code[0],
-                                value: code[0],
-                                data: item
-                            }
-                        }));
-                    }
-                });
-            },
-            autoFocus: true,
-            minLength: 0,
-            select: function (event, ui) {
-                var names = ui.item.data.split("|");
-                console.log(names[1], names[2], names[3]);
-                cad = names[1];
-                if (cad !== '') {
-                    $('#DES_LARG_' + i).val(names[1]);
-                    $('#NRO_UNID_' + i).val(names[2]);
-                    $('#VAL_PREC_' + i).val(names[3]);
-
-                    $('#NRO_UNID_' + i).prop('readonly', false);
-                    $('#VAL_PREC_' + i).prop('readonly', false);
-                    $('#NRO_UNID_' + i).focus();
-                } else {
-                    $('#DES_LARG_' + i).prop('readonly', true);
-                    $('#NRO_UNID_' + i).prop('readonly', true);
-                    $('#VAL_PREC_' + i).prop('readonly', true);
-
-                }
-            }
-        });
     }
 
     $(document).ready(function () {
