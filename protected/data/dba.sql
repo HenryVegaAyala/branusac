@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.6.17
+-- Server version	5.5.5-10.1.13-MariaDB
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,11 +18,11 @@
 -- Create schema branusac
 --
 
-CREATE DATABASE IF NOT EXISTS branusac;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ branusac;
 USE branusac;
 
 --
--- Definition of table `bas_param`
+-- Table structure for table `branusac`.`bas_param`
 --
 
 DROP TABLE IF EXISTS `bas_param`;
@@ -38,7 +38,7 @@ CREATE TABLE `bas_param` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `bas_param`
+-- Dumping data for table `branusac`.`bas_param`
 --
 
 /*!40000 ALTER TABLE `bas_param` DISABLE KEYS */;
@@ -48,7 +48,7 @@ INSERT INTO `bas_param` (`COD_PARA`,`VAL_PARA`,`DES_PARA`,`USU_DIGI`,`FEC_DIGI`,
 
 
 --
--- Definition of table `cliente`
+-- Table structure for table `branusac`.`cliente`
 --
 
 DROP TABLE IF EXISTS `cliente`;
@@ -66,7 +66,7 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cliente`
+-- Dumping data for table `branusac`.`cliente`
 --
 
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
@@ -76,7 +76,7 @@ INSERT INTO `cliente` (`COD_CLIE`,`NOMBRE`,`RUC`,`DNI`,`DIRECCION`,`TELEFONO2`,`
 
 
 --
--- Definition of table `detalle_guia`
+-- Table structure for table `branusac`.`detalle_guia`
 --
 
 DROP TABLE IF EXISTS `detalle_guia`;
@@ -93,7 +93,7 @@ CREATE TABLE `detalle_guia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `detalle_guia`
+-- Dumping data for table `branusac`.`detalle_guia`
 --
 
 /*!40000 ALTER TABLE `detalle_guia` DISABLE KEYS */;
@@ -101,7 +101,7 @@ CREATE TABLE `detalle_guia` (
 
 
 --
--- Definition of table `detalle_presupuesto`
+-- Table structure for table `branusac`.`detalle_presupuesto`
 --
 
 DROP TABLE IF EXISTS `detalle_presupuesto`;
@@ -122,20 +122,23 @@ CREATE TABLE `detalle_presupuesto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `detalle_presupuesto`
+-- Dumping data for table `branusac`.`detalle_presupuesto`
 --
 
 /*!40000 ALTER TABLE `detalle_presupuesto` DISABLE KEYS */;
 INSERT INTO `detalle_presupuesto` (`COD_PRESU`,`COD_PRESU_DET`,`COD_PRODUC`,`LINEA`,`CANTIDAD`,`DESCRIPCION`,`TOTAL`,`COD_CLIE`,`PRECIO`) VALUES 
- (1,1,1,NULL,1000,'papel folder 4a','0.92',1,'920.00'),
- (2,2,1,NULL,34,'pan','43.00',1,'1462.00'),
- (3,3,1,NULL,34,'papel','4.00',1,'136.00'),
- (4,4,1,NULL,34,'pae','4.00',1,'136.00');
+ (1,0,1,NULL,3,'WQE','9.00',1,'3.00'),
+ (1,0,1,NULL,2,'WW','4.00',1,'2.00'),
+ (1,0,1,NULL,3,'43','9.00',1,'3.00'),
+ (1,0,1,NULL,3,'3','90.00',1,'30.00'),
+ (1,0,1,NULL,3,'3','9.00',1,'3.00'),
+ (1,0,1,NULL,9,'O','81.00',1,'9.00'),
+ (1,0,1,NULL,34,'98','1156.00',1,'34.00');
 /*!40000 ALTER TABLE `detalle_presupuesto` ENABLE KEYS */;
 
 
 --
--- Definition of table `factura`
+-- Table structure for table `branusac`.`factura`
 --
 
 DROP TABLE IF EXISTS `factura`;
@@ -164,7 +167,7 @@ CREATE TABLE `factura` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `factura`
+-- Dumping data for table `branusac`.`factura`
 --
 
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
@@ -172,7 +175,7 @@ CREATE TABLE `factura` (
 
 
 --
--- Definition of table `guia`
+-- Table structure for table `branusac`.`guia`
 --
 
 DROP TABLE IF EXISTS `guia`;
@@ -189,12 +192,12 @@ CREATE TABLE `guia` (
   UNIQUE KEY `SYS_CT_38` (`NUM_GUIA`),
   KEY `SYS_FK_40` (`TRANS_CODIGO`),
   KEY `fk_t_guia_Presupuesto1_idx` (`COD_PRESU`),
-  CONSTRAINT `fk_t_guia_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `SYS_FK_40` FOREIGN KEY (`TRANS_CODIGO`) REFERENCES `transportista` (`COD_TRANSP`)
+  CONSTRAINT `SYS_FK_40` FOREIGN KEY (`TRANS_CODIGO`) REFERENCES `transportista` (`COD_TRANSP`),
+  CONSTRAINT `fk_t_guia_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `guia`
+-- Dumping data for table `branusac`.`guia`
 --
 
 /*!40000 ALTER TABLE `guia` DISABLE KEYS */;
@@ -202,7 +205,7 @@ CREATE TABLE `guia` (
 
 
 --
--- Definition of table `imp_folio_factu`
+-- Table structure for table `branusac`.`imp_folio_factu`
 --
 
 DROP TABLE IF EXISTS `imp_folio_factu`;
@@ -213,7 +216,7 @@ CREATE TABLE `imp_folio_factu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `imp_folio_factu`
+-- Dumping data for table `branusac`.`imp_folio_factu`
 --
 
 /*!40000 ALTER TABLE `imp_folio_factu` DISABLE KEYS */;
@@ -221,7 +224,7 @@ CREATE TABLE `imp_folio_factu` (
 
 
 --
--- Definition of table `imp_folio_guia`
+-- Table structure for table `branusac`.`imp_folio_guia`
 --
 
 DROP TABLE IF EXISTS `imp_folio_guia`;
@@ -232,7 +235,7 @@ CREATE TABLE `imp_folio_guia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `imp_folio_guia`
+-- Dumping data for table `branusac`.`imp_folio_guia`
 --
 
 /*!40000 ALTER TABLE `imp_folio_guia` DISABLE KEYS */;
@@ -240,7 +243,7 @@ CREATE TABLE `imp_folio_guia` (
 
 
 --
--- Definition of table `imp_folio_presu`
+-- Table structure for table `branusac`.`imp_folio_presu`
 --
 
 DROP TABLE IF EXISTS `imp_folio_presu`;
@@ -251,17 +254,17 @@ CREATE TABLE `imp_folio_presu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `imp_folio_presu`
+-- Dumping data for table `branusac`.`imp_folio_presu`
 --
 
 /*!40000 ALTER TABLE `imp_folio_presu` DISABLE KEYS */;
 INSERT INTO `imp_folio_presu` (`VAL_INI`,`VAL_FIN`,`VAL_ACTU`) VALUES 
- (1,9999999,8);
+ (1,9999999,5176);
 /*!40000 ALTER TABLE `imp_folio_presu` ENABLE KEYS */;
 
 
 --
--- Definition of table `presupuesto`
+-- Table structure for table `branusac`.`presupuesto`
 --
 
 DROP TABLE IF EXISTS `presupuesto`;
@@ -289,20 +292,17 @@ CREATE TABLE `presupuesto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `presupuesto`
+-- Dumping data for table `branusac`.`presupuesto`
 --
 
 /*!40000 ALTER TABLE `presupuesto` DISABLE KEYS */;
 INSERT INTO `presupuesto` (`COD_PRESU`,`NUM_PRESU`,`COD_CLIE`,`MONEDA`,`FECHA`,`INICIO`,`DIRECCION`,`VIGENCIA`,`COND_PAGO`,`NRO_DIAS`,`COND_PERSONALIZADO`,`ESTADO`,`TOT_MONT_ORDE`,`TOT_MONT_IGV`,`TOT_FACT`,`COMENTARIO`) VALUES 
- (1,'05154',1,'0','2016-08-27','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',30,'','0','920.00','0.00','0.00',NULL),
- (2,'6',1,'0','2016-08-28','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',30,'','0','1462.00','0.00','0.00',NULL),
- (3,'7',1,'0','2016-08-01','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',30,'','0','136.00','0.00','0.00',NULL),
- (4,'8',1,'0','2016-08-02','0000-00-00','av. santa cruz 970 - lima 18','0000-00-00','2',95,'','0','136.00','0.00','0.00',NULL);
+ (1,'5176',1,'0','0000-00-00','0000-00-00','av. santa cruz 970 - lima 18','34','3',45,'','0','1358.00','0.00','0.00','');
 /*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
 
 
 --
--- Definition of table `producto`
+-- Table structure for table `branusac`.`producto`
 --
 
 DROP TABLE IF EXISTS `producto`;
@@ -316,7 +316,7 @@ CREATE TABLE `producto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `producto`
+-- Dumping data for table `branusac`.`producto`
 --
 
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
@@ -326,7 +326,7 @@ INSERT INTO `producto` (`CODIGO`,`DESCRIPCION`,`CANTIDAD`,`PRECIO_U`) VALUES
 
 
 --
--- Definition of table `transportista`
+-- Table structure for table `branusac`.`transportista`
 --
 
 DROP TABLE IF EXISTS `transportista`;
@@ -347,7 +347,7 @@ CREATE TABLE `transportista` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `transportista`
+-- Dumping data for table `branusac`.`transportista`
 --
 
 /*!40000 ALTER TABLE `transportista` DISABLE KEYS */;
@@ -357,7 +357,7 @@ INSERT INTO `transportista` (`COD_TRANSP`,`COD_VEHI`,`NOMBRE`,`APELLIDO`,`DIRECC
 
 
 --
--- Definition of table `usuario`
+-- Table structure for table `branusac`.`usuario`
 --
 
 DROP TABLE IF EXISTS `usuario`;
@@ -373,7 +373,7 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuario`
+-- Dumping data for table `branusac`.`usuario`
 --
 
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
@@ -385,41 +385,39 @@ INSERT INTO `usuario` (`COD_USUA`,`NOM_USUA`,`APE_USUA`,`USE_USUA`,`PAS_USUA`,`E
 
 
 --
--- Definition of procedure `CREAR_DETAL_PRESU`
+-- Procedure `branusac`.`ACTUA_DETAL_PRESU`
 --
 
-DROP PROCEDURE IF EXISTS `CREAR_DETAL_PRESU`;
-
+DROP PROCEDURE IF EXISTS `ACTUA_DETAL_PRESU`;
 DELIMITER $$
 
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CREAR_DETAL_PRESU`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ACTUA_DETAL_PRESU`(
 
-    IN fila            INT,
-    IN x_cod_presu     int(99),
-    IN x_cod_presu_det int(99),
-    IN x_cod_clien     int(99),
-    IN x_NRO_UNID      INT(11),
-    IN x_DES_LARG      VARCHAR(250),
-    IN x_VAL_PREC      DECIMAL(10, 2),
-    IN x_VAL_MONT_UNID DECIMAL(10, 2),
-    IN x_NUM_PRESU     INT(99)
+  IN fila            INT,
+  IN x_cod_presu     int(99),
+  IN x_cod_presu_det int(99),
+  IN x_cod_clien     int(99),
+  IN x_NRO_UNID      INT(11),
+  IN x_DES_LARG      VARCHAR(250),
+  IN x_VAL_PREC      DECIMAL(10, 2),
+  IN x_VAL_MONT_UNID DECIMAL(10, 2)
 )
 BEGIN
 
   IF fila = 0  THEN
 
-    delete from detalle_presupuesto where COD_PRESU = x_cod_presu and COD_CLIE= x_cod_clien;
+    delete FROM detalle_presupuesto
+    WHERE COD_PRESU = x_cod_presu;
 
   END IF;
 
   INSERT INTO  detalle_presupuesto (
     COD_PRESU,
-    COD_PRESU_DET, 
+    COD_PRESU_DET,
     COD_PRODUC,
     CANTIDAD,
-    DESCRIPCION, 
-    TOTAL, 
+    DESCRIPCION,
+    TOTAL,
     COD_CLIE,
     PRECIO
   )
@@ -430,21 +428,69 @@ BEGIN
     1,
     x_NRO_UNID,
     x_DES_LARG,
-    x_VAL_PREC,
+    x_VAL_MONT_UNID, 
     x_cod_clien,
-    x_VAL_MONT_UNID  
+    x_VAL_PREC
   );
 
-  UPDATE imp_folio_presu
-  SET VAL_ACTU = x_NUM_PRESU;
-  
-  END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+END $$
 
 DELIMITER ;
 
+--
+-- Procedure `branusac`.`CREAR_DETAL_PRESU`
+--
 
+DROP PROCEDURE IF EXISTS `CREAR_DETAL_PRESU`;
+DELIMITER $$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CREAR_DETAL_PRESU`(
+
+  IN fila            INT,
+  IN x_cod_presu     int(99),
+  IN x_cod_presu_det int(99),
+  IN x_cod_clien     int(99),
+  IN x_NRO_UNID      INT(11),
+  IN x_DES_LARG      VARCHAR(250),
+  IN x_VAL_PREC      DECIMAL(10, 2),
+  IN x_VAL_MONT_UNID DECIMAL(10, 2)
+)
+BEGIN
+
+    IF fila = 0  THEN
+
+      delete from detalle_presupuesto where COD_PRESU = x_cod_presu and COD_CLIE= x_cod_clien;
+
+      UPDATE imp_folio_presu
+      SET VAL_ACTU = (VAL_ACTU+1);
+
+    END IF;
+
+  INSERT INTO  detalle_presupuesto (
+    COD_PRESU,
+    COD_PRESU_DET,
+    COD_PRODUC,
+    CANTIDAD,
+    DESCRIPCION,
+    TOTAL,
+    COD_CLIE,
+    PRECIO
+  )
+
+  VALUES (
+    x_cod_presu,
+    x_cod_presu_det,
+    1,
+    x_NRO_UNID,
+    x_DES_LARG,
+    x_VAL_MONT_UNID,
+    x_cod_clien,
+    x_VAL_PREC
+  );
+
+  END $$
+
+DELIMITER ;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
