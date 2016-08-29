@@ -15,7 +15,7 @@ class PresupuestoController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index', 'view', 'admin', 'delete', 'ajax'),
+                'actions' => array('create', 'update', 'index', 'view', 'admin', 'delete', 'ajax', 'condicion'),
                 'users' => array('@'),
             ),
             array('deny',  // deny all users
@@ -24,7 +24,37 @@ class PresupuestoController extends Controller
         );
     }
 
-    public function actionAjax()
+    public function actionCondicion()
+    {
+        $CondPago = $_POST["Presupuesto"]["COND_PAGO"];
+
+        switch ($CondPago) {
+            case 0:
+                echo '';
+                break;
+            case 1:
+                echo '';
+                break;
+            case 2:
+                echo '30';
+                break;
+            case 3:
+                echo '45';
+                break;
+            case 4:
+                echo '60';
+                break;
+            case 5:
+                echo '';
+                break;
+            default:
+                echo 'Falló el valor de ingreso.';
+        }
+    }
+
+
+    public
+    function actionAjax()
     {
         $CodCliente = $_POST["Presupuesto"]["COD_CLIE"];
 
@@ -38,8 +68,9 @@ class PresupuestoController extends Controller
         }
 
     }
-    
-    public function actionCreate()
+
+    public
+    function actionCreate()
     {
         $model = new Presupuesto;
 
@@ -53,7 +84,6 @@ class PresupuestoController extends Controller
 
             $model->attributes = $_POST['Presupuesto'];
 
-            $model->VIGENCIA = substr($model->VIGENCIA, 6, 4) . '/' . substr($model->VIGENCIA, 3, 2) . '/' . substr($model->VIGENCIA, 0, 2); //'2016-06-09' ;
             $model->FECHA = substr($model->FECHA, 6, 4) . '/' . substr($model->FECHA, 3, 2) . '/' . substr($model->FECHA, 0, 2); //'2016-06-09' ;
             $model->COD_PRESU = $model->AIPresu();
             $model->NUM_PRESU = $model->NAIPresu();
@@ -94,23 +124,59 @@ class PresupuestoController extends Controller
         ));
     }
 
-
     public
     function actionUpdate($id)
     {
+
+        $model = new Presupuesto;
+
+        $count = Yii::app()->db->createCommand()->select('count(*)')
+            ->from('presupuesto')
+            ->queryScalar();
+
+        $CODPREDET = ($count + 1);
+
         $model = $this->loadModel($id);
 
         if (isset($_POST['Presupuesto'])) {
             $model->attributes = $_POST['Presupuesto'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->COD_PRESU));
+
+            $model->FECHA = substr($model->FECHA, 6, 4) . '/' . substr($model->FECHA, 3, 2) . '/' . substr($model->FECHA, 0, 2); //'2016-06-09' ;
+
+            if (isset ($_POST['DES_LARG'])) {
+
+                $DESCRI = $_POST['DES_LARG'];
+                $UND = $_POST['NRO_UNID'];
+                $VALPRE = $_POST['VAL_PREC'];
+                $VALMOTUND = $_POST['VAL_MONT_UNID'];
+
+                if ($model->save()) {
+                    for ($i = 0; $i < count($DESCRI); $i++) {
+                        if ($DESCRI[$i] <> '') {
+                            $sqlStatement = "call CREAR_DETAL_PRESU(
+                     '" . $i . "',
+                     '" . $model->COD_PRESU . "',
+                     '" . $CODPREDET . "',
+                     '" . $model->COD_CLIE . "',
+                     '" . $UND[$i] . "',
+                     '" . $DESCRI[$i] . "',
+                     '" . $VALPRE[$i] . "',
+                     '" . $VALMOTUND[$i] . "',
+                     '" . $model->NUM_PRESU = $model->NAIPresu() . "'
+                     )";
+                            $command = Yii::app()->db->createCommand($sqlStatement);
+                            $command->execute();
+                        }
+                    }
+                }
+                $this->redirect(array('index'));
+            }
         }
 
         $this->render('update', array(
             'model' => $model,
         ));
     }
-
 
     public
     function actionDelete($id)
@@ -120,7 +186,6 @@ class PresupuestoController extends Controller
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
-
 
     public
     function actionIndex()

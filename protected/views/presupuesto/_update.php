@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Registrar Nuevo Presupuesto</h3>
+            <h3 class="panel-title">Actualizar Presupuesto</h3>
         </div>
 
         <?php $form = $this->beginWidget('CActiveForm', array(
@@ -154,10 +154,13 @@
                     </div>
 
                     <div class="col-sm-4 col-md-3">
-                        <?php echo $form->labelEx($model, 'FECHA'); ?>
+                        <?php echo $form->labelEx($model, 'FECHA');
+                        $FECHA = $model->FECHA;
+                        $NFECHA = date("d-m-Y", strtotime($FECHA) );
+                        ?>
                         <input type="text" id="Presupuesto_FECHA" name="Presupuesto[FECHA]"
                                class="form-control" placeholder="Ingrese la Fecha Ingreso"
-                               value=" <?php $model->FECHA ?>" required="true"/>
+                               value=" <?php echo $NFECHA ?>" required="true"/>
                         <script>
                             $(function () {
                                 $("#Presupuesto_FECHA").datepicker();
@@ -193,7 +196,7 @@
 
         <div class="container-fluid">
             <?php
-            include __DIR__ . '/../Recurso/Grilla.php';
+            include __DIR__ . '/../Recurso/Grilla2.php';
             ?>
         </div>
 

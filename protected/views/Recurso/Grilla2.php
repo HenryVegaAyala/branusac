@@ -1,5 +1,6 @@
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl . '/css/new/jqueryui.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseurl . '/css/icon/css/font-awesome.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jquery1103.js');
 ?>
 
@@ -27,62 +28,48 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
 </script>
 
 
-<?php
-$usuario = Yii::app()->user->name;
-
-$ip = getenv("REMOTE_ADDR");
-$pc = @gethostbyaddr($ip);
-
-$pcip = $pc . ' - ' . $ip;
-
-
-Yii::app()->session['PCIP'] = $pcip;
-Yii::app()->session['USU'] = $usuario;
-?>
-
 <html>
-
-<button type="button" id="agregarCampo" class='btn btn-success btn-sm addmore'>+ Agregar Campos de Productos</button>
-<button type="button" class='btn btn-danger btn-sm delete'>- Eliminar</button>
+<div style="margin-top: 2%"></div>
+<button type="button" id="agregarCampo" class='btn btn-success btn-sm addmore'><a class="fa fa-plus fa-lg"
+                                                                                  style="color: white;"></a> Agregar
+    Productos
+</button>
+<button type="button" class='btn btn-danger btn-sm delete'><a class="fa fa-close fa-lg" style="color: white;"></a>
+    Eliminar
+</button>
 <br><br>
+
 <table class="table table-bordered table-condensed table-responsive table-striped table-hover table-wrapper"
        id="tableP">
     <tr>
         <th><input class='check_all' type='checkbox' onclick="select_all()"/></th>
-        <th>#</th>
+        <th>N°</th>
         <th>Descripción</th>
-        <th>Codigo</th>
         <th>Cantidad</th>
         <th>Precio</th>
         <th>Total</th>
     </tr>
     <?php
+
     $connection = Yii::app()->db;
-    //filtar por oc, cliente y tienda
 
-
-    $sqlStatement = "SELECT X.DES_LARG,F.COD_PROD,F.NRO_UNID,VAL_PREC,VAL_MONT_UNID 
-            FROM 
-           FAC_DETAL_ORDEN_COMPR F, MAE_PRODU X WHERE X.COD_PROD=F.COD_PROD 
-           and F.COD_ORDE = '" . $model->COD_ORDE . "' 
-           and F.COD_CLIE =  '" . $model->COD_CLIE . "' 
-           and  F.COD_TIEN = '" . $model->COD_TIEN . "';";
+    $sqlStatement = "SELECT DESCRIPCION,CANTIDAD,PRECIO,TOTAL from detalle_presupuesto
+                     where COD_PRESU =  '" . $model->COD_PRESU . "';";
 
     $command = $connection->createCommand($sqlStatement);
     $reader = $command->query();
     $count = 1;
     foreach ($reader as $row) {
 
-        $descripcion = $row['DES_LARG'];
+        $descripcion = $row['DESCRIPCION'];
         //$iddescripcion="DES_LARG_". $count ."";
         echo "<tr>
             <td><input type='checkbox' class='case'/></td>
             <td><span id='snum'>$count</span></td>
             <td><input type='text' value=' $descripcion ' id='DES_LARG_" . $count . "' name='DES_LARG[]' size='45'  class='form-control' style='text-transform:uppercase'/></td>
-            <td><input type='text' value=" . $row['COD_PROD'] . " id='COD_PROD_" . $count . "' name='COD_PROD[]' size='10' class='form-control' readonly='true'/></td>
-            <td><input type='text' value=" . $row['NRO_UNID'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' value='0' size='10' class='form-control' /></td>
-            <td><input type='text' value=" . $row['VAL_PREC'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' onkeypress='jsAgregar(event);' id='VAL_PREC_" . $count . "' name='VAL_PREC[]' value='0' size='10' class='form-control'/> </td>
-            <td><input type='text' value=" . $row['VAL_MONT_UNID'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control' readonly='true'/> </td>
+            <td><input type='text' value=" . $row['CANTIDAD'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' value='0' size='10' class='form-control' /></td>
+            <td><input type='text' value=" . $row['PRECIO'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' onkeypress='jsAgregar(event);' id='VAL_PREC_" . $count . "' name='VAL_PREC[]' value='0' size='10' class='form-control'/> </td>
+            <td><input type='text' value=" . $row['TOTAL'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control' readonly='true'/> </td>
         </tr>";
 
 //            "crearFunciones( $count )";
@@ -91,7 +78,6 @@ Yii::app()->session['USU'] = $usuario;
     ?>
 </table>
 <br>
-
 
 </html>
 
@@ -126,9 +112,9 @@ Yii::app()->session['USU'] = $usuario;
         montoIGV = parseFloat(parseFloat(sumaSubTotal, 2) * parseFloat(eval(0.18), 2), 2);
         total = parseFloat(sumaSubTotal, 2) + parseFloat(montoIGV, 2);
 
-        document.getElementById("FACORDENCOMPR_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);
-        document.getElementById("FACORDENCOMPR_TOT_MONT_IGV").value = redondear2decimales(montoIGV);
-        document.getElementById("FACORDENCOMPR_TOT_FACT").value = redondear2decimales(total);
+        document.getElementById("Presupuesto_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);
+        document.getElementById("Presupuesto_TOT_MONT_IGV").value = redondear2decimales(montoIGV);
+        document.getElementById("Presupuesto_TOT_FACT").value = redondear2decimales(total);
     }
 
 
@@ -143,6 +129,7 @@ Yii::app()->session['USU'] = $usuario;
 
         //debe validar que no se ingrese registros duplicados
         var x = document.getElementsByName("COD_PROD[]");
+        var z = document.getElementsByName("DES_LARG[]");
         primeraFila = 0;
         ultimaFila = x.length - 1;
         //i=x.length+1;
@@ -166,19 +153,16 @@ Yii::app()->session['USU'] = $usuario;
         var data = "<tr><td><input type='checkbox' class='case'/></td><td><span id='snum" + i + "'>" + count + "</span></td>";
         data += '\n\\n\
                                 <td>\n\
-                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="45" class="form-control" />\n\
+                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control" style="text-transform:uppercase"/>\n\
                                 </td> \n\
                                 <td>\n\
-                                    <input type="text" id="COD_PROD_' + i + '" name="COD_PROD[]" size="10" class="form-control" readonly="true"/>\n\
+                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="10" class="form-control" onchange="jsCalcular(this)" onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" readonly="true"/>\n\
+                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>   \n\
                                 <td>\n\
-                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="10" class="form-control" onchange="jsCalcular(this)" onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" readonly="true"/>\n\
-                                </td>\n\
-                                <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="10" class="form-control" readonly="true"/>\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" />\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);
@@ -244,7 +228,7 @@ Yii::app()->session['USU'] = $usuario;
                 console.log(names[1], names[2], names[3]);
                 cad = names[1];
                 if (cad !== '') {
-                    $('#COD_PROD_' + i).val(names[1]);
+                    $('#DES_LARG_' + i).val(names[1]);
                     $('#NRO_UNID_' + i).val(names[2]);
                     $('#VAL_PREC_' + i).val(names[3]);
 
@@ -252,7 +236,7 @@ Yii::app()->session['USU'] = $usuario;
                     $('#VAL_PREC_' + i).prop('readonly', false);
                     $('#NRO_UNID_' + i).focus();
                 } else {
-                    $('#COD_PROD_' + i).prop('readonly', true);
+                    $('#DES_LARG_' + i).prop('readonly', true);
                     $('#NRO_UNID_' + i).prop('readonly', true);
                     $('#VAL_PREC_' + i).prop('readonly', true);
 

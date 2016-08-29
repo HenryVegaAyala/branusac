@@ -54,6 +54,7 @@ $('.search-form form').submit(function(){
                     array(
                         'name' => 'NUM_PRESU',
                         'header' => 'N° de Presupuesto',
+                        'htmlOptions' => array('style' => 'width: 140px'),
                         'value' => '$data->NUM_PRESU'
                     ),
                     array(
@@ -62,35 +63,26 @@ $('.search-form form').submit(function(){
                         'value' => '$data->cODCLIE->NOMBRE'
                     ),
                     array(
-                        'name' => 'MONEDA',
-                        'header' => 'Moneda',
-                        'value' => function($data) {
-
-                            $variable = $data->__GET('MONEDA');
-                            switch ($variable) {
-                                case 0:
-                                    echo 'Nuevo Soles';
-                                    break;
-                                case 1:
-                                    echo 'Dólares Americanos';
-                                    break;
-                            }
-                        },
-                    ),
-
-                    array(
                         'name' => 'FECHA',
                         'header' => 'Fecha',
+                        'htmlOptions' => array('style' => 'width: 90px'),
                         'value' => 'Yii::app()->dateFormatter->format("dd/MM/y",strtotime($data->FECHA))'
                     ),
                     array(
                         'name' => 'VIGENCIA',
                         'header' => 'Vigencia',
-                        'value' => 'Yii::app()->dateFormatter->format("dd/MM/y",strtotime($data->VIGENCIA))'
+                        'htmlOptions' => array('style' => 'width: 90px'),
+                        'value' => '$data->VIGENCIA'
                     ),
-                    'COND_PAGO',
+                    array(
+                        'name' => 'COND_PAGO',
+                        'header' => 'Cond. de Pago',
+                        'htmlOptions' => array('style' => 'width: 115px'),
+                        'value' => '$data->COND_PAGO'
+                    ),
                     array(
                         'name' => 'ESTADO',
+                        'htmlOptions' => array('style' => 'width: 120px'),
                         'header' => 'Estado',
                         'value' => function($data) {
 

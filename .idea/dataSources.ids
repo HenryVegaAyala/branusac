@@ -337,7 +337,7 @@
         <data-type>varchar(250)</data-type>
       </column>
       <column id="100" parent="8" name="VIGENCIA">
-        <data-type>date</data-type>
+        <data-type>varchar(50)</data-type>
       </column>
       <column id="101" parent="8" name="COND_PAGO">
         <data-type>char(1)</data-type>
