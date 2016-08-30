@@ -78,9 +78,9 @@ $('.search-form form').submit(function(){
                         'name' => 'COND_PAGO',
                         'header' => 'Cond. de Pago',
                         'htmlOptions' => array('style' => 'width: 145px'),
-                        'value' => function($data) {
+                        'value' => function ($data) {
 
-                            $variable = $data->__GET('ESTADO');
+                            $variable = $data->__GET('COND_PAGO');
                             switch ($variable) {
                                 case 0:
                                     echo 'Contra Entrega';
@@ -107,7 +107,7 @@ $('.search-form form').submit(function(){
                         'name' => 'ESTADO',
                         'htmlOptions' => array('style' => 'width: 120px'),
                         'header' => 'Estado',
-                        'value' => function($data) {
+                        'value' => function ($data) {
 
                             $variable = $data->__GET('ESTADO');
                             switch ($variable) {
@@ -130,8 +130,17 @@ $('.search-form form').submit(function(){
                     array(
                         'header' => 'Opciones',
                         'class' => 'ext.bootstrap.widgets.TbButtonColumn',
-                        'htmlOptions' => array('style' => 'width: 60px; text-align: center;'),
-                        'template' => '{view} / {update} / {delete} ',
+                        'htmlOptions' => array('style' => 'width: 130px; text-align: center;'),
+                        'template' => '{view} / {update} / {delete} / {Reporte}',
+                        'buttons' => array(
+                            'Reporte' => array(
+                                'icon' => 'file',
+                                'label' => 'Generar PDF',
+                                'htmlOptions' => array('style' => 'width: 50px'),
+                                'options' => array('target' => '_blank'),
+                                'url' => 'CHtml::normalizeUrl(array("Reporte", "id"=>$data->COD_PRESU))',
+                            ),
+                        ),
                     ),
                 ),
             )); ?>
