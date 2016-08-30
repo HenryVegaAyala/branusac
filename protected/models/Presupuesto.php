@@ -114,6 +114,12 @@ class Presupuesto extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
+        if (strrpos($this->FECHA, "/") > 0) {
+            $this->FECHA = substr($this->FECHA, 6, 4) . '-' . substr($this->FECHA, 3, 2) . '-' . substr($this->FECHA, 0, 2); //'2016-06-09' ;
+        }
+
+        $criteria->order = 'NUM_PRESU DESC';
+
         $criteria->compare('COD_PRESU', $this->COD_PRESU);
         $criteria->compare('NUM_PRESU', $this->NUM_PRESU, true);
         $criteria->compare('COD_CLIE', $this->COD_CLIE);
@@ -174,6 +180,17 @@ class Presupuesto extends CActiveRecord
             array('COND_PAGO' => '5', 'value' => 'Personalizado'),
         );
         return cHtml::listData($model, 'COND_PAGO', 'value');
+    }
+
+    public function ListaEstado()
+    {
+        $model = array(
+            array('ESTADO' => '1', 'value' => 'En Proceso'),
+            array('ESTADO' => '2', 'value' => 'Despachadado/Atendido'),
+            array('ESTADO' => '9', 'value' => 'Anulado'),
+            array('ESTADO' => '0', 'value' => 'Creado'),
+        );
+        return cHtml::listData($model, 'ESTADO', 'value');
     }
 
     public function AIPresu()

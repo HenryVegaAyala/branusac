@@ -4,8 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Presupuestos'=>array('index'),
-	$model->COD_PRESU=>array('view','id'=>$model->COD_PRESU),
-	'Update',
+	'Actualizar',
 );
 
 ?>

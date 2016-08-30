@@ -78,6 +78,17 @@
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),
 
+                            array(
+                                'label' => 'Configuración',
+                                'items' => array(
+                                    array('label' => 'IGV', 'url' => array('/cliente/index')),
+                                    array('label' => 'Folio de Presupuesto', 'url' => array('/cliente/index')),
+                                    array('label' => 'Folio de Guia', 'url' => array('/cliente/index')),
+                                    array('label' => 'Folio de Factura', 'url' => array('/cliente/index')),
+                                    '---',
+                                ), 'visible' => !Yii::app()->user->isGuest
+                            ),
+
                             array('label' => 'Iniciar Sesión', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                             array('label' => 'Logout (' . Yii::app()->user->name . ')', 'icon' => 'user', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
 

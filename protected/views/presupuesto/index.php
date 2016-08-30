@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     'Presupuestos' => array('index'),
-    'Manage',
+    'Lista',
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -71,14 +71,37 @@ $('.search-form form').submit(function(){
                     array(
                         'name' => 'VIGENCIA',
                         'header' => 'Vigencia',
-                        'htmlOptions' => array('style' => 'width: 90px'),
-                        'value' => '$data->VIGENCIA'
+                        'htmlOptions' => array('style' => 'width: 75px'),
+                        'value' => $model->VIGENCIA,
                     ),
                     array(
                         'name' => 'COND_PAGO',
                         'header' => 'Cond. de Pago',
-                        'htmlOptions' => array('style' => 'width: 115px'),
-                        'value' => '$data->COND_PAGO'
+                        'htmlOptions' => array('style' => 'width: 145px'),
+                        'value' => function($data) {
+
+                            $variable = $data->__GET('ESTADO');
+                            switch ($variable) {
+                                case 0:
+                                    echo 'Contra Entrega';
+                                    break;
+                                case 1:
+                                    echo 'Contado';
+                                    break;
+                                case 2:
+                                    echo '30 días';
+                                    break;
+                                case 3:
+                                    echo '45 días';
+                                    break;
+                                case 4:
+                                    echo '60 días';
+                                    break;
+                                case 5:
+                                    echo 'Personalizado';
+                                    break;
+                            }
+                        },
                     ),
                     array(
                         'name' => 'ESTADO',

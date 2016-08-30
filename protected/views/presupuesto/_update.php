@@ -154,9 +154,10 @@
                     </div>
 
                     <div class="col-sm-4 col-md-3">
-                        <?php echo $form->labelEx($model, 'FECHA');
+                        <?php echo $form->labelEx($model, 'FECHA'); ?>
+                        <?php
                         $FECHA = $model->FECHA;
-                        $NFECHA = date("d-m-Y", strtotime($FECHA) );
+                        $NFECHA = date("d/m/Y", strtotime($FECHA) );
                         ?>
                         <input type="text" id="Presupuesto_FECHA" name="Presupuesto[FECHA]"
                                class="form-control" placeholder="Ingrese la Fecha Ingreso"
@@ -265,7 +266,7 @@
                     $this->widget(
                         'ext.bootstrap.widgets.TbButton', array(
                         'context' => 'success',
-                        'label' => 'Registrarse',
+                        'label' => 'Actualizar',
                         'size' => 'md',
                         'icon' => 'fa fa-save fa-lg',
                         'buttonType' => 'submit',
