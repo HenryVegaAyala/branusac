@@ -1,11 +1,6 @@
 /assets/*
 /protected/runtime/application.log
 assets/
-framework/cli/runtime/
-framework/cli/views/shell/module/components/
-framework/cli/views/shell/module/messages/
-framework/cli/views/shell/module/models/
-framework/cli/views/shell/module/views/layouts/
 protected/commands/
 protected/messages/
 protected/migrations/
@@ -15,5 +10,5 @@ protected/tests/unit/
 themes/classic/views/layouts/
 themes/classic/views/site/
 themes/classic/views/system/
-/protected/runtime/session-1.1.17.db
-/protected/runtime/
+protected/runtime/session-1.1.17.db
+protected/runtime/

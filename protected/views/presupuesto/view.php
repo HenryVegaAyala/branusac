@@ -82,9 +82,6 @@ $this->breadcrumbs = array(
             'attributes' => array(
                 array(
                     'name' => 'N&#176 de Presupuesto',
-                    'value' => $model->NUM_PRESU),
-                array(
-                    'name' => 'N&#176 de Presupuesto',
                     'value' => $model->cODCLIE->NOMBRE),
                 array(
                     'name' => 'Fecha',
@@ -103,7 +100,7 @@ $this->breadcrumbs = array(
                     'name' => 'N&#176 Dias',
                     'value' => $model->NRO_DIAS . ' dias'),
                 array(
-                    'name' => 'Personalizacion',
+                    'name' => 'Personalización',
                     'value' => $model->COND_PERSONALIZADO),
                 array(
                     'name' => 'Estado',

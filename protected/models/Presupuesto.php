@@ -208,10 +208,11 @@ class Presupuesto extends CActiveRecord
 
         $NunPresu = Yii::app()->db->createCommand()
             ->select('VAL_ACTU')
-            ->from('imp_folio_presu')
+            ->from('folio')
+            ->where('VAL_LLAVE = 0')
             ->queryScalar();
 
-        $Num = ($NunPresu + 1);
+        $Num = ($NunPresu);
 
         return $Num;
     }

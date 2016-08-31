@@ -157,11 +157,10 @@
                         <?php echo $form->labelEx($model, 'FECHA'); ?>
                         <?php
                         $FECHA = $model->FECHA;
-                        $NFECHA = date("d/m/Y", strtotime($FECHA) );
                         ?>
                         <input type="text" id="Presupuesto_FECHA" name="Presupuesto[FECHA]"
                                class="form-control" placeholder="Ingrese la Fecha Ingreso"
-                               value=" <?php echo $NFECHA ?>" required="true"/>
+                               value=" <?php echo $FECHA ?>" required="true"/>
                         <script>
                             $(function () {
                                 $("#Presupuesto_FECHA").datepicker();

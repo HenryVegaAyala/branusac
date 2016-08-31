@@ -25,7 +25,7 @@ $('.search-form form').submit(function(){
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Lista de Clientes</h3>
+            <h3 class="panel-title">Lista de Presupuestos</h3>
         </div>
 
         <div class="container-fluid" style="margin-top: 2%">

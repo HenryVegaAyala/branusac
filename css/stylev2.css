@@ -6,6 +6,10 @@
         Purpose of the stylesheet follows.
 */
 
+.required{
+    color: red;
+}
+
 img {
     max-width: 100%;
     height: auto;
