@@ -56,6 +56,18 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
 
 </html>
 
+<?PHP
+$sqlStatement = "SELECT VAL_PARA FROM bas_param";
+$connection = Yii::app()->db;
+$command = $connection->createCommand($sqlStatement);
+$reader = $command->query();
+while ($row = $reader->read()) {
+ $Valor = $row['VAL_PARA'] ;
+
+ $NV = ($Valor/100);
+
+}
+?>
 
 <script>
 
@@ -84,7 +96,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
             sumaSubTotal = parseFloat(sumaSubTotal, 2) + parseFloat(arr_total[x].value, 2);
         }
         //alert(sumaSubTotal);
-        montoIGV = parseFloat(parseFloat(sumaSubTotal, 2) * parseFloat(eval(0.18), 2), 2);
+        montoIGV = parseFloat(parseFloat(sumaSubTotal, 2) * parseFloat(eval(<?PHP ECHO $NV ?>), 2), 2);
         total = parseFloat(sumaSubTotal, 2) + parseFloat(montoIGV, 2);
 
         document.getElementById("Factura_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);

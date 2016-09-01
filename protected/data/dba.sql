@@ -34,6 +34,7 @@ CREATE TABLE `bas_param` (
   `FEC_DIGI` datetime DEFAULT NULL,
   `USU_MODI` varchar(20) DEFAULT NULL,
   `FEC_MODI` datetime DEFAULT NULL,
+  `VALOR` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`COD_PARA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -42,8 +43,8 @@ CREATE TABLE `bas_param` (
 --
 
 /*!40000 ALTER TABLE `bas_param` DISABLE KEYS */;
-INSERT INTO `bas_param` (`COD_PARA`,`VAL_PARA`,`DES_PARA`,`USU_DIGI`,`FEC_DIGI`,`USU_MODI`,`FEC_MODI`) VALUES 
- ('01','18','IGV','ADMIN','2016-06-21 00:00:00',NULL,NULL);
+INSERT INTO `bas_param` (`COD_PARA`,`VAL_PARA`,`DES_PARA`,`USU_DIGI`,`FEC_DIGI`,`USU_MODI`,`FEC_MODI`,`VALOR`) VALUES 
+ ('01','18','IGV','ADMIN','2016-06-21 00:00:00','admin','2016-09-01 16:58:35','1');
 /*!40000 ALTER TABLE `bas_param` ENABLE KEYS */;
 
 
@@ -73,6 +74,34 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`COD_CLIE`,`NOMBRE`,`RUC`,`DNI`,`DIRECCION`,`TELEFONO2`,`CORREO_E`,`TELEFONO`,`FAX`) VALUES 
  (1,'adidas chile ltda suc  del perú','20347100316',48429679,'av. santa cruz 970 - lima 18',955201758,'','2802886','');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+
+
+--
+-- Table structure for table `branusac`.`detalle_factura`
+--
+
+DROP TABLE IF EXISTS `detalle_factura`;
+CREATE TABLE `detalle_factura` (
+  `COD_FACT` int(99) NOT NULL,
+  `COD_FACT_DET` int(99) NOT NULL,
+  `COD_PRODUC` int(11) NOT NULL,
+  `LINEA` int(11) DEFAULT NULL,
+  `CANTIDAD` int(11) DEFAULT NULL,
+  `DESCRIPCION` varchar(250) DEFAULT NULL,
+  `TOTAL` decimal(9,2) DEFAULT NULL,
+  `COD_CLIE` int(11) NOT NULL,
+  `PRECIO` decimal(10,2) NOT NULL,
+  KEY `fk_detalle_factura_factura1_idx` (`COD_FACT`),
+  KEY `fk_detalle_factura_t_stock1_idx` (`COD_PRODUC`),
+  CONSTRAINT `fk_detalle_factura_factura1` FOREIGN KEY (`COD_FACT`) REFERENCES `factura` (`COD_FACT`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `branusac`.`detalle_factura`
+--
+
+/*!40000 ALTER TABLE `detalle_factura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `detalle_factura` ENABLE KEYS */;
 
 
 --
@@ -127,13 +156,19 @@ CREATE TABLE `detalle_presupuesto` (
 
 /*!40000 ALTER TABLE `detalle_presupuesto` DISABLE KEYS */;
 INSERT INTO `detalle_presupuesto` (`COD_PRESU`,`COD_PRESU_DET`,`COD_PRODUC`,`LINEA`,`CANTIDAD`,`DESCRIPCION`,`TOTAL`,`COD_CLIE`,`PRECIO`) VALUES 
- (1,0,1,NULL,3,'WQE','9.00',1,'3.00'),
- (1,0,1,NULL,2,'WW','4.00',1,'2.00'),
- (1,0,1,NULL,3,'43','9.00',1,'3.00'),
- (1,0,1,NULL,3,'3','90.00',1,'30.00'),
- (1,0,1,NULL,3,'3','9.00',1,'3.00'),
- (1,0,1,NULL,9,'O','81.00',1,'9.00'),
- (1,0,1,NULL,34,'98','1156.00',1,'34.00');
+ (1,1,1,NULL,3,'3','9.00',1,'3.00'),
+ (4,4,1,NULL,9,'9','81.00',1,'9.00'),
+ (3,4,1,NULL,9,'9','81.00',1,'9.00'),
+ (3,4,1,NULL,9,'9','81.00',1,'9.00'),
+ (3,4,1,NULL,9,'9','891.00',1,'99.00'),
+ (3,4,1,NULL,9,'9','81.00',1,'9.00'),
+ (2,0,1,NULL,5,'5','25.00',1,'5.00'),
+ (5,1,1,NULL,31233,'3','93699.00',1,'3.00'),
+ (5,1,1,NULL,3123,'3','103059.00',1,'33.00'),
+ (5,1,1,NULL,33,'3','99.00',1,'3.00'),
+ (6,1,1,NULL,34,'pan','1156.00',1,'34.00'),
+ (6,1,1,NULL,34,'pan','1156.00',1,'34.00'),
+ (6,1,1,NULL,34,'paneri','1156.00',1,'34.00');
 /*!40000 ALTER TABLE `detalle_presupuesto` ENABLE KEYS */;
 
 
@@ -144,6 +179,7 @@ INSERT INTO `detalle_presupuesto` (`COD_PRESU`,`COD_PRESU_DET`,`COD_PRODUC`,`LIN
 DROP TABLE IF EXISTS `factura`;
 CREATE TABLE `factura` (
   `COD_FACT` int(99) NOT NULL,
+  `COD_PRESU` int(99) NOT NULL,
   `NUM_FACT` varchar(7) NOT NULL,
   `MONEDA` char(1) NOT NULL,
   `FECHA` date DEFAULT NULL,
@@ -153,17 +189,16 @@ CREATE TABLE `factura` (
   `COND_PAGO` char(1) DEFAULT NULL,
   `NRO_DIAS` int(11) DEFAULT NULL,
   `COND_PERSONALIZADO` varchar(100) DEFAULT NULL,
-  `SUBTOTAL` decimal(10,2) DEFAULT NULL,
-  `IGV` decimal(10,2) DEFAULT NULL,
-  `TOTAL` decimal(10,2) DEFAULT NULL,
+  `TOT_MONT_ORDE` decimal(10,2) DEFAULT NULL,
+  `TOT_MONT_IGV` decimal(10,2) DEFAULT NULL,
+  `TOT_FACT` decimal(10,2) DEFAULT NULL,
   `FECHA_CANC` date DEFAULT NULL,
   `ESTADO` char(1) DEFAULT NULL,
-  `COD_GUIA` int(99) NOT NULL,
-  `facturacol` varchar(45) DEFAULT NULL,
+  `COD_GUIA` int(99) DEFAULT NULL,
   PRIMARY KEY (`COD_FACT`),
   UNIQUE KEY `SYS_CT_12` (`NUM_FACT`),
-  KEY `fk_t_factura_Guia1_idx` (`COD_GUIA`),
-  CONSTRAINT `fk_t_factura_Guia1` FOREIGN KEY (`COD_GUIA`) REFERENCES `guia` (`COD_GUIA`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_factura_presupuesto1` (`COD_PRESU`),
+  CONSTRAINT `fk_factura_presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -171,7 +206,39 @@ CREATE TABLE `factura` (
 --
 
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
+INSERT INTO `factura` (`COD_FACT`,`COD_PRESU`,`NUM_FACT`,`MONEDA`,`FECHA`,`CLIENTE`,`RUC`,`OC`,`COND_PAGO`,`NRO_DIAS`,`COND_PERSONALIZADO`,`TOT_MONT_ORDE`,`TOT_MONT_IGV`,`TOT_FACT`,`FECHA_CANC`,`ESTADO`,`COD_GUIA`) VALUES 
+ (1,1,'1','1','2016-09-01','adidas chile ltda suc  del perú','1','1','1',1,'1','1.00','1.00','11.00','0000-00-00','1',NULL),
+ (2,1,'2','2','0000-00-00','2','2','2','2',2,'2','22.00','0.00','2.00','0000-00-00','2',NULL);
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
+
+
+--
+-- Table structure for table `branusac`.`folio`
+--
+
+DROP TABLE IF EXISTS `folio`;
+CREATE TABLE `folio` (
+  `VAL_INI` int(99) NOT NULL DEFAULT '0',
+  `VAL_FIN` int(99) NOT NULL,
+  `VAL_ACTU` int(99) NOT NULL,
+  `VAL_LLAVE` int(255) unsigned NOT NULL DEFAULT '0',
+  `DESCRIPCION` varchar(100) DEFAULT NULL,
+  `FECHA` datetime DEFAULT NULL,
+  `VALOR` varchar(1) DEFAULT NULL,
+  `USUARIO` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`VAL_LLAVE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `branusac`.`folio`
+--
+
+/*!40000 ALTER TABLE `folio` DISABLE KEYS */;
+INSERT INTO `folio` (`VAL_INI`,`VAL_FIN`,`VAL_ACTU`,`VAL_LLAVE`,`DESCRIPCION`,`FECHA`,`VALOR`,`USUARIO`) VALUES 
+ (1,9999999,5182,0,'N° de Presupuesto','2016-09-01 16:57:07','2','admin'),
+ (1,9999999,983,1,'N° de Guia','2016-08-31 17:57:25','3','admin'),
+ (1,9999999,7654,2,'N° de Factura           ','2016-08-31 17:48:13','4','admin');
+/*!40000 ALTER TABLE `folio` ENABLE KEYS */;
 
 
 --
@@ -181,8 +248,8 @@ CREATE TABLE `factura` (
 DROP TABLE IF EXISTS `guia`;
 CREATE TABLE `guia` (
   `COD_GUIA` int(99) NOT NULL,
+  `COD_FACT` int(99) NOT NULL,
   `NUM_GUIA` varchar(3) DEFAULT NULL,
-  `COD_PRESU` int(99) NOT NULL,
   `DOMICILIO` varchar(120) DEFAULT NULL,
   `RUC` varchar(20) DEFAULT NULL,
   `OC` varchar(20) DEFAULT NULL,
@@ -191,9 +258,9 @@ CREATE TABLE `guia` (
   PRIMARY KEY (`COD_GUIA`),
   UNIQUE KEY `SYS_CT_38` (`NUM_GUIA`),
   KEY `SYS_FK_40` (`TRANS_CODIGO`),
-  KEY `fk_t_guia_Presupuesto1_idx` (`COD_PRESU`),
+  KEY `fk_guia_factura1` (`COD_FACT`),
   CONSTRAINT `SYS_FK_40` FOREIGN KEY (`TRANS_CODIGO`) REFERENCES `transportista` (`COD_TRANSP`),
-  CONSTRAINT `fk_t_guia_Presupuesto1` FOREIGN KEY (`COD_PRESU`) REFERENCES `presupuesto` (`COD_PRESU`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_guia_factura1` FOREIGN KEY (`COD_FACT`) REFERENCES `factura` (`COD_FACT`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -202,65 +269,6 @@ CREATE TABLE `guia` (
 
 /*!40000 ALTER TABLE `guia` DISABLE KEYS */;
 /*!40000 ALTER TABLE `guia` ENABLE KEYS */;
-
-
---
--- Table structure for table `branusac`.`imp_folio_factu`
---
-
-DROP TABLE IF EXISTS `imp_folio_factu`;
-CREATE TABLE `imp_folio_factu` (
-  `VAL_INI` int(99) NOT NULL,
-  `VAL_FIN` int(99) NOT NULL,
-  `VAL_ACTU` int(99) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `branusac`.`imp_folio_factu`
---
-
-/*!40000 ALTER TABLE `imp_folio_factu` DISABLE KEYS */;
-/*!40000 ALTER TABLE `imp_folio_factu` ENABLE KEYS */;
-
-
---
--- Table structure for table `branusac`.`imp_folio_guia`
---
-
-DROP TABLE IF EXISTS `imp_folio_guia`;
-CREATE TABLE `imp_folio_guia` (
-  `VAL_INI` int(99) NOT NULL,
-  `VAL_FIN` int(99) NOT NULL,
-  `VAL_ACTU` int(99) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `branusac`.`imp_folio_guia`
---
-
-/*!40000 ALTER TABLE `imp_folio_guia` DISABLE KEYS */;
-/*!40000 ALTER TABLE `imp_folio_guia` ENABLE KEYS */;
-
-
---
--- Table structure for table `branusac`.`imp_folio_presu`
---
-
-DROP TABLE IF EXISTS `imp_folio_presu`;
-CREATE TABLE `imp_folio_presu` (
-  `VAL_INI` int(99) NOT NULL,
-  `VAL_FIN` int(99) NOT NULL,
-  `VAL_ACTU` int(99) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `branusac`.`imp_folio_presu`
---
-
-/*!40000 ALTER TABLE `imp_folio_presu` DISABLE KEYS */;
-INSERT INTO `imp_folio_presu` (`VAL_INI`,`VAL_FIN`,`VAL_ACTU`) VALUES 
- (1,9999999,5176);
-/*!40000 ALTER TABLE `imp_folio_presu` ENABLE KEYS */;
 
 
 --
@@ -297,7 +305,12 @@ CREATE TABLE `presupuesto` (
 
 /*!40000 ALTER TABLE `presupuesto` DISABLE KEYS */;
 INSERT INTO `presupuesto` (`COD_PRESU`,`NUM_PRESU`,`COD_CLIE`,`MONEDA`,`FECHA`,`INICIO`,`DIRECCION`,`VIGENCIA`,`COND_PAGO`,`NRO_DIAS`,`COND_PERSONALIZADO`,`ESTADO`,`TOT_MONT_ORDE`,`TOT_MONT_IGV`,`TOT_FACT`,`COMENTARIO`) VALUES 
- (1,'5176',1,'0','0000-00-00','0000-00-00','av. santa cruz 970 - lima 18','34','3',45,'','0','1358.00','0.00','0.00','');
+ (1,'5176',1,'0','2016-08-18','0000-00-00','av. santa cruz 970 - lima 18','3','2',30,'','0','9.00','0.00','0.00',''),
+ (2,'5177',1,'0','2016-08-20','0000-00-00','av. santa cruz 970 - lima 18','5','2',30,'','0','25.00','0.00','0.00','5'),
+ (3,'5178',1,'0','2016-08-31','0000-00-00','av. santa cruz 970 - lima 18','23','2',30,'','0','1134.00','0.00','0.00',''),
+ (4,'5179',1,'0','2016-08-31','0000-00-00','av. santa cruz 970 - lima 18','23','3',45,'','0','81.00','0.00','0.00','23'),
+ (5,'5180',1,'0','2016-09-01','0000-00-00','av. santa cruz 970 - lima 18','3','3',45,'3','0','196857.00','0.00','0.00','3'),
+ (6,'5181',1,'0','2009-03-16','0000-00-00','av. santa cruz 970 - lima 18','23','2',30,'','0','3468.00','0.00','0.00','');
 /*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
 
 
@@ -438,6 +451,54 @@ END $$
 DELIMITER ;
 
 --
+-- Procedure `branusac`.`AUDITORIA`
+--
+
+DROP PROCEDURE IF EXISTS `AUDITORIA`;
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AUDITORIA`(
+
+  IN X_USUARIO VARCHAR(100),
+  IN X_VALOR   INT
+)
+BEGIN
+
+    CASE X_VALOR
+
+      WHEN 1
+      THEN
+        UPDATE bas_param
+        SET USU_MODI = X_USUARIO,
+          FEC_MODI   = NOW();
+
+      WHEN 2
+      THEN
+        UPDATE folio
+        SET USUARIO = X_USUARIO,
+          FECHA   = NOW()
+      where VAL_LLAVE = 0;
+
+      WHEN 3
+      THEN
+        UPDATE folio
+        SET USUARIO = X_USUARIO,
+          FECHA   = NOW()
+        where VAL_LLAVE = 1;
+
+      WHEN 4
+      THEN
+        UPDATE folio
+        SET USUARIO = X_USUARIO,
+          FECHA   = NOW()
+        where VAL_LLAVE = 2;
+
+      END CASE;
+    END $$
+
+DELIMITER ;
+
+--
 -- Procedure `branusac`.`CREAR_DETAL_PRESU`
 --
 
@@ -461,8 +522,9 @@ BEGIN
 
       delete from detalle_presupuesto where COD_PRESU = x_cod_presu and COD_CLIE= x_cod_clien;
 
-      UPDATE imp_folio_presu
-      SET VAL_ACTU = (VAL_ACTU+1);
+      UPDATE folio
+      SET VAL_ACTU = (VAL_ACTU+1)
+      where VAL_LLAVE = 0;
 
     END IF;
 
