@@ -54,17 +54,18 @@
                             ),
 
                             array(
-                                'label' => 'Guías',
+                                'label' => 'Facturas',
                                 'items' => array(
-                                    array('label' => 'Lista de Guias', 'url' => array('/guia/create')),
+                                    array('label' => 'Crear Nuevo Facturas', 'url' => array('/factura/create')),
+                                    array('label' => 'Lista de Facturas', 'url' => array('/factura/index')),
                                     '---',
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),
 
                             array(
-                                'label' => 'Facturas',
+                                'label' => 'Guías',
                                 'items' => array(
-                                    array('label' => 'Lista de Facturas', 'url' => array('/factura/index')),
+                                    array('label' => 'Lista de Guias', 'url' => array('/guia/create')),
                                     '---',
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),

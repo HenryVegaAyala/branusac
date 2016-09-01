@@ -31,6 +31,20 @@
       <primary-key name="PRIMARY" columns="COD_CLIE"/>
       <exported-key name="SYS_FK_21" table="presupuesto" schema="" catalog="branusac" columns="COD_CLIE"/>
     </table>
+    <table name="detalle_factura" schema="" catalog="branusac" type="TABLE">
+      <column name="COD_FACT" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_FACT_DET" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_PRODUC" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="LINEA" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="CANTIDAD" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="DESCRIPCION" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12"/>
+      <column name="TOTAL" sqlType="DECIMAL" precision="9" scale="2" nullable="true" jdbcType="3"/>
+      <column name="COD_CLIE" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="PRECIO" sqlType="DECIMAL" precision="10" scale="2" nullable="false" jdbcType="3"/>
+      <foreign-key name="fk_detalle_factura_factura1" columns="COD_FACT" ref-table="factura" ref-schema="" ref-catalog="branusac" ref-columns="COD_FACT" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_detalle_factura_factura1_idx" unique="false" columns="COD_FACT"/>
+      <index name="fk_detalle_factura_t_stock1_idx" unique="false" columns="COD_PRODUC"/>
+    </table>
     <table name="detalle_guia" schema="" catalog="branusac" type="TABLE">
       <column name="COD_GUIA_DET" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="CODIGO_GUIA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -59,6 +73,7 @@
     </table>
     <table name="factura" schema="" catalog="branusac" type="TABLE">
       <column name="COD_FACT" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="NUM_FACT" sqlType="VARCHAR" precision="7" scale="0" nullable="false" jdbcType="12"/>
       <column name="MONEDA" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
       <column name="FECHA" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
@@ -68,17 +83,18 @@
       <column name="COND_PAGO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
       <column name="NRO_DIAS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="COND_PERSONALIZADO" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <column name="SUBTOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
-      <column name="IGV" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
-      <column name="TOTAL" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="TOT_MONT_ORDE" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="TOT_MONT_IGV" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="TOT_FACT" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
       <column name="FECHA_CANC" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
-      <column name="COD_GUIA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="facturacol" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="COD_GUIA" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="COD_FACT"/>
-      <foreign-key name="fk_t_factura_Guia1" columns="COD_GUIA" ref-table="guia" ref-schema="" ref-catalog="branusac" ref-columns="COD_GUIA" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_factura_presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_detalle_factura_factura1" table="detalle_factura" schema="" catalog="branusac" columns="COD_FACT"/>
+      <exported-key name="fk_guia_factura1" table="guia" schema="" catalog="branusac" columns="COD_FACT"/>
       <index name="SYS_CT_12" unique="true" columns="NUM_FACT"/>
-      <index name="fk_t_factura_Guia1_idx" unique="false" columns="COD_GUIA"/>
+      <index name="fk_factura_presupuesto1" unique="false" columns="COD_PRESU"/>
     </table>
     <table name="folio" schema="" catalog="branusac" type="TABLE">
       <column name="VAL_INI" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
@@ -93,8 +109,8 @@
     </table>
     <table name="guia" schema="" catalog="branusac" type="TABLE">
       <column name="COD_GUIA" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_FACT" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="NUM_GUIA" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
-      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="DOMICILIO" sqlType="VARCHAR" precision="120" scale="0" nullable="true" jdbcType="12"/>
       <column name="RUC" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="OC" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
@@ -102,11 +118,10 @@
       <column name="TRANS_CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="COD_GUIA"/>
       <foreign-key name="SYS_FK_40" columns="TRANS_CODIGO" ref-table="transportista" ref-schema="" ref-catalog="branusac" ref-columns="COD_TRANSP" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="fk_t_guia_Presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_guia_factura1" columns="COD_FACT" ref-table="factura" ref-schema="" ref-catalog="branusac" ref-columns="COD_FACT" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="fk_t_guia_det_t_guia1" table="detalle_guia" schema="" catalog="branusac" columns="CODIGO_GUIA"/>
-      <exported-key name="fk_t_factura_Guia1" table="factura" schema="" catalog="branusac" columns="COD_GUIA"/>
       <index name="SYS_CT_38" unique="true" columns="NUM_GUIA"/>
-      <index name="fk_t_guia_Presupuesto1_idx" unique="false" columns="COD_PRESU"/>
+      <index name="fk_guia_factura1" unique="false" columns="COD_FACT"/>
       <index name="SYS_FK_40" unique="false" columns="TRANS_CODIGO"/>
     </table>
     <table name="presupuesto" schema="" catalog="branusac" type="TABLE">
@@ -129,7 +144,7 @@
       <primary-key name="PRIMARY" columns="COD_PRESU"/>
       <foreign-key name="SYS_FK_21" columns="COD_CLIE" ref-table="cliente" ref-schema="" ref-catalog="branusac" ref-columns="COD_CLIE" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="fk_t_presupuesto_det_Presupuesto1" table="detalle_presupuesto" schema="" catalog="branusac" columns="COD_PRESU"/>
-      <exported-key name="fk_t_guia_Presupuesto1" table="guia" schema="" catalog="branusac" columns="COD_PRESU"/>
+      <exported-key name="fk_factura_presupuesto1" table="factura" schema="" catalog="branusac" columns="COD_PRESU"/>
       <index name="SYS_CT_13" unique="true" columns="NUM_PRESU"/>
       <index name="SYS_FK_21" unique="false" columns="COD_CLIE"/>
     </table>

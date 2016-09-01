@@ -6,6 +6,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
 
 <script language="javascript" type="text/javascript">
 
+
     function stopRKey(evt) {
         var evt = (evt) ? evt : ((event) ? event : null);
         var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
@@ -86,9 +87,10 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
         montoIGV = parseFloat(parseFloat(sumaSubTotal, 2) * parseFloat(eval(0.18), 2), 2);
         total = parseFloat(sumaSubTotal, 2) + parseFloat(montoIGV, 2);
 
-        document.getElementById("Presupuesto_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);
-        document.getElementById("Presupuesto_TOT_MONT_IGV").value = redondear2decimales(montoIGV);
-        document.getElementById("Presupuesto_TOT_FACT").value = redondear2decimales(total);
+        document.getElementById("Factura_TOT_MONT_ORDE").value = redondear2decimales(sumaSubTotal);
+        document.getElementById("Factura_TOT_MONT_IGV").value = redondear2decimales(montoIGV);
+        document.getElementById("Factura_TOT_FACT").value = redondear2decimales(total);
+
     }
 
 
@@ -103,6 +105,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
 
         //debe validar que no se ingrese registros duplicados
         var x = document.getElementsByName("COD_PROD[]");
+        var z = document.getElementsByName("DES_LARG[]");
         primeraFila = 0;
         ultimaFila = x.length - 1;
         //i=x.length+1;
@@ -135,7 +138,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
                                     <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" onkeypress="jsAgregar(event);" />\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" onkeypress="jsAgregar(event);"/>\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);

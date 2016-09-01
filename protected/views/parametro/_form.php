@@ -20,7 +20,7 @@
         )); ?>
 
         <div class="container" style="margin-top: 2%">
-          <p class="note" style="font-size: 15px;"><span class="required">*</span> Al cambiar el valor del IGV puede afectar en el valor de las <span class="required">FACTURAS.</span>.</p>
+          <p class="note" style="font-size: 15px;"><span class="requiredc">*</span> Al cambiar el valor del IGV puede afectar en el valor de las <span class="requiredc">FACTURAS.</span>.</p>
         </div>
 
         <?php echo $form->errorSummary($model); ?>
