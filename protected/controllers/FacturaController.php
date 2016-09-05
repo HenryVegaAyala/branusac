@@ -26,7 +26,7 @@ class FacturaController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index', 'view', 'admin', 'delete'),
+                'actions' => array('create', 'update', 'index', 'view', 'admin', 'delete', 'ajax', 'condicion'),
                 'users' => array('@'),
             ),
             array('deny',  // deny all users
@@ -35,10 +35,51 @@ class FacturaController extends Controller
         );
     }
 
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
+    public function actionCondicion()
+    {
+        $CondPago = $_POST["Factura"]["COND_PAGO"];
+
+        switch ($CondPago) {
+            case 0:
+                echo '';
+                break;
+            case 1:
+                echo '';
+                break;
+            case 2:
+                echo '30';
+                break;
+            case 3:
+                echo '45';
+                break;
+            case 4:
+                echo '60';
+                break;
+            case 5:
+                echo '';
+                break;
+            default:
+                echo 'Falló el valor de ingreso.';
+        }
+    }
+
+
+    public
+    function actionAjax()
+    {
+        $CodCliente = $_POST["Factura"]["CLIENTE"];
+
+        $connection = Yii::app()->db;
+        $sqlStatement = "SELECT  RUC from cliente where '" . $CodCliente . "';";
+        $command = $connection->createCommand($sqlStatement);
+        $reader = $command->query();
+
+        foreach ($reader as $row) {
+            echo $row['RUC'];
+        }
+
+    }
+
     public function actionView($id)
     {
         $this->render('view', array(
@@ -54,15 +95,47 @@ class FacturaController extends Controller
     {
         $model = new Factura;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        $count = Yii::app()->db->createCommand()->select('count(*)')
+            ->from('factura')
+            ->queryScalar();
+
+        $CODFACDET = ($count + 1);
 
         if (isset($_POST['Factura'])) {
             $model->attributes = $_POST['Factura'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->COD_FACT));
-        }
 
+            $model->FECHA = substr($model->FECHA, 6, 4) . '/' . substr($model->FECHA, 3, 2) . '/' . substr($model->FECHA, 0, 2); //'2016-06-09' ;
+            $model->COD_FACT = $model->AIFactu();
+            $model->NUM_FACT = $model->NAIFactu();
+
+            if (isset ($_POST['DES_LARG'])) {
+
+                $DESCRI = $_POST['DES_LARG'];
+                $UND = $_POST['NRO_UNID'];
+                $VALPRE = $_POST['VAL_PREC'];
+                $VALMOTUND = $_POST['VAL_MONT_UNID'];
+
+                if ($model->save()) {
+                    for ($i = 0; $i < count($DESCRI); $i++) {
+                        if ($DESCRI[$i] <> '') {
+                            $sqlStatement = "call CREAR_DETAL_FACTU(
+                     '" . $i . "',
+                     '" . $model->COD_FACT . "',
+                     '" . $CODFACDET . "',
+                     '" . $model->CLIENTE . "',
+                     '" . $UND[$i] . "',
+                     '" . $DESCRI[$i] . "',
+                     '" . $VALPRE[$i] . "',
+                     '" . $VALMOTUND[$i] . "'
+                     )";
+                            $command = Yii::app()->db->createCommand($sqlStatement);
+                            $command->execute();
+                        }
+                    }
+                }
+                $this->redirect(array('index'));
+            }
+        }
         $this->render('create', array(
             'model' => $model,
         ));

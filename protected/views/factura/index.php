@@ -2,8 +2,8 @@
 /* @var $this FacturaController */
 /* @var $model Factura */
 
-$this->breadcrumbs=array(
-    'Facturas'=>array('index'),
+$this->breadcrumbs = array(
+    'Facturas' => array('index'),
     'Lista',
 );
 
@@ -34,8 +34,8 @@ $('.search-form form').submit(function(){
         </div>
 
         <div class="search-form" style="display:none">
-            <?php $this->renderPartial('_search',array(
-                'model'=>$model,
+            <?php $this->renderPartial('_search', array(
+                'model' => $model,
             )); ?>
         </div>
         <!-- search-form -->
@@ -43,9 +43,9 @@ $('.search-form form').submit(function(){
         <div class="table-responsive">
             <?php $this->widget('ext.bootstrap.widgets.TbGridView', array(
                 'type' => 'bordered condensed striped',
-                'id'=>'factura-grid',
-                'dataProvider'=>$model->search(),
-                'columns'=>array(
+                'id' => 'factura-grid',
+                'dataProvider' => $model->search(),
+                'columns' => array(
                     array(
                         'id' => 'COD_FACT',
                         'class' => 'CCheckBoxColumn',
@@ -61,7 +61,19 @@ $('.search-form form').submit(function(){
                         'name' => 'COD_PRESU',
                         'header' => 'N° Presupuesto',
                         'htmlOptions' => array('style' => 'width: 10px'),
-                        'value' => '$data->cODPRESU->NUM_PRESU'
+                        'value' => function ($data) {
+
+                            $model = new Factura();
+
+                            $variable = $data->__GET('COD_PRESU');
+
+                            if ($variable == null) {
+                                echo 'No Asociado';
+                            } else {
+                               echo $model->ValorNFact($variable);
+                            }
+
+                        },
                     ),
                     array(
                         'name' => 'FECHA',
@@ -73,7 +85,19 @@ $('.search-form form').submit(function(){
                         'name' => 'CLIENTE',
                         'header' => 'Cliente',
                         'htmlOptions' => array('style' => 'width: 220px'),
-                        'value' => '$data->CLIENTE'
+                        'value' => function ($data) {
+
+                            $model = new Factura();
+
+                            $variable = $data->__GET('CLIENTE');
+
+                            if ($variable == null) {
+                                echo 'No Asociado';
+                            } else {
+                                echo $model->ValorNFact($variable);
+                            }
+
+                        },
                     ),
                     array(
                         'name' => 'OC',

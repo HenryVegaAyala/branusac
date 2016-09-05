@@ -30,9 +30,9 @@
                 currentText: 'Hoy',
                 monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'MiÃ©rcoles', 'Jueves', 'Viernes', 'SÃ¡bado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'MiÃ©', 'Juv', 'Vie', 'SÃ¡b'],
+                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'SÃ¡'],
                 weekHeader: 'Sm',
                 dateFormat: 'dd/mm/yy',
                 firstDay: 1,
@@ -50,18 +50,37 @@
 
                     <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'NUM_FACT'); ?>
-                        <?php echo $form->textField($model, 'NUM_FACT', array('class' => 'form-control')); ?>
+                        <?php echo $form->textField($model, 'NUM_FACT', array('class' => 'form-control','value' => $model->NAIFactu(), 'disabled' => 'true')); ?>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'COD_GUIA'); ?>
-                        <?php echo $form->textField($model, 'COD_GUIA', array('class' => 'form-control')); ?>
+                        <?php echo $form->textField($model, 'COD_GUIA', array('class' => 'form-control','readonly' => 'readonly')); ?>
                         <?php echo $form->error($model, 'COD_GUIA'); ?>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                         <?php echo $form->labelEx($model, 'CLIENTE'); ?>
-                        <?php echo $form->textField($model, 'CLIENTE', array('class' => 'form-control')); ?>
+                        <?php
+                        $htmlOptions = array(
+                            'ajax' => array(
+                                "url" => $this->createUrl("Ajax"),
+                                "type" => "POST",
+                                "success" => "function(data){
+
+                            cadena = data.split('/');
+
+                           var direccion=document.getElementById('Factura_RUC');
+                           direccion.value= cadena[0];
+                               }
+                            "
+                            ),
+                            'class' => 'form-control',
+                            'empty' => 'Seleccionar Cliente',
+                            'style' => 'text-transform: uppercase'
+                        );
+                        ?>
+                        <?php echo $form->dropDownList($model, 'CLIENTE',$model->ListaCliente(),$htmlOptions); ?>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
@@ -81,12 +100,6 @@
                         <?php echo $form->textField($model, 'OC', array('class' => 'form-control')); ?>
                     </div>
 
-                    <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'MONEDA'); ?>
-                        <?php echo $form->textField($model, 'MONEDA', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'MONEDA'); ?>
-                    </div>
-
                 </div>
             </div>
 
@@ -94,7 +107,26 @@
                 <div class="form-group">
                     <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'COND_PAGO'); ?>
-                        <?php echo $form->textField($model, 'COND_PAGO', array('class' => 'form-control')); ?>
+                        <?php
+                        $htmlOptions = array(
+                            'ajax' => array(
+                                "url" => $this->createUrl("Condicion"),
+                                "type" => "POST",
+                                "success" => "function(data){
+
+                            cadena = data.split('/');
+
+                           var CondPago=document.getElementById('Factura_NRO_DIAS');
+                           CondPago.value= cadena[0];
+                               }
+                            "
+                            ),
+                            'class' => 'form-control',
+                            'empty' => 'CondiciÃ³n de Pago',
+                            'style' => 'text-transform: uppercase'
+                        );
+                        ?>
+                        <?php echo $form->dropDownList($model, 'COND_PAGO',$model->ListaCondicion(), $htmlOptions); ?>
                         <?php echo $form->error($model, 'COND_PAGO'); ?>
                     </div>
 
@@ -116,7 +148,6 @@
             <div class="fieldset">
                 <div class="form-group">
 
-
                     <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'FECHA_CANC'); ?>
                         <input type="text" id="Factura_FECHA_CANC" name="Factura[FECHA_CANC]"
@@ -132,9 +163,9 @@
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'ESTADO'); ?>
-                        <?php echo $form->textField($model, 'ESTADO', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'ESTADO'); ?>
+                        <?php echo $form->labelEx($model, 'MONEDA'); ?>
+                        <?php echo $form->dropDownList($model, 'MONEDA',$model->ListaMoneda(), array('class' => 'form-control','empty' => 'Seleccionar Moneda')); ?>
+                        <?php echo $form->error($model, 'MONEDA'); ?>
                     </div>
 
                 </div>

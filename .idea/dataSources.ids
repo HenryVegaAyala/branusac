@@ -72,10 +72,10 @@
       <index name="fk_t_presupuesto_det_Presupuesto1_idx" unique="false" columns="COD_PRESU"/>
     </table>
     <table name="factura" schema="" catalog="branusac" type="TABLE">
-      <column name="COD_FACT" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="COD_FACT" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="COD_PRESU" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="NUM_FACT" sqlType="VARCHAR" precision="7" scale="0" nullable="false" jdbcType="12"/>
-      <column name="MONEDA" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="MONEDA" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1" def="JzAn"/>
       <column name="FECHA" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="CLIENTE" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
       <column name="RUC" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
@@ -199,6 +199,18 @@
       <prototype>
         <parameter name="X_USUARIO" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12" type="1" index="1"/>
         <parameter name="X_VALOR" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+      </prototype>
+    </procedure>
+    <procedure name="CREAR_DETAL_FACTU" schema="" catalog="branusac" type="1">
+      <prototype>
+        <parameter name="fila" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="x_cod_factu" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+        <parameter name="x_cod_factu_det" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="3"/>
+        <parameter name="x_cod_clien" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+        <parameter name="x_NRO_UNID" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="5"/>
+        <parameter name="x_DES_LARG" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12" type="1" index="6"/>
+        <parameter name="x_VAL_PREC" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3" type="1" index="7"/>
+        <parameter name="x_VAL_MONT_UNID" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3" type="1" index="8"/>
       </prototype>
     </procedure>
     <procedure name="CREAR_DETAL_PRESU" schema="" catalog="branusac" type="1">

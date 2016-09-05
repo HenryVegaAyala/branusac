@@ -27,8 +27,11 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d5bdeaba-ceb5-4a69-b264-657b59b901a7">
-      <console name="Connection" type="STANDARD" />
+      <console name="Connection" type="STANDARD"><![CDATA[select * from branusac.bas_param;]]></console>
     </connection>
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-list connection-id="d5bdeaba-ceb5-4a69-b264-657b59b901a7" dataset="branusac.bas_param" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
