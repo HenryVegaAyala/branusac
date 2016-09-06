@@ -84,7 +84,7 @@ class Factura extends CActiveRecord
             'COD_PRESU' => 'N° de Presupuesto',
             'NUM_FACT' => 'N° de Factura',
             'MONEDA' => 'Moneda',
-            'FECHA' => 'Fecha',
+            'FECHA' => 'Fecha Creada',
             'CLIENTE' => 'Cliente',
             'RUC' => 'RUC',
             'OC' => 'Orden de Compra',
@@ -117,6 +117,8 @@ class Factura extends CActiveRecord
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
+
+        $criteria->order = 'NUM_FACT DESC';
 
         $criteria->compare('COD_FACT', $this->COD_FACT);
         $criteria->compare('COD_PRESU', $this->COD_PRESU);
@@ -226,6 +228,17 @@ class Factura extends CActiveRecord
 
         return $Factura;
 
+    }
+
+    public function Cliente($Codigo)
+    {
+        $cliente = Yii::app()->db->createCommand()
+            ->select('NOMBRE')
+            ->from('cliente')
+            ->where("COD_CLIE = '" . $Codigo . "';")
+            ->queryScalar();
+
+        return $cliente;
     }
 
 

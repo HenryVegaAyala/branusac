@@ -87,7 +87,7 @@
       <column name="TOT_MONT_IGV" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
       <column name="TOT_FACT" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
       <column name="FECHA_CANC" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
-      <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="ESTADO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1" def="JzAn"/>
       <column name="COD_GUIA" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="COD_FACT"/>
       <foreign-key name="fk_factura_presupuesto1" columns="COD_PRESU" ref-table="presupuesto" ref-schema="" ref-catalog="branusac" ref-columns="COD_PRESU" update-rule="3" delete-rule="3" deferrability="2"/>
@@ -183,6 +183,18 @@
       <column name="EST_USUA" sqlType="VARCHAR" precision="1" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="COD_USUA"/>
     </table>
+    <procedure name="ACTUA_DETAL_FACTU" schema="" catalog="branusac" type="1">
+      <prototype>
+        <parameter name="fila" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="x_cod_factu" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+        <parameter name="x_cod_factu_det" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="3"/>
+        <parameter name="x_cod_clien" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+        <parameter name="x_NRO_UNID" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="5"/>
+        <parameter name="x_DES_LARG" sqlType="VARCHAR" precision="250" scale="0" nullable="true" jdbcType="12" type="1" index="6"/>
+        <parameter name="x_VAL_PREC" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3" type="1" index="7"/>
+        <parameter name="x_VAL_MONT_UNID" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3" type="1" index="8"/>
+      </prototype>
+    </procedure>
     <procedure name="ACTUA_DETAL_PRESU" schema="" catalog="branusac" type="1">
       <prototype>
         <parameter name="fila" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>

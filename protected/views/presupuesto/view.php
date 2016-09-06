@@ -81,20 +81,20 @@ $this->breadcrumbs = array(
             'type' => 'bordered condensed striped raw',
             'attributes' => array(
                 array(
-                    'name' => 'N&#176 de Presupuesto',
+                    'name' => 'Cliente',
                     'value' => $model->cODCLIE->NOMBRE),
+                'DIRECCION',
                 array(
-                    'name' => 'Fecha',
+                    'name' => 'Moneda',
                     'value' => $Moneda),
                 array(
                     'name' => 'Fecha',
                     'value' => $FECHA),
-                'DIRECCION',
                 array(
                     'name' => 'Vigencia',
                     'value' => $model->VIGENCIA . ' dias'),
                 array(
-                    'name' => 'Estado',
+                    'name' => 'Condición de Pago',
                     'value' => $CondPago),
                 array(
                     'name' => 'N&#176 Dias',

@@ -65,7 +65,7 @@
                             array(
                                 'label' => 'Guías',
                                 'items' => array(
-                                    array('label' => 'Lista de Guias', 'url' => array('/guia/create')),
+                                    array('label' => 'Lista de Guias', 'url' => array('/guia/index')),
                                     '---',
                                 ), 'visible' => !Yii::app()->user->isGuest
                             ),

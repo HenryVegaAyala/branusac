@@ -52,10 +52,41 @@ $('.search-form form').submit(function(){
                         'selectableRows' => '50',
                     ),
                     array(
+                        'name' => 'FECHA',
+                        'header' => 'Fecha Creada',
+                        'htmlOptions' => array('style' => 'width: 30px'),
+                        'value' => 'Yii::app()->dateFormatter->format("dd/MM/y",strtotime($data->FECHA))'
+                    ),
+                    array(
                         'name' => 'NUM_FACT',
-                        'header' => 'N° Factura',
-                        'htmlOptions' => array('style' => 'width: 10px'),
+                        'header' => 'N° Fact.',
+                        'htmlOptions' => array('style' => 'width: 50px'),
                         'value' => '$data->NUM_FACT'
+                    ),
+                    array(
+                        'name' => 'CLIENTE',
+                        'header' => 'Cliente',
+                        'htmlOptions' => array('style' => 'width: 295px'),
+                        'value' => function ($data) {
+
+                            $model = new Factura();
+
+                            $variable = $data->__GET('CLIENTE');
+
+                            if ($variable == null) {
+                                echo 'No Asociado';
+                            } else {
+                                echo $model->Cliente($variable);
+                            }
+
+                        },
+                    ),
+
+                    array(
+                        'name' => 'OC',
+                        'header' => 'Ord. Compra',
+                        'htmlOptions' => array('style' => 'width: 75px'),
+                        'value' => '$data->OC'
                     ),
                     array(
                         'name' => 'COD_PRESU',
@@ -70,52 +101,33 @@ $('.search-form form').submit(function(){
                             if ($variable == null) {
                                 echo 'No Asociado';
                             } else {
-                               echo $model->ValorNFact($variable);
-                            }
-
-                        },
-                    ),
-                    array(
-                        'name' => 'FECHA',
-                        'header' => 'Fecha',
-                        'htmlOptions' => array('style' => 'width: 40px'),
-                        'value' => 'Yii::app()->dateFormatter->format("dd/MM/y",strtotime($data->FECHA))'
-                    ),
-                    array(
-                        'name' => 'CLIENTE',
-                        'header' => 'Cliente',
-                        'htmlOptions' => array('style' => 'width: 220px'),
-                        'value' => function ($data) {
-
-                            $model = new Factura();
-
-                            $variable = $data->__GET('CLIENTE');
-
-                            if ($variable == null) {
-                                echo 'No Asociado';
-                            } else {
                                 echo $model->ValorNFact($variable);
                             }
 
                         },
                     ),
                     array(
-                        'name' => 'OC',
-                        'header' => 'Ord. Compr.',
-                        'htmlOptions' => array('style' => 'width: 75px'),
-                        'value' => '$data->OC'
-                    ),
-                    array(
-                        'name' => 'TOT_FACT',
-                        'header' => 'Total',
-                        'htmlOptions' => array('style' => 'width: 70px'),
-                        'value' => '$data->TOT_FACT'
-                    ),
-                    array(
                         'name' => 'ESTADO',
                         'header' => 'Estado',
-                        'htmlOptions' => array('style' => 'width: 120px'),
-                        'value' => '$data->ESTADO'
+                        'htmlOptions' => array('style' => 'width: 90px'),
+                        'value' => function ($data) {
+
+                            $variable = $data->__GET('ESTADO');
+                            switch ($variable) {
+                                case 1:
+                                    echo 'En Proceso';
+                                    break;
+                                case 2:
+                                    echo 'Despacho/Atendido';
+                                    break;
+                                case 9:
+                                    echo 'Anulado';
+                                    break;
+                                case 0:
+                                    echo 'Creado';
+                                    break;
+                            }
+                        },
                     ),
                     array(
                         'header' => 'Opciones',

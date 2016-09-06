@@ -148,15 +148,50 @@ class FacturaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        $model = new DetalleFactura();
+
+        $count = Yii::app()->db->createCommand()->select('count(*)')
+            ->from('detalle_factura')
+            ->where("COD_FACT_DET = '" . $model->COD_FACT_DET . "'")
+            ->queryScalar();
+
+        $CODPREDET = ($count);
+
+        $model = $this->loadModel($id);
 
         if (isset($_POST['Factura'])) {
             $model->attributes = $_POST['Factura'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->COD_FACT));
+
+            $model->FECHA_CANC = substr($model->FECHA_CANC, 6, 4) . '/' . substr($model->FECHA_CANC, 3, 2) . '/' . substr($model->FECHA_CANC, 0, 2); //'2016-06-09' ;
+
+            if (isset ($_POST['DES_LARG'])) {
+
+                $DESCRI = $_POST['DES_LARG'];
+                $UND = $_POST['NRO_UNID'];
+                $VALPRE = $_POST['VAL_PREC'];
+                $VALMOTUND = $_POST['VAL_MONT_UNID'];
+
+                if ($model->update()) {
+                    for ($i = 0; $i < count($DESCRI); $i++) {
+                        if ($DESCRI[$i] <> '') {
+                            $sqlStatement = "call ACTUA_DETAL_FACTU(
+                    '" . $i . "',
+                    '" . $model->COD_FACT . "',
+                    '" . $CODPREDET . "',
+                    '" . $model->CLIENTE . "',
+                    '" . $UND[$i] . "',
+                    '" . $DESCRI[$i] . "',
+                    '" . $VALPRE[$i] . "',
+                    '" . $VALMOTUND[$i] . "'
+                )";
+                            $command = Yii::app()->db->createCommand($sqlStatement);
+                            $command->execute();
+                        }
+                    }
+                }
+                $this->redirect(array('index'));
+            }
         }
 
         $this->render('update', array(

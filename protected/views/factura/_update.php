@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Registrar Nueva Factura</h3>
+            <h3 class="panel-title">Actualizar Factura</h3>
         </div>
 
         <?php $form = $this->beginWidget('CActiveForm', array(
@@ -49,55 +49,57 @@
                 <div class="form-group">
 
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'COD_PRESU'); ?>
-                        <?php echo $form->textField($model, 'COD_PRESU', array('class' => 'form-control')); ?>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'NUM_FACT'); ?>
-                        <?php echo $form->textField($model, 'NUM_FACT', array('class' => 'form-control')); ?>
+                        <?php echo $form->textField($model, 'NUM_FACT', array('class' => 'form-control', 'disabled' => 'true')); ?>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'OC'); ?>
-                        <?php echo $form->textField($model, 'OC', array('class' => 'form-control')); ?>
+                        <?php echo $form->labelEx($model, 'COD_GUIA'); ?>
+                        <?php echo $form->textField($model, 'COD_GUIA', array('class' => 'form-control', 'readonly' => 'readonly')); ?>
+                        <?php echo $form->error($model, 'COD_GUIA'); ?>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <?php echo $form->labelEx($model, 'CLIENTE'); ?>
+                        <?php
+                        $htmlOptions = array(
+                            'ajax' => array(
+                                "url" => $this->createUrl("Ajax"),
+                                "type" => "POST",
+                                "success" => "function(data){
+
+                            cadena = data.split('/');
+
+                           var direccion=document.getElementById('Factura_RUC');
+                           direccion.value= cadena[0];
+                               }
+                            "
+                            ),
+                            'class' => 'form-control',
+                            'empty' => 'Seleccionar Cliente',
+                            'disabled' => 'true',
+                            'style' => 'text-transform: uppercase'
+                        );
+                        ?>
+                        <?php echo $form->dropDownList($model, 'CLIENTE', $model->ListaCliente(), $htmlOptions); ?>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'MONEDA'); ?>
-                        <?php echo $form->textField($model, 'MONEDA', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'MONEDA'); ?>
+                        <?php echo $form->labelEx($model, 'RUC'); ?>
+                        <?php echo $form->textField($model, 'RUC', array('class' => 'form-control', 'disabled' => 'true')); ?>
+                        <?php echo $form->error($model, 'RUC'); ?>
                     </div>
+
                 </div>
             </div>
 
             <div class="fieldset">
                 <div class="form-group">
-                    <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'FECHA'); ?>
-                        <input type="text" id="Factura_FECHA" name="Factura[FECHA]"
-                               class="form-control" placeholder="Ingrese la Fecha Ingreso"
-                               value=" <?php $model->FECHA ?>" required="true"/>
-                        <script>
-                            $(function () {
-                                $("#Factura_FECHA").datepicker();
-                            });
-
-                        </script>
-                        <?php echo $form->error($model, 'FECHA'); ?>
-                    </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'CLIENTE'); ?>
-                        <?php echo $form->textField($model, 'CLIENTE', array('class' => 'form-control')); ?>
+                        <?php echo $form->labelEx($model, 'OC'); ?>
+                        <?php echo $form->textField($model, 'OC', array('class' => 'form-control', 'disabled' => 'true')); ?>
                     </div>
-
-                    <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'RUC'); ?>
-                        <?php echo $form->textField($model, 'RUC', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'RUC'); ?>
-                    </div>
-
 
                 </div>
             </div>
@@ -106,7 +108,26 @@
                 <div class="form-group">
                     <div class="col-sm-6 col-md-3">
                         <?php echo $form->labelEx($model, 'COND_PAGO'); ?>
-                        <?php echo $form->textField($model, 'COND_PAGO', array('class' => 'form-control')); ?>
+                        <?php
+                        $htmlOptions = array(
+                            'ajax' => array(
+                                "url" => $this->createUrl("Condicion"),
+                                "type" => "POST",
+                                "success" => "function(data){
+
+                            cadena = data.split('/');
+
+                           var CondPago=document.getElementById('Factura_NRO_DIAS');
+                           CondPago.value= cadena[0];
+                               }
+                            "
+                            ),
+                            'class' => 'form-control',
+                            'empty' => 'Condición de Pago',
+                            'style' => 'text-transform: uppercase'
+                        );
+                        ?>
+                        <?php echo $form->dropDownList($model, 'COND_PAGO', $model->ListaCondicion(), $htmlOptions); ?>
                         <?php echo $form->error($model, 'COND_PAGO'); ?>
                     </div>
 
@@ -128,12 +149,13 @@
             <div class="fieldset">
                 <div class="form-group">
 
-
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'FECHA_CANC'); ?>
+                        <?php echo $form->labelEx($model, 'FECHA_CANC');
+                        $Fecha = $model->FECHA_CANC;
+                        ?>
                         <input type="text" id="Factura_FECHA_CANC" name="Factura[FECHA_CANC]"
                                class="form-control" placeholder="Ingrese la Fecha Ingreso"
-                               value=" <?php $model->FECHA ?>" required="true"/>
+                               value=" <?php echo $Fecha ?>" required="true"/>
                         <script>
                             $(function () {
                                 $("#Factura_FECHA_CANC").datepicker();
@@ -144,10 +166,11 @@
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <?php echo $form->labelEx($model, 'ESTADO'); ?>
-                        <?php echo $form->textField($model, 'ESTADO', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'ESTADO'); ?>
+                        <?php echo $form->labelEx($model, 'MONEDA'); ?>
+                        <?php echo $form->dropDownList($model, 'MONEDA', $model->ListaMoneda(), array('class' => 'form-control', 'empty' => 'Seleccionar Moneda')); ?>
+                        <?php echo $form->error($model, 'MONEDA'); ?>
                     </div>
+
                 </div>
             </div>
 
@@ -157,7 +180,7 @@
 
         <div class="container-fluid">
             <?php
-            include __DIR__ . '/../Recurso/Grilla3.php';
+            include __DIR__ . '/../Recurso/Grilla4.php';
             ?>
         </div>
 

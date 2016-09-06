@@ -18,9 +18,11 @@
     <file url="file://$PROJECT_DIR$/protected/views/factura/_form.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/factura/_search.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/factura/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/views/factura/view.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/folio/_form.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/folio/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/folio/update.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/protected/views/guia/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/layouts/main.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/parametro/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/protected/views/parametro/update.php" charset="UTF-8" />
