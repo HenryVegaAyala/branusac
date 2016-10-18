@@ -65,16 +65,16 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
             <td><input type='checkbox' class='case'/></td>
             <td><span id='snum'>$count</span></td>
             <td>
-                <input type='text' value=" . $row['DESCRIPCION'] . " id='DES_LARG_" . $count . "' name='DES_LARG[]' size='45'  class='form-control' style='text-transform:uppercase'/>
+                <input type='text' value=" . $row['DESCRIPCION'] . " id='DES_LARG_" . $count . "' name='DES_LARG[]' size='45'  class='form-control  input-sm' style='text-transform:uppercase'/>
             </td>
             <td>
-                <input type='text' value=" . $row['CANTIDAD'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' size='10' class='form-control' />
+                <input type='text' value=" . $row['CANTIDAD'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);' id='NRO_UNID_" . $count . "' name='NRO_UNID[]' size='10' class='form-control  input-sm' />
             </td>
             <td>
-                <input type='text' value=" . $row['PRECIO'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);'  id='VAL_PREC_" . $count . "' name='VAL_PREC[]' size='10' class='form-control' />
+                <input type='text' value=" . $row['PRECIO'] . " onchange='jsCalcular(this)' onkeyup='jsCalcular(this);'  id='VAL_PREC_" . $count . "' name='VAL_PREC[]' size='10' class='form-control  input-sm' />
             </td>
             <td>
-                <input type='text' value=" . $row['TOTAL'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control' onkeypress='jsAgregar(event);' value='0'/>
+                <input type='text' value=" . $row['TOTAL'] . " id='campo_VAL_MONT_UNID_" . $count . "' name='VAL_MONT_UNID[]' size='10' class='form-control  input-sm' onkeypress='jsAgregar(event);' value='0'/>
             </td>
         </tr>";
 
@@ -157,16 +157,16 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/css/new/jqu
         var data = "<tr><td><input type='checkbox' class='case'/></td><td><span id='snum" + i + "'>" + count + "</span></td>";
         data += '\n\\n\
                                 <td>\n\
-                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control" style="text-transform:uppercase"/>\n\
+                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control  input-sm" style="text-transform:uppercase"/>\n\
                                 </td> \n\
                                 <td>\n\
-                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);"   />\n\
+                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control  input-sm" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);"   />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);"   />\n\
+                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control  input-sm" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);"   />\n\
                                 </td>   \n\
                                 <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" onkeypress="jsAgregar(event);" />\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control  input-sm" onkeypress="jsAgregar(event);" />\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);

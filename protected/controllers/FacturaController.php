@@ -70,12 +70,13 @@ class FacturaController extends Controller
         $CodCliente = $_POST["Factura"]["CLIENTE"];
 
         $connection = Yii::app()->db;
-        $sqlStatement = "SELECT  RUC from cliente where '" . $CodCliente . "';";
+        $sqlStatement = "SELECT  RUC from cliente where COD_CLIE = '" . $CodCliente . "';";
         $command = $connection->createCommand($sqlStatement);
         $reader = $command->query();
 
         foreach ($reader as $row) {
             echo $row['RUC'];
+            echo "/";
         }
 
     }

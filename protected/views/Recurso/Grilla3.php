@@ -141,16 +141,16 @@ while ($row = $reader->read()) {
         var data = "<tr><td><input type='checkbox' class='case'/></td><td><span id='snum" + i + "'>" + count + "</span></td>";
         data += '\n\\n\
                                 <td>\n\
-                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control" style="text-transform:uppercase"/>\n\
+                                    <input type="text" id="DES_LARG_' + i + '" name="DES_LARG[]" size="51" class="form-control  input-sm" style="text-transform:uppercase"/>\n\
                                 </td> \n\
                                 <td>\n\
-                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
+                                    <input type="text" id="NRO_UNID_' + i + '" name="NRO_UNID[]" size="8" class="form-control  input-sm" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>   \n\
                                 <td>\n\
-                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
+                                    <input type="text" id="VAL_PREC_' + i + '" name="VAL_PREC[]" size="8" class="form-control  input-sm" onchange="jsCalcular(this)"  onkeyup="jsCalcular(this);" onkeypress="jsAgregar(event);" value="0" />\n\
                                 </td>\n\
                                 <td>\n\
-                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control" onkeypress="jsAgregar(event);"/>\n\
+                                    <input type="text" id="campo_VAL_MONT_UNID' + i + '" name="VAL_MONT_UNID[]" size="8" class="form-control  input-sm" onkeypress="jsAgregar(event);"/>\n\
                                 </td>\n\
                                 </tr>';
         $('#tableP').append(data);

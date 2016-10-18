@@ -72,7 +72,8 @@ CREATE TABLE `cliente` (
 
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
 INSERT INTO `cliente` (`COD_CLIE`,`NOMBRE`,`RUC`,`DNI`,`DIRECCION`,`TELEFONO2`,`CORREO_E`,`TELEFONO`,`FAX`) VALUES 
- (1,'adidas chile ltda suc  del perú','20347100316',48429679,'av. santa cruz 970 - lima 18',955201758,'','2802886','');
+ (1,'adidas chile ltda suc  del perú','20347100316',48429679,'av. santa cruz 970 - lima 18',955201758,'','2802886',''),
+ (2,'Empresa Consorcio Volvo','893847264',NULL,'Sector 8 mz m lote 13 Villa el Salvadoor',955201758,'ingenierovega@hotmail.com','955201758','');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 
 
@@ -101,6 +102,26 @@ CREATE TABLE `detalle_factura` (
 --
 
 /*!40000 ALTER TABLE `detalle_factura` DISABLE KEYS */;
+INSERT INTO `detalle_factura` (`COD_FACT`,`COD_FACT_DET`,`COD_PRODUC`,`LINEA`,`CANTIDAD`,`DESCRIPCION`,`TOTAL`,`COD_CLIE`,`PRECIO`) VALUES 
+ (6,6,1,NULL,34,'pan3','1156.00',1,'34.00'),
+ (6,6,1,NULL,34,'pan','102.00',1,'3.00'),
+ (7,7,1,NULL,34,'panwdw','11662.00',1,'343.00'),
+ (7,7,1,NULL,34,'pan','1156.00',1,'34.00'),
+ (7,7,1,NULL,34,'pans','102.00',1,'3.00'),
+ (7,7,1,NULL,334,'pas','1002.00',1,'3.00'),
+ (3,3,1,NULL,34,'papel A4','1156.00',1,'34.00'),
+ (4,4,1,NULL,34,'ososo','1156.00',1,'34.00'),
+ (5,3,1,NULL,34,'x2','1156.00',1,'34.00'),
+ (5,3,1,NULL,34,'x1','136.00',1,'4.00'),
+ (5,3,1,NULL,4,'x3','12.00',1,'3.00'),
+ (8,6,1,NULL,43,'papel A4','1462.00',1,'34.00'),
+ (9,7,1,NULL,2,'as','4.00',1,'2.00'),
+ (10,8,1,NULL,23,'qw','529.00',1,'23.00'),
+ (11,9,1,NULL,23,'23','736.00',1,'32.00'),
+ (12,10,1,NULL,23,'23','529.00',1,'23.00'),
+ (13,11,1,NULL,45,'45','2025.00',1,'45.00'),
+ (13,11,1,NULL,45,'45','2025.00',1,'45.00'),
+ (14,12,1,NULL,34,'pn','1156.00',2,'34.00');
 /*!40000 ALTER TABLE `detalle_factura` ENABLE KEYS */;
 
 
@@ -168,7 +189,8 @@ INSERT INTO `detalle_presupuesto` (`COD_PRESU`,`COD_PRESU_DET`,`COD_PRODUC`,`LIN
  (5,1,1,NULL,33,'3','99.00',1,'3.00'),
  (6,1,1,NULL,34,'pan','1156.00',1,'34.00'),
  (6,1,1,NULL,34,'pan','1156.00',1,'34.00'),
- (6,1,1,NULL,34,'paneri','1156.00',1,'34.00');
+ (6,1,1,NULL,34,'paneri','1156.00',1,'34.00'),
+ (7,1,1,NULL,23,'Hoja','46.00',1,'2.00');
 /*!40000 ALTER TABLE `detalle_presupuesto` ENABLE KEYS */;
 
 
@@ -178,10 +200,10 @@ INSERT INTO `detalle_presupuesto` (`COD_PRESU`,`COD_PRESU_DET`,`COD_PRODUC`,`LIN
 
 DROP TABLE IF EXISTS `factura`;
 CREATE TABLE `factura` (
-  `COD_FACT` int(99) NOT NULL,
-  `COD_PRESU` int(99) NOT NULL,
+  `COD_FACT` int(99) NOT NULL DEFAULT '0',
+  `COD_PRESU` int(99) DEFAULT NULL,
   `NUM_FACT` varchar(7) NOT NULL,
-  `MONEDA` char(1) NOT NULL,
+  `MONEDA` char(1) DEFAULT '0',
   `FECHA` date DEFAULT NULL,
   `CLIENTE` varchar(150) NOT NULL,
   `RUC` varchar(20) NOT NULL,
@@ -193,7 +215,7 @@ CREATE TABLE `factura` (
   `TOT_MONT_IGV` decimal(10,2) DEFAULT NULL,
   `TOT_FACT` decimal(10,2) DEFAULT NULL,
   `FECHA_CANC` date DEFAULT NULL,
-  `ESTADO` char(1) DEFAULT NULL,
+  `ESTADO` char(1) DEFAULT '0',
   `COD_GUIA` int(99) DEFAULT NULL,
   PRIMARY KEY (`COD_FACT`),
   UNIQUE KEY `SYS_CT_12` (`NUM_FACT`),
@@ -207,8 +229,19 @@ CREATE TABLE `factura` (
 
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
 INSERT INTO `factura` (`COD_FACT`,`COD_PRESU`,`NUM_FACT`,`MONEDA`,`FECHA`,`CLIENTE`,`RUC`,`OC`,`COND_PAGO`,`NRO_DIAS`,`COND_PERSONALIZADO`,`TOT_MONT_ORDE`,`TOT_MONT_IGV`,`TOT_FACT`,`FECHA_CANC`,`ESTADO`,`COD_GUIA`) VALUES 
- (1,1,'1','1','2016-09-01','adidas chile ltda suc  del perú','1','1','1',1,'1','1.00','1.00','11.00','0000-00-00','1',NULL),
- (2,1,'2','2','0000-00-00','2','2','2','2',2,'2','22.00','0.00','2.00','0000-00-00','2',NULL);
+ (3,NULL,'7655','0','2016-09-05','1','20347100316','','2',30,'','1156.00','208.08','1364.08','0000-00-00','0',NULL),
+ (4,NULL,'7656','0','2016-09-06','1','20347100316','','2',30,'','1156.00','208.08','1364.08','2016-09-30','0',NULL),
+ (5,NULL,'7657','0','0009-06-06','1','20347100316','','2',30,'','1304.00','234.72','1538.72','2016-09-16','0',NULL),
+ (6,NULL,'7653','0','2016-09-04','1','20347100316','34','2',30,'34','1258.00','226.44','1484.44','0000-00-00',NULL,9897663),
+ (7,NULL,'7654','0','2016-09-03','1','20347100316','','3',45,'','13922.00','2505.96','16427.96','0000-00-00',NULL,NULL),
+ (8,NULL,'7658','1','2016-09-16','1','20347100316','','2',30,'','1462.00','263.16','1725.16','0000-00-00','0',NULL),
+ (9,NULL,'7659','0','2016-09-16','1','20347100316','','3',45,'','4.00','0.72','4.72','0000-00-00','0',NULL),
+ (10,NULL,'7660','0','2016-09-16','1','20347100316','','1',NULL,'','529.00','95.22','624.22','0000-00-00','0',NULL);
+INSERT INTO `factura` (`COD_FACT`,`COD_PRESU`,`NUM_FACT`,`MONEDA`,`FECHA`,`CLIENTE`,`RUC`,`OC`,`COND_PAGO`,`NRO_DIAS`,`COND_PERSONALIZADO`,`TOT_MONT_ORDE`,`TOT_MONT_IGV`,`TOT_FACT`,`FECHA_CANC`,`ESTADO`,`COD_GUIA`) VALUES 
+ (11,NULL,'7661','0','2016-09-16','1','20347100316','','4',60,'','736.00','132.48','868.48','0000-00-00','0',NULL),
+ (12,NULL,'7662','0','2016-09-16','1','20347100316','','3',45,'','529.00','95.22','624.22','0000-00-00','0',NULL),
+ (13,NULL,'7663','0','2016-09-16','1','20347100316','','2',30,'','4050.00','729.00','4779.00','0000-00-00','0',NULL),
+ (14,NULL,'7664','0','2016-09-16','2','893847264','','2',30,'','1156.00','208.08','1364.08','0000-00-00','0',NULL);
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 
 
@@ -235,9 +268,9 @@ CREATE TABLE `folio` (
 
 /*!40000 ALTER TABLE `folio` DISABLE KEYS */;
 INSERT INTO `folio` (`VAL_INI`,`VAL_FIN`,`VAL_ACTU`,`VAL_LLAVE`,`DESCRIPCION`,`FECHA`,`VALOR`,`USUARIO`) VALUES 
- (1,9999999,5182,0,'N° de Presupuesto','2016-09-01 16:57:07','2','admin'),
+ (1,9999999,5183,0,'N° de Presupuesto','2016-09-19 14:50:46','2','admin'),
  (1,9999999,983,1,'N° de Guia','2016-08-31 17:57:25','3','admin'),
- (1,9999999,7654,2,'N° de Factura           ','2016-08-31 17:48:13','4','admin');
+ (1,9999999,7665,2,'N° de Factura           ','2016-09-05 18:16:40','4','admin');
 /*!40000 ALTER TABLE `folio` ENABLE KEYS */;
 
 
@@ -310,7 +343,8 @@ INSERT INTO `presupuesto` (`COD_PRESU`,`NUM_PRESU`,`COD_CLIE`,`MONEDA`,`FECHA`,`
  (3,'5178',1,'0','2016-08-31','0000-00-00','av. santa cruz 970 - lima 18','23','2',30,'','0','1134.00','0.00','0.00',''),
  (4,'5179',1,'0','2016-08-31','0000-00-00','av. santa cruz 970 - lima 18','23','3',45,'','0','81.00','0.00','0.00','23'),
  (5,'5180',1,'0','2016-09-01','0000-00-00','av. santa cruz 970 - lima 18','3','3',45,'3','0','196857.00','0.00','0.00','3'),
- (6,'5181',1,'0','2009-03-16','0000-00-00','av. santa cruz 970 - lima 18','23','2',30,'','0','3468.00','0.00','0.00','');
+ (6,'5181',1,'0','2009-03-16','0000-00-00','av. santa cruz 970 - lima 18','23','2',30,'','0','3468.00','0.00','0.00',''),
+ (7,'5182',1,'0','2016-09-06','0000-00-00','av. santa cruz 970 - lima 18','10','2',30,'','0','46.00','0.00','0.00','');
 /*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
 
 
@@ -396,6 +430,59 @@ INSERT INTO `usuario` (`COD_USUA`,`NOM_USUA`,`APE_USUA`,`USE_USUA`,`PAS_USUA`,`E
  (3,NULL,NULL,'root','63a9f0ea7bb98050796b649e85481845',NULL,NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
+
+--
+-- Procedure `branusac`.`ACTUA_DETAL_FACTU`
+--
+
+DROP PROCEDURE IF EXISTS `ACTUA_DETAL_FACTU`;
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ACTUA_DETAL_FACTU`(
+
+  IN fila            INT,
+  IN x_cod_factu     int(99),
+  IN x_cod_factu_det int(99),
+  IN x_cod_clien     int(99),
+  IN x_NRO_UNID      INT(11),
+  IN x_DES_LARG      VARCHAR(250),
+  IN x_VAL_PREC      DECIMAL(10, 2),
+  IN x_VAL_MONT_UNID DECIMAL(10, 2)
+)
+BEGIN
+
+  IF fila = 0  THEN
+
+    delete FROM detalle_factura
+    WHERE COD_FACT = x_cod_factu;
+
+  END IF;
+
+  INSERT INTO  detalle_factura (
+    COD_FACT,
+    COD_FACT_DET,
+    COD_PRODUC,
+    CANTIDAD,
+    DESCRIPCION,
+    TOTAL,
+    COD_CLIE,
+    PRECIO
+  )
+
+  VALUES (
+    x_cod_factu,
+    x_cod_factu_det,
+    1,
+    x_NRO_UNID,
+    x_DES_LARG,
+    x_VAL_MONT_UNID, 
+    x_cod_clien,
+    x_VAL_PREC
+  );
+
+END $$
+
+DELIMITER ;
 
 --
 -- Procedure `branusac`.`ACTUA_DETAL_PRESU`
@@ -495,6 +582,66 @@ BEGIN
 
       END CASE;
     END $$
+
+DELIMITER ;
+
+--
+-- Procedure `branusac`.`CREAR_DETAL_FACTU`
+--
+
+DROP PROCEDURE IF EXISTS `CREAR_DETAL_FACTU`;
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CREAR_DETAL_FACTU`(
+
+  IN fila            INT,
+  IN x_cod_factu     int(99),
+  IN x_cod_factu_det int(99),
+  IN x_cod_clien     int(99),
+  IN x_NRO_UNID      INT(11),
+  IN x_DES_LARG      VARCHAR(250),
+  IN x_VAL_PREC      DECIMAL(10, 2),
+  IN x_VAL_MONT_UNID DECIMAL(10, 2)
+)
+BEGIN
+
+    IF fila = 0  THEN
+
+      delete from detalle_factura where COD_FACT = x_cod_factu and COD_CLIE = x_cod_clien;
+
+      UPDATE folio
+      SET VAL_ACTU = (VAL_ACTU+1)
+      where VAL_LLAVE = 2;
+      
+      UPDATE factura
+      SET FECHA = now()
+      WHERE CLIENTE = x_cod_clien and COD_FACT = x_cod_factu;
+
+    END IF;
+
+    INSERT INTO  detalle_factura (
+      COD_FACT,
+      COD_FACT_DET,
+      COD_PRODUC,
+      CANTIDAD,
+      DESCRIPCION,
+      TOTAL,
+      COD_CLIE,
+      PRECIO
+    )
+
+    VALUES (
+      x_cod_factu,
+      x_cod_factu_det,
+      1,
+      x_NRO_UNID,
+      x_DES_LARG,
+      x_VAL_MONT_UNID,
+      x_cod_clien,
+      x_VAL_PREC
+    );
+
+  END $$
 
 DELIMITER ;
 

@@ -197,7 +197,7 @@ class Factura extends CActiveRecord
     public function AIFactu()
     {
 
-        $max = Yii::app()->db->createCommand()->select('count(*)')->from('factura')->queryScalar();
+        $max = Yii::app()->db->createCommand()->select('max(COD_FACT)')->from('factura')->queryScalar();
 
         $id = ($max + 1);
 

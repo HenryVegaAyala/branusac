@@ -59,12 +59,13 @@ class PresupuestoController extends Controller
         $CodCliente = $_POST["Presupuesto"]["COD_CLIE"];
 
         $connection = Yii::app()->db;
-        $sqlStatement = "SELECT  DIRECCION from cliente where '" . $CodCliente . "';";
+        $sqlStatement = "SELECT  DIRECCION from cliente where COD_CLIE = '" . $CodCliente . "';";
         $command = $connection->createCommand($sqlStatement);
         $reader = $command->query();
 
         foreach ($reader as $row) {
             echo $row['DIRECCION'];
+            echo "/";
         }
 
     }
